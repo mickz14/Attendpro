@@ -1,1 +1,51 @@
+*{
+    padding: 0px;
+    margin: 0;
+    box-sizing: border-box;
+}
+:root{
+    --primary-color: #00AFFF;
+    --primary-color-vlight: #BFEBFF;
+    --textcolor: #515151;
+}
+body{
+    font-family: "Poppins", sans-serif;
+    
+}
+nav{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 10px;
+ }
+
+.at-logo{
+    color: #515151;
+    font-weight: 700;
+    font-size: 1.5rem;
+    
+}
+.at-logo span{
+    color: #00AFFF;
+}
+
+.nav-links{
+    
+    flex-basis: 450px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+li{
+    list-style: none;
+    /* margin-left: 1rem; */
+}
+.nav-links a{
+    text-decoration: none;
+    color: #515151;
+}
+img{
+    width: 50%;
+}
+
+
 
