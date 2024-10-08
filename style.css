@@ -10,42 +10,238 @@
 }
 body{
     font-family: "Poppins", sans-serif;
-    
+    background-color: #fafbff;
+}
+.nav-con{
+    width: 100%;
+    position: fixed;
+    top: 0;          
+    left: 0;    
+    z-index: 1000; 
+    backdrop-filter: blur(10px); 
+    background-color: rgba(255, 255, 255, 0.7); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 nav{
     display: flex;
-    justify-content: space-around;
-    padding: 20px 10px;
- }
-
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px  0px 10px 0px;
+    width: 90%;
+    margin: auto;
+   
+}
 .at-logo{
     color: #515151;
     font-weight: 700;
-    font-size: 1.5rem;
-    
-}
+    font-size: 1.6rem;
+    margin-right: 10px;
+}   
 .at-logo span{
     color: #00AFFF;
 }
-
-.nav-links{
-    
-    flex-basis: 450px;
+.nav-links{   
     display: flex;
-    justify-content: space-between;
-    
+    align-items: center;
+    flex-shrink: 0;   
+    gap: 1rem;
+    flex-wrap: wrap;
+     
 }
 li{
     list-style: none;
-    /* margin-left: 1rem; */
+    flex-shrink: 0.5;
 }
 .nav-links a{
     text-decoration: none;
+    color: #515151;   
+}
+.btn{
+    padding: 1rem 2rem;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 2px 3px 20px 0px #00aeffba;
+    cursor: pointer;
+}
+.at-intro-sec{
+    width: 90%;
+    display: flex;
+    margin: 5.3rem auto;
+    padding: 2rem 1rem;
+    background-color: #bfebff90;
+    justify-content: space-between;
+    border-radius: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.at-heading{
+    flex-basis: 40%;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    
+}
+.at-heading span{
+    color: #00a6ffef;
+    font-weight: 700;
+    font-size: 1.6rem;
+    /* flex-shrink: 0; */
+}
+.img-container{
+    flex-basis: 50%;
+    min-width: 300px;
+    flex-shrink: 0;
+    align-self: center;
+}
+.img-container img{
+    width: 100%;
+    border-radius: 1rem;
+}
+.textgrey{
     color: #515151;
+    font-weight: 400;
+    font-size: 1rem;
 }
-img{
-    max-width: 50%;
+.get-started-btn{
+    font-size: 1rem;
+    display: flex;
+    gap: 8px;
+    text-decoration: underline;
+}
+@media (max-width: 716px) {
+    .at-heading, .img-container {
+        flex-basis: 100%;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .at-heading span {
+        font-size: 1.4rem; 
+    }
+
+    .img-container img {
+        max-width: 90%; 
+        margin: 0 auto; 
+    }
+
+    .at-intro-sec {
+        padding: 1rem 0.5rem; 
+    }
+}
+.cards-container{
+    display: flex;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 2rem 1rem;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.cards{
+    flex-basis: 23%;
+    min-width: 200px;
+    background-color: rgba(159, 205, 245, 0.37);
+    padding: 1rem;
+    border-radius: .5rem;
+    /* transition: transform 0.2s; */
+}
+.main-section{
+    display: flex;
+    flex-direction: column;
 }
 
+/* footer */
 
+footer {
+    background-color: #323232;
+    color: white;
+    padding: 2rem 0;
+}
 
+/* Footer Container */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+    margin-top: 1rem;
+}
+
+.footer-section {
+    flex-basis: 30%; /* Each section takes 30% of the container */
+    margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #00a6ffef;
+}
+
+.footer-section p, 
+.footer-section a {
+    color: white;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+/* Links Section */
+.footer-section.links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section.links li {
+    margin-bottom: 0.5rem;
+}
+
+/* Social Icons */
+.social-icons a {
+    margin-right: 10px;
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    padding: 1rem 0;
+    border-top: 1px solid #444;
+    margin-top: 1.5rem;
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 716px) {
+    .footer-section {
+        flex-basis: 100%; /* Stack sections vertically on smaller screens */
+        text-align: center;
+    }
+
+    .footer-section.contact {
+        margin-top: 1.5rem;
+    }
+
+    .footer-container {
+        padding: 0 10px;
+    }
+}
