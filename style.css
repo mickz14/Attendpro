@@ -144,9 +144,14 @@ li{
     display: flex;
     gap: 8px;
     text-decoration: underline;
-    box-shadow: 2px 3px 20px 0px #ffffff
+    box-shadow: 2px 3px 20px 0px #ffffff;
 
 }
+.get-started-btn:hover{
+    box-shadow: 3px 4px 25px 2px #ffffff;
+    transform: scale(1.1); 
+}
+
 @media (max-width: 716px) {
     .at-heading, .img-container {
         flex-basis: 100%;
@@ -182,7 +187,7 @@ li{
     background-color: #b5b5b51b;
     padding: 1rem;
     border-radius: .5rem;
-    /* transition: transform 0.2s; */
+    transition: transform 0.2s;
 }
 .main-section{
     display: flex;
