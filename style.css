@@ -226,6 +226,7 @@ li{
     border-radius: 1rem;
     justify-content: space-between;
     gap: 1rem;
+    text-align: center;
 }
 
 .feature-box p{
