@@ -1,6 +1,7 @@
 const body = document.querySelector("body");
 const modal = document.querySelector(".modal");
 const modalButton = document.querySelector(".modal-button");
+const signupbutton = document.querySelector(".sign-up-btn");
 const closeButton = document.querySelector(".close-button");
 const scrollDown = document.querySelector(".scroll-down");
 let isOpened = false;
@@ -24,6 +25,7 @@ const closeModal = () => {
 // });
 
 modalButton.addEventListener("click", openModal);
+signupbutton.addEventListener("click", openModal);
 closeButton.addEventListener("click", closeModal);
 
 // document.onkeydown = (evt) => {
