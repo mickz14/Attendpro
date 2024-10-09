@@ -194,6 +194,14 @@ li{
     padding: 1rem;
     border-radius: .5rem;
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+.cards img{
+    width: 64px;
 }
 .main-section{
     display: flex;
@@ -222,6 +230,8 @@ li{
 
 .feature-box p{
     width: 40%;
+    text-align: center;
+    align-self: center;
     
 }
 .fimg{
@@ -272,7 +282,9 @@ li{
 .mgt-1rem{
     margin-top: 2.4rem;
 }
-
+.mgb-1rem{
+    margin-bottom: 2rem;
+}
 
 
 /* ================================================================================================= */
