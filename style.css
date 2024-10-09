@@ -71,6 +71,10 @@ li{
     margin: 5.3rem auto;
     padding: 2rem 1rem;
     background-color: #bfebff90;
+    background: linear-gradient(to right, #00a6ff, #00ffab);
+    background: linear-gradient(to right, #00a6ff, #bfebff90);
+
+
     justify-content: space-between;
     border-radius: 1rem;
     flex-wrap: wrap;
@@ -87,7 +91,7 @@ li{
     
 }
 .at-heading span{
-    color: #00a6ffef;
+    color: #515151;;
     font-weight: 700;
     font-size: 1.6rem;
     /* flex-shrink: 0; */
@@ -245,3 +249,4 @@ footer {
         padding: 0 10px;
     }
 }
+
