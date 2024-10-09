@@ -65,18 +65,16 @@ li{
     box-shadow: 2px 3px 20px 0px #00aeffba;
     cursor: pointer;
 }
+.bg{
+    width: 100%;
+    background: linear-gradient(to right, #00a6ffc1, #bfebff90);
+}
 .at-intro-sec{
     width: 90%;
     display: flex;
-    margin: 5.3rem auto;
+    margin: 6.3rem auto;
     padding: 2rem 1rem;
-    background-color: #bfebff90;
-    background: linear-gradient(to right, #00a6ff, #00ffab);
-    background: linear-gradient(to right, #00a6ff, #bfebff90);
-
-
     justify-content: space-between;
-    border-radius: 1rem;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -87,14 +85,12 @@ li{
     flex-direction: column;
     gap: 1rem;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center; 
 }
 .at-heading span{
-    color: #515151;;
+    color: #515151;
     font-weight: 700;
-    font-size: 1.6rem;
-    /* flex-shrink: 0; */
+    font-size: 2rem;
 }
 .img-container{
     flex-basis: 50%;
@@ -111,11 +107,27 @@ li{
     font-weight: 400;
     font-size: 1rem;
 }
+.fw-400{
+    font-weight: 400;
+}
+.fw-700{
+    font-weight: 700;
+}
+.fw-500{
+    font-weight: 500;
+}
+.fs-2rem{
+    font-size: 2rem;
+
+}
 .get-started-btn{
+    margin-top: 1rem;
     font-size: 1rem;
     display: flex;
     gap: 8px;
     text-decoration: underline;
+    box-shadow: 2px 3px 20px 0px #ffffff
+
 }
 @media (max-width: 716px) {
     .at-heading, .img-container {
@@ -159,12 +171,48 @@ li{
     flex-direction: column;
 }
 
+.about-us{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 1rem auto;
+    padding: 2rem 1rem;
+    align-items: center;
+    
+}
+.feature-box{
+    display: flex;
+    width: 100%;
+    background-color: #b5b5b53f;
+    padding: 3rem;
+    /* background: linear-gradient(to right, #00a6ff87, #bfebff90); */
+    border-radius: 1rem;
+}
+.feature-box p{
+    width: 40%;
+}
+.ab-heading{
+    margin: 1.5rem 0rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /* footer */
 
 footer {
     background-color: #323232;
     color: white;
     padding: 2rem 0;
+    margin-top: 4rem;
 }
 
 /* Footer Container */
