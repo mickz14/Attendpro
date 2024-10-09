@@ -250,10 +250,19 @@ li{
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.rb img:hover{
+.rb img.student:hover{
+    content: url(images/reading2.png);
+
+}
+.rb img.teacher:hover{
     content: url(images/teacher2.png);
 
 }
+.rb img.hod:hover{
+    content: url(images/hod-panel2.png);
+
+}
+
 .ab-heading{
     margin: 1.5rem 0rem;
     text-align: center;
