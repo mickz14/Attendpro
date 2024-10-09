@@ -46,7 +46,10 @@ nav{
     flex-shrink: 0;   
     gap: 1rem;
     flex-wrap: wrap;
+    @media (max-width: 716px) {
+        display: none;
      
+    }
 }
 li{
     list-style: none;
@@ -137,6 +140,9 @@ li{
 .fs-2rem{
     font-size: 2rem;
 
+}
+.mgt-1rem{
+    margin-top: 1rem;
 }
 .get-started-btn{
     margin-top: 1rem;
@@ -262,6 +268,9 @@ li{
 .ab-heading{
     margin: 1.5rem 0rem;
     text-align: center;
+}
+.mgt-1rem{
+    margin-top: 2.4rem;
 }
 
 
