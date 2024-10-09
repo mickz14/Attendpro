@@ -143,7 +143,7 @@ li{
     font-size: 2rem;
 
 }
-.get-started-btn{
+.modal-button{
     margin-top: 1rem;
     font-size: 1rem;
     display: flex;
@@ -152,7 +152,8 @@ li{
     box-shadow: 2px 3px 20px 0px #ffffff;
 
 }
-.get-started-btn:hover{
+/* get-started-btn:hover */
+.modal-button:hover{
     box-shadow: 3px 4px 25px 2px #ffffff;
     transform: scale(1.1); 
 }
