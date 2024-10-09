@@ -54,8 +54,22 @@ li{
 }
 .nav-links a{
     text-decoration: none;
-    color: #515151;   
+    color: #515151; 
+
 }
+.link a::after{
+    content: '';
+    display: block;
+    height: 4px;
+    width: 0px;
+    background-color: #00AFFF;
+    transition: all .5s;
+}
+.link a:hover::after{
+    width: 100%;
+}
+
+
 .btn{
     padding: 1rem 2rem;
     background-color: #000000;
@@ -65,9 +79,13 @@ li{
     box-shadow: 2px 3px 20px 0px #00aeffba;
     cursor: pointer;
 }
+.btn:hover {
+    transform: scale(1.02);
+}
 .bg{
     width: 100%;
-    background: linear-gradient(to right, #00a6ffc1, #bfebff90);
+    background: linear-gradient(to right, #00a6ff8e, #03eaffc5);
+
 }
 .at-intro-sec{
     width: 90%;
@@ -161,7 +179,7 @@ li{
 .cards{
     flex-basis: 23%;
     min-width: 200px;
-    background-color: rgba(159, 205, 245, 0.37);
+    background-color: #b5b5b51b;
     padding: 1rem;
     border-radius: .5rem;
     /* transition: transform 0.2s; */
@@ -184,9 +202,8 @@ li{
 .feature-box{
     display: flex;
     width: 100%;
-    background-color: #b5b5b51b;
+    background :linear-gradient(to right, #00a6ff25, #bfebff90);
     padding: 3rem;
-    /* background: linear-gradient(to right, #00a6ff87, #bfebff90); */
     border-radius: 1rem;
     justify-content: space-between;
     gap: 1rem;
