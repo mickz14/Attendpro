@@ -32,3 +32,11 @@ closeButton.addEventListener("click", closeModal);
 //   evt = evt || window.event;
 //   evt.keyCode === 27 ? closeModal() : false;
 // };
+
+
+const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+    });

@@ -92,6 +92,52 @@ li{
     background: linear-gradient(to right, #00a6ff8e, #03eaffc5);
 
 }
+
+/* =============== */
+/* Style for the hamburger icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 30px;
+    height: 21px;
+}
+
+.hamburger span {
+    display: block;
+    height: 3px;
+    background-color: #515151;
+    border-radius: 3px;
+    /* margin: 4px 0px; */
+
+}
+@media (max-width: 716px) {
+    /* Hide navigation links on small screens */
+    .nav-links {
+        display: none;
+        
+    }
+
+    /* Show hamburger icon */
+    .hamburger {
+        display: flex;
+    }
+    
+    /* Show the nav-links when the menu is open */
+    .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+}
+/* =============== */
+
 .at-intro-sec{
     width: 90%;
     display: flex;
