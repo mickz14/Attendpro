@@ -4,9 +4,10 @@
   padding: 0;
   box-sizing: border-box;
   user-select: none;
+  font-family: "Poppins", sans-serif;
 }
 .bg-img{
-  background: url('images/image.png');
+  background: url('images/fac-loginbg.png');
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -20,13 +21,78 @@
   width: 100%;
   background: rgba(0,0,0,0.7);
 }
+.nav-con{
+  width: 100%;
+  position: fixed;
+  top: 0;          
+  left: 0;    
+  z-index: 1000; 
+  /* backdrop-filter: blur(10px);  */
+  /* background-color: transparent;  */
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px  0px 10px 0px;
+  width: 90%;
+  margin: auto;
+ 
+}
+.at-logo{
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-right: 10px;
+}   
+.at-logo span{
+  color: #0c9de1;
+}
+.nav-links{   
+  /* display: flex; */
+  align-items: center;
+  flex-shrink: 0;   
+  gap: 1rem;
+  flex-wrap: wrap;
+  @media (max-width: 716px) {
+      display: none;
+   
+  }
+}
+li{
+  list-style: none;
+  flex-shrink: 0.5;
+}
+.nav-links a{
+  text-decoration:none; 
+  color: #fff; 
+  font-family: 'Montserrat',sans-serif;
+  font-size: 18px;
+  margin-right: 80px;
+  /* margin-left: 80px; */ 
+  font-weight: 300;
+
+
+}
+/* .link a::after{
+  content: '';
+  display: block;
+  height: 4px;
+  width: 0px;
+  background-color: #00AFFF;
+  transition: all .5s;
+} */
+/* .link a:hover::after{
+  width: 100%;
+} */
 .content{
   position: absolute;
   top: 50%;
   left: 50%; 
   z-index: 999;
   text-align: center;
-  padding: 60px 32px;
+  padding: 32px 32px;
   width: 370px;
   transform: translate(-50%,-50%);
   background: rgba(255,255,255,0.04);
@@ -38,6 +104,36 @@
   font-weight: 600;
   margin: 0 0 35px 0;
   font-family: 'Montserrat',sans-serif;
+}
+.icons {
+  margin: 20px 0;
+}
+
+.icons a {
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 45px;
+  height: 40px;
+}
+.teacher{
+  content: url('images/fac-loginicon.png');
+  /* width: 100%;
+  height: 45px; */
+  line-height: 45px;
+  margin-left: 0px;
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 45px;
+  height: 40px;
+
 }
 .field{
   position: relative;
@@ -69,6 +165,10 @@
   font-size: 16px; 
   font-family: 'Poppins',sans-serif;
   left: 30px; 
+  margin-right: 16px;
+}
+.field input:last-child{
+  margin-right: 0px;
 }
 .space{
   margin-top: 16px;
@@ -111,14 +211,6 @@
   font-weight: 400;
   width: 10px;
 }
-/* .field #fieldpass .error input{
-    border-color: #E92B2B;
-    border-width: 2px;
-} */
-/* .field #fieldpass .success input{
-  border-color: #0b0;
-  border-width: 2px;
-} */
 
 .field input[type="submit"]{
   background: #3498db;
@@ -133,13 +225,15 @@
 }
 .field input[type="submit"]:hover{
   background: #2691d9;
+
 }
 
-.login{
+.login text{
   color: white;
   margin: 20px 0;
   font-family: 'Poppins',sans-serif;
 }
+
 element.style{
   display: block;
 }
