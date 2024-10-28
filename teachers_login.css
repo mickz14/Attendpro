@@ -35,11 +35,17 @@ nav{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px  0px 10px 0px;
+  padding: 1px  0px 10px 0px;
+  /* padding: 15px 0px 10px; */
   width: 90%;
-  margin: auto;
- 
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2px;
+  unicode-bidi: isolate;
+  /* margin: 0px 48.25px 0px 48.25px; */
 }
+
 .at-logo{
   color: #fff;
   font-weight: 700;
@@ -50,7 +56,7 @@ nav{
   color: #0c9de1;
 }
 .nav-links{   
-  /* display: flex; */
+  display: flex;
   align-items: center;
   flex-shrink: 0;   
   gap: 1rem;
@@ -59,6 +65,7 @@ nav{
       display: none;
    
   }
+  margin-top:  20px;
 }
 li{
   list-style: none;
@@ -72,20 +79,19 @@ li{
   margin-right: 80px;
   /* margin-left: 80px; */ 
   font-weight: 300;
-
-
+  
 }
-/* .link a::after{
-  content: '';
+.link a::after{
+  content:'';
   display: block;
   height: 4px;
   width: 0px;
   background-color: #00AFFF;
   transition: all .5s;
-} */
-/* .link a:hover::after{
+} 
+.link a:hover::after{
   width: 100%;
-} */
+} 
 .content{
   position: absolute;
   top: 50%;
