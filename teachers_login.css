@@ -21,6 +21,9 @@
   width: 100%;
   background: rgba(0,0,0,0.7);
 }
+
+/* uthaya hua content */
+
 .nav-con{
   width: 100%;
   position: fixed;
@@ -90,8 +93,10 @@ li{
   transition: all .5s;
 } 
 .link a:hover::after{
-  width: 100%;
+  width: 60%;
 } 
+
+/* yaha tk */
 .content{
   position: absolute;
   top: 50%;
