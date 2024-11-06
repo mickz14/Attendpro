@@ -21,6 +21,12 @@ app.get("/",(req,res)=>{
 app.get("/teacher_login",(req,res)=>{
     res.render("teachers_login.ejs")
 })
+app.get("/t_dashboard",(req,res)=>{
+    res.render("t_dashboard.ejs")
+})
+app.get("/t_profile",(req,res)=>{
+    res.render("t_profile")
+})
 
 app.listen(8080,()=>{
     console.log("server is listening on http://localhost:8080/")
