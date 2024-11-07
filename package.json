@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Minor proj- attendance management system using cloud comp",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
