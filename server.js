@@ -6,16 +6,15 @@ const path = require("path")
 const ejs = require("ejs")
 
 app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"/views"));
+app.set("views",path.join(__dirname,"/views")); // dirname gives current directory name in which the server file is and path.join is used to join all paths (html files saves with .ejs) with the views folder by default.
 app.engine("ejs",ejsmate);
 
 app.use(express.urlencoded({extended:true})); //  is a middleware provided by Express that will process the request encoded form and will put all information into the request body object you receive in your handler function.
 
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
 
 app.get("/",(req,res)=>{
-    // console.log(req)
-    res.render("index.ejs")
+    res.render("index") //or index.ejs it's same
 })
 
 app.get("/teacher_login",(req,res)=>{
@@ -35,7 +34,7 @@ app.get("/t_mark_attendance",(req,res)=>{
 })
 
 app.listen(8080,()=>{
-    console.log("server is listening on http://localhost:8080/")
+    console.log("server is listening on http://localhost:8080/");
 })
 
 
