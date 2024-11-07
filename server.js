@@ -23,6 +23,8 @@ app.use(express.urlencoded({extended:true})); //  is a middleware provided by Ex
 
 app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
 
+app.use(express.json()) //doing smthing very important
+
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
 })
@@ -30,6 +32,20 @@ app.get("/",(req,res)=>{
 app.get("/teacher_login",(req,res)=>{
     res.render("teachers_login.ejs")
 })
+
+app.post("/teacher_login",(req,res) =>{
+    // authenticate user here
+    
+    console.log("blah");
+    console.log(req.body);
+
+    // res.render("");
+})
+
+app.get("/teacher_edit",(req,res) => {
+    res.render("teacher_editprofile")
+})
+
 app.get("/t_dashboard",(req,res)=>{
     res.render("t_dashboard")
 })

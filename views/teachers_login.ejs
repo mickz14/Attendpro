@@ -24,10 +24,10 @@
           <a href="#" class="icon"><i class="teacher"></i></a>
         </div>
         <header>Faculty Login</header>
-        <form action="#">
+        <form action="/t_dashboard" method="post">
           <div class="field"> 
             <span class="fa fa-user"></span>
-            <input type="text" class = "user-key" id = "user-key" required placeholder="Username">
+            <input type="text" class = "user-key" id = "user-key" required placeholder="Faculty ID">
           </div>
           
           <div class="field space" id = "fieldpass"> <!--field space-->
@@ -52,7 +52,9 @@
         <!-- </div> -->
 
           <div class="field">
-            <input class="login" type="submit" value="LOGIN"> 
+            <button class="login"  value = "faculty_login" name = "faculty-login-button"  onclick="location.href = '/teacher_edit'"> LOGIN </button>
+            
+            
             <!-- <input class = "signup" type = "submit" value = "SIGN UP"> -->
 
           </div>
