@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
     <link rel="shortcut icon" href="/images/AttendPro-logo.png" type="image/x-icon">
     <script type="text/javascript" src="/js/t_script.js" defer></script>
+    <script type="text/javascript" src="/js/t_mark_att.js" defer></script>
+
 
 </head>
 <body class="h-screen overflow-hidden">
@@ -36,20 +38,20 @@
                 <span class="material-symbols-outlined group-hover:text-[#00AFFF]">space_dashboard</span>
                 <a href="" class="sb-item group-hover:text-[#00AFFF] ">Dashboard</a>
             </div>
-            <div onclick="openPage('t_profile')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#00AFFF]/20 group overflow-hidden" >
+            <div onclick="openPage('/t_profile')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#00AFFF]/20 group overflow-hidden" >
                 <div class="h-full w-2  group-hover:bg-[#00AFFF] "></div>
                 <span class="material-symbols-outlined group-hover:text-[#00AFFF]">person</span>
-                <a class="sb-item group-hover:text-[#00AFFF]">Profile</a>
+                <a href ="t_profile.ejs" class="sb-item group-hover:text-[#00AFFF]">Profile</a>
+            </div>
+            <div onclick="openPage('/t_view_attendance')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#00AFFF]/20 group overflow-hidden">
+                <div class="h-full w-2  group-hover:bg-[#00AFFF] "></div>
+                <span class="material-symbols-outlined group-hover:text-[#00AFFF]">visibility</span>
+                <a class="sb-item group-hover:text-[#00AFFF]">View Attendance</a>
             </div>
             <div class="w-full h-12 my-2 flex rounded items-center gap-3 bg-[#00AFFF]/20 group overflow-hidden">
                 <div class="h-full w-2  bg-[#00AFFF] "></div>
-                <span class="material-symbols-outlined text-[#00AFFF]">visibility</span>
-                <a class="sb-item text-[#00AFFF]">View Attendance</a>
-            </div>
-            <div onclick="openPage('/t_mark_attendance')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#00AFFF]/20 group overflow-hidden">
-                <div class="h-full w-2  group-hover:bg-[#00AFFF] "></div>
-                <span class="material-symbols-outlined group-hover:text-[#00AFFF]">check_box</span>
-                <a class="sb-item group-hover:text-[#00AFFF]">Mark Attendance</a>
+                <span class="material-symbols-outlined text-[#00AFFF]">check_box</span>
+                <a class="sb-item text-[#00AFFF]">Mark Attendance</a>
             </div>
             <div onclick="openPage('/t_manage_account')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#00AFFF]/20 group overflow-hidden">
                 <div class="h-full w-2  group-hover:bg-[#00AFFF] "></div>
@@ -70,9 +72,33 @@
     </div>
 
     <!-- Main Section -->
-    <div class="main-sec ml-0 sm:ml-60 mt-16 p-8 h-[calc(100vh-4rem)] overflow-auto bg-gray-100">
-        <h1 class="text-2xl font-bold mb-4">Main Content</h1>
-        <p>Helooo</p>
+    <div class="main-sec ml-0 sm:ml-60 mt-16 p-4 h-[calc(100vh-4rem)] overflow-auto bg-gray-200/70 text-[#515151]">
+        <h1 class="text-2xl font-bold mb-4">Attendance</h1>
+        <!--  //////////////////////////////// -->
+        <div class="w-full flex justify-evenly ">
+            <div class="w-44 flex flex-col">
+                <label for="select-lect">Select Lecture:</label>
+                <select name="lecture" id="select-lect" class="bg-white border-1 rounded-sm border-gray-200">
+                    <option value="Sample1">Sample1</option>
+                    <option value="Sample2">Sample2</option>
+                    <option value="Sample3">Sample</option>
+
+                </select>
+            </div>
+            <div class="w-44  flex flex-col mx-4">
+                <label for="att-date">Attendance Date:</label>
+                <div id="att-date" class=" h-5 bg-white border-1 rounded-sm border-gray-200 flex justify-center items-center">
+
+                </div>
+            </div>
+
+            <div class="take-att-btn h-10 w-44 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg text-white font-medium flex justify-center items-center">Take Attendance</div>   
+        </div>
+        <!--  //////////////////////////////// -->
+        
+
+
+
         <!-- Add more content to test scrolling -->
     </div>
 

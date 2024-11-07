@@ -22,10 +22,16 @@ app.get("/teacher_login",(req,res)=>{
     res.render("teachers_login.ejs")
 })
 app.get("/t_dashboard",(req,res)=>{
-    res.render("t_dashboard.ejs")
+    res.render("t_dashboard")
 })
 app.get("/t_profile",(req,res)=>{
     res.render("t_profile")
+})
+app.get("/t_view_attendance",(req,res)=>{
+    res.render("t_view_attendance")
+})
+app.get("/t_mark_attendance",(req,res)=>{
+    res.render("t_mark_attendance")
 })
 
 app.listen(8080,()=>{
