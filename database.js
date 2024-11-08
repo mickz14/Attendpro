@@ -19,10 +19,20 @@ export async function chk_pass_from_id(id){
    const [result] = await pool.query(
       'SELECT F_PASSWORD FROM FACULTY WHERE F_ID = ?',[id])
 
-   // console.log(typeof(result[0]))
    if(typeof(result[0]) == "undefined") return "undefined"
    return result[0].F_PASSWORD
 }
 
+export async function chk_t_lect_num(id){
+   const [result] = await pool.query(
+      'SELECT COUNT(F_ID) AS RES FROM LECTURE WHERE F_ID = ?',[id]
+   )
+   const send = result[0].RES;
+   return send
+}
+
+// const r = await chk_t_lect_num(10001);
+// console.log(r);
+// console.log(typeof(r));
 
 // pool.end();

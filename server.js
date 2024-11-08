@@ -14,7 +14,7 @@ import ejs from 'ejs'
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_id } from './database.js';
+import { chk_pass_from_id ,chk_t_lect_num} from './database.js';
 
 // ==================================================================================
 
@@ -57,9 +57,13 @@ app.post("/teacher_login",async(req,res) =>{
     }
     // both correct - move to next page
     else{
-        res.redirect("/teacher_edit");
+        const t_lectures = await chk_t_lect_num(t_userid);
+        if(t_lectures == 0){
+            res.redirect("/teacher_edit");
+        }else{
+            res.redirect("/t_dashboard")
+        } 
     }
-    res.end();
 })
 
 app.get("/teacher_edit",(req,res) => {

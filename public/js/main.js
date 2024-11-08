@@ -22,19 +22,19 @@ showBtn.addEventListener('click', function show(){
 
 });
 
-submitbtn.addEventListener('click', function(login){
+// submitbtn.addEventListener('click', function(login){
   // while(field1.textContent != "" ||field2.textContent != ""){
     // if(pass_field.value == example_password && user_field.value == example_username){
     //  window.location = "/teacher_edit";
   // }
-  if(user_field.textContent == "" || pass_field.textContent == ""){
-    field1.style.border = "2px solid red";
-    field2.style.border = "2px solid red";
-    err.textContent = "Please Fill Username and Password";
-  }else{
-    field1.style.border = "";
-    field2.style.border = "";
-  }
+  // if(user_field.textContent == "" || pass_field.textContent == ""){
+  //   field1.style.border = "2px solid red";
+  //   field2.style.border = "2px solid red";
+  //   err.textContent = "Please Fill Username and Password";
+  // }else{
+  //   field1.style.border = "";
+  //   field2.style.border = "";
+  // }
   // else if (user_field.value != example_username || pass_field.value != example_password){
   //   field1.style.border = "2px solid red";
   //   field2.style.border = "2px solid red";
@@ -46,4 +46,4 @@ submitbtn.addEventListener('click', function(login){
 
   // }
   
-});
+// });
