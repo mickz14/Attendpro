@@ -24,22 +24,23 @@
           <a href="#" class="icon"><i class="teacher"></i></a>
         </div>
         <header>Faculty Login</header>
-        <form action="/t_dashboard" method="post">
+        
+        <form method="post">
           <div class="field"> 
             <span class="fa fa-user"></span>
-            <input type="text" class = "user-key" id = "user-key" required placeholder="Faculty ID">
+            <input type="text" name = "t_userid_key" class = "user-key" id = "user-key" required placeholder="Faculty ID">
           </div>
           
           <div class="field space" id = "fieldpass"> <!--field space-->
             <span class="fa fa-lock"></span>
-            <input type="password" class="pass-key" id="pass-key" required placeholder="Password">
+            <input type="password" name = "t_pass_key" class="pass-key" id="pass-key" required placeholder="Password">
             <span class="show">SHOW</span>
           </div>
  
-          <div class="mssg"> <!--pass-->
-            <a href="#">Forgot Password?</a> <br>
+          <div class="mssg" > 
+            <!-- <a href="#">Forgot Password?</a> <br> -->
             <span class="txt"></span>
-            </div>
+          </div>
           
           
         <!-- <div class="links">
@@ -51,8 +52,8 @@
           </div> -->
         <!-- </div> -->
 
-          <div class="field">
-            <button class="login"  value = "faculty_login" name = "faculty-login-button"  onclick="location.href = '/teacher_edit'"> LOGIN </button>
+          <div class="field" id="div_submit">
+            <button class="login"  value = "faculty_login" name = "faculty-login-button" > LOGIN </button>
             
             
             <!-- <input class = "signup" type = "submit" value = "SIGN UP"> -->

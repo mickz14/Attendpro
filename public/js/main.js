@@ -8,11 +8,6 @@ const showBtn = document.querySelector('.show');
 const submitbtn = document.querySelector('.login');
 const submitbtn2 = document.querySelector('.signup');
 
-// let pass = document.getElementById("pass-key").value;
-
-let example_username = "monica";
-let example_password = "123";
-
 showBtn.addEventListener('click', function show(){
  if(pass_field.type === "password"){
    pass_field.type = "text";
@@ -28,17 +23,23 @@ showBtn.addEventListener('click', function show(){
 });
 
 submitbtn.addEventListener('click', function(login){
-  event.preventDefault();
   // while(field1.textContent != "" ||field2.textContent != ""){
-    if(pass_field.value == example_password && user_field.value == example_username){
-     window.location = "/teacher_edit";
-  }
-  // else if(user_field.textContent == "" || pass_field.textContent == ""){}
-  else if (user_field.value != example_username || pass_field.value != example_password){
+    // if(pass_field.value == example_password && user_field.value == example_username){
+    //  window.location = "/teacher_edit";
+  // }
+  if(user_field.textContent == "" || pass_field.textContent == ""){
     field1.style.border = "2px solid red";
     field2.style.border = "2px solid red";
-    err.textContent = "Wrong username or Password";
+    err.textContent = "Please Fill Username and Password";
+  }else{
+    field1.style.border = "";
+    field2.style.border = "";
   }
+  // else if (user_field.value != example_username || pass_field.value != example_password){
+  //   field1.style.border = "2px solid red";
+  //   field2.style.border = "2px solid red";
+  //   err.textContent = "Wrong username or Password";
+  // }
   // else{
     
   // }
