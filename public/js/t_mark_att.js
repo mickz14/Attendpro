@@ -2,6 +2,13 @@ const attendanceDate = document.querySelector("#att-date");
 const takeAttendanceBtn = document.querySelector(".take-att-btn");
 const lectureSelect = document.getElementById("select-lect");
 const errorMessage = document.querySelector(".error-msg");
+const ctobeloaded = document.querySelector(".content-to-be-loaded");
+const tablebody = document.querySelector("tbody");
+const rowsperpage = document.querySelector("#rows-per-page");
+const prevpage = document.querySelector("#prev-page");
+const nextpage = document.querySelector("#next-page");
+const pagemsg = document.querySelector(".page-msg");
+
 
 // Function to format the date as YYYY-MM-DD
 function getFormattedDate(date) {
@@ -23,9 +30,76 @@ takeAttendanceBtn.addEventListener("click", () => {
     } else {
         errorMessage.classList.add("hidden"); // Hide error message if valid
         // Continue with attendance-taking actions here
+        ctobeloaded.classList.toggle("hidden");
     }
 });
 
 lectureSelect.addEventListener('focus',()=>{
     errorMessage.classList.add("hidden");
 })
+
+// pagination
+
+// Sample data 
+const rowsData = Array.from({ length: 50 }, (_, i) => ({
+    id: i + 1,
+    name: `Student ${i + 1}`,
+    status: i % 2 === 0 ? "Present" : "Absent"
+}));
+
+let currentpage = 1;
+
+// Initial render
+renderPage(currentpage);
+
+// Handling the next and previous page buttons
+nextpage.addEventListener('click',()=>{
+    const rows = rowsperpage.value === "all" ? rowsData.length : parseInt(rowsperpage.value, 10)
+    const totalPages = Math.ceil(rowsData.length /rows);
+    if(currentpage<totalPages) {currentpage++;}
+    else{
+        currentpage=totalPages;
+    }
+    renderPage(currentpage);
+})
+prevpage.addEventListener('click',()=>{
+    if(currentpage>1) {currentpage--;}
+    else{
+        currentpage = 1;
+    }
+    renderPage(currentpage);
+})
+
+
+//render data rows acc to page number
+function renderPage(page){
+    tablebody.innerHTML = "";  // Clear previous rows
+
+    let rowsperpageValue = rowsperpage.value;
+    const rows = rowsperpageValue === "all" ? rowsData.length : parseInt(rowsperpageValue, 10); //no. of rows to be shown
+    const startIndex = (page - 1) * rows;
+    //rowsData.length can be less than rowsperpageValue selected
+    const endIndex = Math.min(startIndex + rows, rowsData.length);   
+
+
+    for (let i = startIndex; i < endIndex; i++) {
+        const student = rowsData[i];
+        const row = `
+            <tr>
+                <td class="border-2 px-4 py-2">${student.id}</td>
+                <td class="border-2 px-4 py-2">${student.name}</td>
+                <td class="border-2 px-4 py-2">
+                    <input type="checkbox" ${student.present ? "checked" : ""}>
+                </td>
+            </tr>
+        `;
+        tablebody.insertAdjacentHTML("beforeend", row);
+    }
+    const totalPages = Math.ceil(rowsData.length/rows);
+    pagemsg.textContent = `Page ${page} of ${totalPages}`;
+}
+
+rowsperpage.addEventListener("change", () => {
+    currentpage = 1; // Reset to the first page
+    renderPage(currentpage);
+});
