@@ -1,17 +1,29 @@
 
-const express = require("express")
+// const express = require("express")
+import express from 'express'
 const app = express()
-const ejsmate = require("ejs-mate");
-const path = require("path")
-const ejs = require("ejs")
+
+// const ejsmate = require("ejs-mate");
+import ejsmate from "ejs-mate"
+// const path = require("path")
+import path from 'node:path'
+import { fileURLToPath } from 'url';
+// const ejs = require("ejs")
+import ejs from 'ejs'
+
+// ==================================================================================
 
 app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"/views")); // dirname gives current directory name in which the server file is and path.join is used to join all paths (html files saves with .ejs) with the views folder by default.
 app.engine("ejs",ejsmate);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.set("views",path.join(__dirname,"/views")); // dirname gives current directory name in which the server file is and path.join is used to join all paths (html files saves with .ejs) with the views folder by default.
 
 app.use(express.urlencoded({extended:true})); //  is a middleware provided by Express that will process the request encoded form and will put all information into the request body object you receive in your handler function.
 
 app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
+
+app.use(express.json()) //doing smthing very important
 
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
@@ -20,6 +32,20 @@ app.get("/",(req,res)=>{
 app.get("/teacher_login",(req,res)=>{
     res.render("teachers_login.ejs")
 })
+
+app.post("/teacher_login",(req,res) =>{
+    // authenticate user here
+    
+    console.log("blah");
+    console.log(req.body);
+
+    // res.render("");
+})
+
+app.get("/teacher_edit",(req,res) => {
+    res.render("teacher_editprofile")
+})
+
 app.get("/t_dashboard",(req,res)=>{
     res.render("t_dashboard")
 })
@@ -36,34 +62,3 @@ app.get("/t_mark_attendance",(req,res)=>{
 app.listen(8080,()=>{
     console.log("server is listening on http://localhost:8080/");
 })
-
-
-// random code - ignore
-
-
-// const mysql = require("mysql"); 
-  
-// let db_con  = mysql.createConnection({ 
-//     host: "localhost", 
-//     user: "root", 
-//     password: '', 
-//     database: 'gfg_db'
-// }); 
-  
-// db_con.connect((err) => { 
-//     if (err) { 
-//       console.log("Database Connection Failed !!!", err); 
-//       return; 
-//     } 
-  
-//     console.log("We are connected to gfg_db database"); 
-  
-//     This query will be used to select columns 
-//     let query = 'SELECT * FROM users'; 
-  
-//     db_con.query(query, (err, rows) => { 
-//         if(err) throw err; 
-  
-//         console.log(rows); 
-//     }); 
-// });

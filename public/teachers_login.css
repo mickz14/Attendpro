@@ -223,7 +223,7 @@ li{
   width: 10px;
 }
 
-.field input[type="submit"]{
+.field button{
   background: #3498db;
   border: 1px solid #2691d9;
   color: white;
@@ -234,7 +234,7 @@ li{
   font-family: 'Montserrat',sans-serif;
 
 }
-.field input[type="submit"]:hover{
+.field button:hover{
   background: #2691d9;
 
 }

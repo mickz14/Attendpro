@@ -31,7 +31,7 @@ submitbtn.addEventListener('click', function(login){
   event.preventDefault();
   // while(field1.textContent != "" ||field2.textContent != ""){
     if(pass_field.value == example_password && user_field.value == example_username){
-     window.location = "teacher-dash/index.html";
+     window.location = "/teacher_edit";
   }
   // else if(user_field.textContent == "" || pass_field.textContent == ""){}
   else if (user_field.value != example_username || pass_field.value != example_password){
