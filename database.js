@@ -10,18 +10,19 @@ const pool = mysql.createPool({
    user : process.env.MYSQL_USER,
    password : process.env.MYSQL_PASSWORD,
    database :process.env.MYSQL_DATABASE,
+   connectionLimit: 10,
 }).promise();
 
-// const result = await pool.query("Select * from faculty;")
-// console.log(result[0])
 
 // this function takes the faculty id and return the password associated with it 
 export async function chk_pass_from_id(id){
    const [result] = await pool.query(
-      'SELECT F_PASSWORD FROM FACULTY WHERE F_ID = ?',
-      [id])
-      return result[0]
+      'SELECT F_PASSWORD FROM FACULTY WHERE F_ID = ?',[id])
+
+   // console.log(typeof(result[0]))
+   if(typeof(result[0]) == "undefined") return "undefined"
+   return result[0].F_PASSWORD
 }
 
-const r = await chk_pass_from_id(10004)
-console.log(r)
+
+// pool.end();

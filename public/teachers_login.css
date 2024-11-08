@@ -147,6 +147,7 @@ li{
 
 }
 .field{
+  justify-content: center;
   position: relative;
   height: 45px; 
   width: 100%; 
@@ -161,6 +162,11 @@ li{
   display: flex;
   background: rgba(255,255,255,0.94);
 }
+
+#div_submit{
+  background: none !important;
+}
+
 .field span{
   color: #222;
   width: 20px;
@@ -224,6 +230,7 @@ li{
 }
 
 .field button{
+  width: 50%;
   background: #3498db;
   border: 1px solid #2691d9;
   color: white;
