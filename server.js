@@ -7,9 +7,11 @@ const app = express()
 import ejsmate from "ejs-mate"
 // const path = require("path")
 import path from 'node:path'
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
+
+import flash from 'connect-flash'
 
 // ===================================================================================
 // importing data from database file
@@ -29,13 +31,15 @@ app.use(express.urlencoded({extended:true})); //  is a middleware provided by Ex
 
 app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
 
+// app.use(flash());
 
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
 })
 
 app.get("/teacher_login",(req,res)=>{
-    res.render("teachers_login.ejs")
+    // console.log(req.msg);
+    res.render("teachers_login.ejs") // {message: req.flash('t_msg')}
 })
 
 app.post("/teacher_login",async(req,res) =>{
@@ -47,9 +51,13 @@ app.post("/teacher_login",async(req,res) =>{
     const check1 = await chk_pass_from_id(t_userid); // get actual value from database
     
     // authenticate user here
-    // wrong username 
+    // wrong username `
+    // var msg = "";
     if(check1 == "undefined") {
-        res.redirect("/teacher_login");
+        const msg = "User Not Found" ;
+        // res.send(msg)
+        // req.flash("t_msg",msg)
+        res.render("teachers_login.ejs",{'msg' : "FDv"});
     }
     // right username wrong password
     else if(check1 != t_password){
@@ -66,8 +74,13 @@ app.post("/teacher_login",async(req,res) =>{
     }
 })
 
+
 app.get("/teacher_edit",(req,res) => {
     res.render("teacher_editprofile")
+})
+
+app.post("/teacher_edit",(req,res) => {
+    
 })
 
 app.get("/t_dashboard",(req,res)=>{
