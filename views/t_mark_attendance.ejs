@@ -64,7 +64,7 @@
           <span class="material-symbols-outlined group-hover:text-[#1e7aa4]"
             >space_dashboard</span
           >
-          <a href="" class="sb-item group-hover:text-[#1e7aa4]">Dashboard</a>
+          <a class="sb-item group-hover:text-[#1e7aa4]">Dashboard</a>
         </div>
         <div
           onclick="openPage('/t_profile')"
@@ -160,7 +160,7 @@
         </div>
 
         <div
-          class="take-att-btn h-10 w-44 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg text-white font-medium flex justify-center items-center gap-1"
+          class="take-att-btn h-10 w-44 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center gap-1"
         >
           Take Attendance
         </div>
@@ -168,8 +168,8 @@
       <!--  //////////////////////////////// -->
       <div class="content-to-be-loaded hidden">
         <div class="my-4 border-4">Record Lecture</div>
-        <div id="attendance-table" class="mt-6 w-11/12 bg-white m-auto">
-          <table class="w-full md:text-sm text-xs border-x-2">
+        <div id="attendance-table" class="mt-6 w-11/12 bg-white m-auto overflow-x-auto">
+          <table class="w-full md:text-sm text-xs border-x-2 ">
             <thead>
               <tr class="border-y-2 bg-[#1e7aa4]/30">
                 <th class="px-4 py-2">Student ID</th>
@@ -181,7 +181,7 @@
 
             <!-- table body -->
             <tbody>
-
+           
             </tbody>
           </table>
         </div>
@@ -204,15 +204,14 @@
         </div>
         <!-- Save button -->
         <div class="w-11/12 flex justify-end m-auto">
-          <div
-            class="save-att-btn h-10 w-28 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg text-white font-medium flex justify-center items-center gap-1"
-          >
+          <div class="save-att-btn h-10 w-28 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg text-white font-medium flex justify-center items-center gap-1">
             Save
           </div>
+          <div class="present h-7 w-20 bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500">Present</div>
+          <div class="absent h-7 w-20 bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">Absent</div>
         </div>
       </div>
 
-      <!-- Add more content to test scrolling -->
     </div>
   </body>
 </html>
