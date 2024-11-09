@@ -10,7 +10,6 @@ const nextpage = document.querySelector("#next-page");
 const pagemsg = document.querySelector(".page-msg");
 
 
-// Function to format the date as YYYY-MM-DD
 function getFormattedDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
@@ -18,7 +17,7 @@ function getFormattedDate(date) {
     return `${day}-${month}-${year}`;
 }
 
-// Get today's date
+// Getting today's date
 const today = new Date();
 const todayFormatted = getFormattedDate(today);
 
@@ -30,7 +29,10 @@ takeAttendanceBtn.addEventListener("click", () => {
     } else {
         errorMessage.classList.add("hidden"); // Hide error message if valid
         // Continue with attendance-taking actions here
-        ctobeloaded.classList.toggle("hidden");
+        ctobeloaded.classList.remove("hidden");
+
+        // Initial render
+        renderPage(1);
     }
 });
 
@@ -48,9 +50,6 @@ const rowsData = Array.from({ length: 50 }, (_, i) => ({
 }));
 
 let currentpage = 1;
-
-// Initial render
-renderPage(currentpage);
 
 // Handling the next and previous page buttons
 nextpage.addEventListener('click',()=>{
@@ -72,7 +71,7 @@ prevpage.addEventListener('click',()=>{
 
 
 //render data rows acc to page number
-function renderPage(page){
+async function renderPage(page){
     tablebody.innerHTML = "";  // Clear previous rows
 
     let rowsperpageValue = rowsperpage.value;
@@ -88,13 +87,16 @@ function renderPage(page){
             <tr>
                 <td class="border-2 px-4 py-2">${student.id}</td>
                 <td class="border-2 px-4 py-2">${student.name}</td>
-                <td class="border-2 px-4 py-2">
-                    <input type="checkbox" ${student.present ? "checked" : ""}>
+                <td class="border-2 px-4 py-2 text-center"><input type="checkbox" class="checkbox">
                 </td>
+                <td class="border-2 px-4 py-2"></td>
+
             </tr>
         `;
         tablebody.insertAdjacentHTML("beforeend", row);
     }
+
+    
     const totalPages = Math.ceil(rowsData.length/rows);
     pagemsg.textContent = `Page ${page} of ${totalPages}`;
 }
@@ -103,3 +105,23 @@ rowsperpage.addEventListener("change", () => {
     currentpage = 1; // Reset to the first page
     renderPage(currentpage);
 });
+
+// Async function to set up event listeners after rendering the table
+async function setupCheckboxListeners() {
+    await renderPage(); // Wait until the table is rendered
+
+    // Add event listeners to checkboxes
+    document.querySelectorAll(".checkbox").forEach(checkbox => {
+        checkbox.addEventListener("click", handleCheckboxClick);
+    });
+}
+function handleCheckboxClick(e){
+    if(e.target.checked ='true'){
+        const tablerow = e.target.closest('tr');
+        // tr.removeAdjacentHTML("beforeend", row);
+
+            console.log('hiiiiiiiii');
+    }
+}
+
+
