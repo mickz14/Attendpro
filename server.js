@@ -2,7 +2,7 @@
 // const express = require("express")
 import express from 'express'
 const app = express()
-
+const port = 8080
 // const ejsmate = require("ejs-mate");
 import ejsmate from "ejs-mate"
 // const path = require("path")
@@ -31,20 +31,20 @@ app.use(express.urlencoded({extended:true})); //  is a middleware provided by Ex
 
 app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
 
-// app.use(flash());
-
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
 })
 
-app.get("/teacher_login",(req,res)=>{
-    // console.log(req.msg);
-    res.render("teachers_login.ejs") // {message: req.flash('t_msg')}
-})
+async function t_func1(req, res) {
+    if(typeof(req.dataProcessed) == "undefined") console.log("yes");
+    else var context = req.dataProcessed.DF;
+    console.log(context);
+    res.render("teachers_login.ejs",{context});
+}
 
-app.post("/teacher_login",async(req,res) =>{
-    
-    // values sent by user in post req
+async function  t_func2(req, res, next) {
+    // instead of res.redirect('/') process the data received in req.body
+
     const t_userid = req.body.t_userid_key;
     const t_password = req.body.t_pass_key;
     
@@ -54,14 +54,13 @@ app.post("/teacher_login",async(req,res) =>{
     // wrong username `
     // var msg = "";
     if(check1 == "undefined") {
-        const msg = "User Not Found" ;
+        req.dataProcessed = {"DF":"Ddfsfs","sd":"df"}
         // res.send(msg)
         // req.flash("t_msg",msg)
-        res.render("teachers_login.ejs",{'msg' : "FDv"});
+        // res.redirect("/teacher_login");
     }
-    // right username wrong password
     else if(check1 != t_password){
-        res.redirect("/teacher_login");
+        req.dataProcessed = {"DF" :"abc"};
     }
     // both correct - move to next page
     else{
@@ -72,7 +71,50 @@ app.post("/teacher_login",async(req,res) =>{
             res.redirect("/t_dashboard")
         } 
     }
-})
+    return next();
+}
+
+app.get('/teacher_login', t_func1);
+app.post('/teacher_login', t_func2, t_func1);
+
+// app.get("/teacher_login",(req,res)=>{
+//     // console.log(req.msg);
+//     var context = req.dataProcessed;
+//     console.log(context);
+//     res.render("teachers_login.ejs",{context}) // {message: req.flash('t_msg')}
+// })  
+
+// app.post("/teacher_login",async(req,res) =>{
+    
+//     // values sent by user in post req
+//     const t_userid = req.body.t_userid_key;
+//     const t_password = req.body.t_pass_key;
+    
+//     const check1 = await chk_pass_from_id(t_userid); // get actual value from database
+    
+//     // authenticate user here
+//     // wrong username `
+//     // var msg = "";
+//     if(check1 == "undefined") {
+//         req.dataProcessed = "Ddfsfs";
+//         // res.send(msg)
+//         // req.flash("t_msg",msg)
+//         res.redirect("/teacher_login");
+//     }
+//     // right username wrong password
+//     else if(check1 != t_password){
+//         res.redirect("/teacher_login");
+//     }
+//     // both correct - move to next page
+//     else{
+//         const t_lectures = await chk_t_lect_num(t_userid);
+//         if(t_lectures == 0){
+//             res.redirect("/teacher_edit");
+//         }else{
+//             res.redirect("/t_dashboard")
+//         } 
+//     }
+// })
 
 
 app.get("/teacher_edit",(req,res) => {
@@ -96,6 +138,6 @@ app.get("/t_mark_attendance",(req,res)=>{
     res.render("t_mark_attendance")
 })
 
-app.listen(8080,()=>{
+app.listen(port,()=>{
     console.log("server is listening on http://localhost:8080/");
 })
