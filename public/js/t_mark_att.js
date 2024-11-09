@@ -32,7 +32,7 @@ takeAttendanceBtn.addEventListener("click", () => {
         ctobeloaded.classList.remove("hidden");
 
         // Initial render
-        renderPage(1);
+        renderPage(1).then(() => setupCheckboxListeners());
     }
 });
 
@@ -59,14 +59,14 @@ nextpage.addEventListener('click',()=>{
     else{
         currentpage=totalPages;
     }
-    renderPage(currentpage);
+    renderPage(currentpage).then(() => setupCheckboxListeners());
 })
 prevpage.addEventListener('click',()=>{
     if(currentpage>1) {currentpage--;}
     else{
         currentpage = 1;
     }
-    renderPage(currentpage);
+    renderPage(currentpage).then(() => setupCheckboxListeners());
 })
 
 
@@ -103,24 +103,24 @@ async function renderPage(page){
 
 rowsperpage.addEventListener("change", () => {
     currentpage = 1; // Reset to the first page
-    renderPage(currentpage);
+    renderPage(currentpage).then(() => setupCheckboxListeners());
 });
 
 // Async function to set up event listeners after rendering the table
 async function setupCheckboxListeners() {
-    await renderPage(); // Wait until the table is rendered
-
-    // Add event listeners to checkboxes
     document.querySelectorAll(".checkbox").forEach(checkbox => {
         checkbox.addEventListener("click", handleCheckboxClick);
     });
 }
 function handleCheckboxClick(e){
-    if(e.target.checked ='true'){
+    if(e.target.checked){
         const tablerow = e.target.closest('tr');
-        // tr.removeAdjacentHTML("beforeend", row);
-
-            console.log('hiiiiiiiii');
+        tablerow.lastElementChild.innerHTML = `<div class="present h-5 w-3/5 flex items-center justify-center bg-green-200 border-2 border-green-400 
+        rounded-md text-center text-green-500">Present</div>`
+    }
+    else{
+        const tablerow = e.target.closest('tr');
+        tablerow.lastElementChild.innerHTML = `<div class="absent h-5 w-3/5 flex items-center justify-center bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">Absent</div>`
     }
 }
 
