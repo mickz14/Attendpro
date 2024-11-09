@@ -115,12 +115,12 @@ async function setupCheckboxListeners() {
 function handleCheckboxClick(e){
     if(e.target.checked){
         const tablerow = e.target.closest('tr');
-        tablerow.lastElementChild.innerHTML = `<div class="present h-5 w-3/5 flex items-center justify-center bg-green-200 border-2 border-green-400 
+        tablerow.lastElementChild.innerHTML = `<div class="present h-5 w-16 flex items-center justify-center bg-green-200 border-2 border-green-400 
         rounded-md text-center text-green-500">Present</div>`
     }
     else{
         const tablerow = e.target.closest('tr');
-        tablerow.lastElementChild.innerHTML = `<div class="absent h-5 w-3/5 flex items-center justify-center bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">Absent</div>`
+        tablerow.lastElementChild.innerHTML = `<div class="absent h-5 w-16 flex items-center justify-center bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">Absent</div>`
     }
 }
 
