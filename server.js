@@ -11,7 +11,10 @@ import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 // ===================================================================================
 // importing data from database file
 
@@ -118,6 +121,9 @@ app.get("/student_login",(req,res)=>{
     res.render("student_login")
 })
 
+app.use((req, res, next) => { 
+    res.status(404).render("error_page");
+}) 
 app.listen(port,()=>{
     console.log("server is listening on http://localhost:8080/");
 })
