@@ -36,14 +36,31 @@ app.get("/",(req,res)=>{
 })
 
 async function t_func1(req, res) {
-    if(typeof(req.dataProcessed) == "undefined") console.log("yes");
-    else var context = req.dataProcessed.DF;
-    console.log(context);
-    res.render("teachers_login.ejs",{context});
+    // function called without post request
+    var text;
+    if(typeof(req.dataProcessed) == "undefined") {
+        text = "";
+        res.render("teachers_login.ejs",{text});
+    }
+    else{
+        var msg = req.dataProcessed.msgcode;
+        if(msg == "wrong_username"){
+            text = "User does not exist !";
+            res.render("teachers_login",{text});
+        }else if (msg == "wrong_password"){
+            text = "Incorrect Password !";
+            res.render("teachers_login",{text});
+        }else if (msg == "right_zero_lec"){
+            res.render("teacher_editprofile");
+        }else if (msg== "right_not_zero_lec"){
+            res.render("t_dashboard");
+        }else{
+            res.render("error_page.ejs");
+        }
+    } 
 }
 
 async function  t_func2(req, res, next) {
-    // instead of res.redirect('/') process the data received in req.body
 
     const t_userid = req.body.t_userid_key;
     const t_password = req.body.t_pass_key;
@@ -51,24 +68,25 @@ async function  t_func2(req, res, next) {
     const check1 = await chk_pass_from_id(t_userid); // get actual value from database
     
     // authenticate user here
+    
     // wrong username `
-    // var msg = "";
+    req.dataProcessed = "";
     if(check1 == "undefined") {
-        req.dataProcessed = {"DF":"Ddfsfs","sd":"df"}
-        // res.send(msg)
-        // req.flash("t_msg",msg)
-        // res.redirect("/teacher_login");
+        req.dataProcessed = {"msgcode":"wrong_username"}
     }
+    // right username wrong password
     else if(check1 != t_password){
-        req.dataProcessed = {"DF" :"abc"};
+        req.dataProcessed = {"msgcode" :"wrong_password"};
     }
     // both correct - move to next page
     else{
         const t_lectures = await chk_t_lect_num(t_userid);
         if(t_lectures == 0){
-            res.redirect("/teacher_edit");
+            // send to edit profile page to add lectures
+            req.dataProcessed = {"msgcode" : "right_zero_lec"}
         }else{
-            res.redirect("/t_dashboard")
+            // send to teacher dashboard - all status good
+            req.dataProcessed = {"msgcode" : "right_not_zero_lec"}
         } 
     }
     return next();
@@ -76,46 +94,6 @@ async function  t_func2(req, res, next) {
 
 app.get('/teacher_login', t_func1);
 app.post('/teacher_login', t_func2, t_func1);
-
-// app.get("/teacher_login",(req,res)=>{
-//     // console.log(req.msg);
-//     var context = req.dataProcessed;
-//     console.log(context);
-//     res.render("teachers_login.ejs",{context}) // {message: req.flash('t_msg')}
-// })  
-
-// app.post("/teacher_login",async(req,res) =>{
-    
-//     // values sent by user in post req
-//     const t_userid = req.body.t_userid_key;
-//     const t_password = req.body.t_pass_key;
-    
-//     const check1 = await chk_pass_from_id(t_userid); // get actual value from database
-    
-//     // authenticate user here
-//     // wrong username `
-//     // var msg = "";
-//     if(check1 == "undefined") {
-//         req.dataProcessed = "Ddfsfs";
-//         // res.send(msg)
-//         // req.flash("t_msg",msg)
-//         res.redirect("/teacher_login");
-//     }
-//     // right username wrong password
-//     else if(check1 != t_password){
-//         res.redirect("/teacher_login");
-//     }
-//     // both correct - move to next page
-//     else{
-//         const t_lectures = await chk_t_lect_num(t_userid);
-//         if(t_lectures == 0){
-//             res.redirect("/teacher_edit");
-//         }else{
-//             res.redirect("/t_dashboard")
-//         } 
-//     }
-// })
-
 
 app.get("/teacher_edit",(req,res) => {
     res.render("teacher_editprofile")

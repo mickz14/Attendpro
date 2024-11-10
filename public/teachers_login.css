@@ -205,7 +205,7 @@ li{
 }
 .mssg {
   text-align: left;
-  margin: 4px 0;
+  margin-top: 8px ;
   margin-bottom: 20px;  
 }
 .mssg a{
@@ -222,10 +222,11 @@ li{
   position: relative;
   left: 10px;
   color: #E92B2B;
-  font-size: 15px;
-  margin-top: 15px;
+  font-size: 17px;
+  margin-top: 25px;
+  margin-left: 60px;
   font-family: 'Poppins',sans-serif;
-  font-weight: 400;
+  font-weight: 450;
   width: 10px;
 }
 
