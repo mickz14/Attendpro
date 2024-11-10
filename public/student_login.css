@@ -6,11 +6,17 @@
   user-select: none;
   font-family: "Poppins", sans-serif;
 }
-.bg-img{
-  background: url('/public/images/stu_loginimg.png');
+.bg{
   height: 100vh;
   background-size: cover;
   background-position: center;
+}
+.bg-img{
+  background: url('/images/stu_loginimg.png');
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  
 }
 .bg-img:after{
   position: absolute;
@@ -22,7 +28,6 @@
   background: rgba(0,0,0,0.7);
 }
 
-/* uthaya hua content */
 
 .nav-con{
   width: 100%;
@@ -131,7 +136,7 @@ li{
   height: 40px;
 }
 .student{
-  content: url('/public/images/stu_icon2.png');
+  content: url('/images/stu_icon2.png');
   /* width: 100%;
   height: 45px; */
   line-height: 45px;

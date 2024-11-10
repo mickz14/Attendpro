@@ -11,10 +11,7 @@ import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 // ===================================================================================
 // importing data from database file
 
@@ -25,13 +22,13 @@ import { chk_pass_from_id ,chk_t_lect_num} from './database.js';
 app.set("view engine","ejs");
 app.engine("ejs",ejsmate);
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-app.set("views",path.join(__dirname,"/views")); // dirname gives current directory name in which the server file is and path.join is used to join all paths (html files saves with .ejs) with the views folder by default.
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+app.set("views",path.join(dirname,"/views")); // dirname gives current directory name in which the server file is and path.join is used to join all paths (html files saves with .ejs) with the views folder by default.
 
 app.use(express.json()) //doing smthing very important
 app.use(express.urlencoded({extended:true})); //  is a middleware provided by Express that will process the request encoded form and will put all information into the request body object you receive in your handler function.
 
-app.use(express.static(path.join(__dirname,"public"))); // used to access static files and making them public 
+app.use(express.static(path.join(dirname,"public"))); // used to access static files and making them public 
 
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same

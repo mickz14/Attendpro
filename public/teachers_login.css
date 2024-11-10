@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 .bg-img{
-  background: url('/public/images/stu_loginimg.png');
+  background: url('/images/fac-loginbg.png');
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -130,8 +130,8 @@ li{
   width: 45px;
   height: 40px;
 }
-.student{
-  content: url('/public/images/stu_icon2.png');
+.teacher{
+  content: url('/images/fac-loginicon.png');
   /* width: 100%;
   height: 45px; */
   line-height: 45px;
