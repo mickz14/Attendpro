@@ -11,7 +11,6 @@ import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
 
-import flash from 'connect-flash'
 
 // ===================================================================================
 // importing data from database file
@@ -114,6 +113,9 @@ app.get("/t_view_attendance",(req,res)=>{
 })
 app.get("/t_mark_attendance",(req,res)=>{
     res.render("t_mark_attendance")
+})
+app.get("/student_login",(req,res)=>{
+    res.render("student_login")
 })
 
 app.listen(port,()=>{
