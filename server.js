@@ -15,7 +15,7 @@ import ejs from 'ejs'
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_id ,chk_t_lect_num} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num} from './database.js';
 
 // ==================================================================================
 
@@ -33,16 +33,16 @@ app.use(express.static(path.join(dirname,"public"))); // used to access static f
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
 })
-
+//for faculty login
 async function t_func1(req, res) {
     // function called without post request
-    var text;
+    let text;
     if(typeof(req.dataProcessed) == "undefined") {
         text = "";
         res.render("teachers_login.ejs",{text});
     }
     else{
-        var msg = req.dataProcessed.msgcode;
+        let msg = req.dataProcessed.msgcode;
         if(msg == "wrong_username"){
             text = "User does not exist !";
             res.render("teachers_login",{text});
@@ -59,7 +59,7 @@ async function t_func1(req, res) {
     } 
 }
 
-async function  t_func2(req, res, next) {
+async function t_func2(req, res, next) {
 
     const t_userid = req.body.t_userid_key;
     const t_password = req.body.t_pass_key;
@@ -94,6 +94,62 @@ async function  t_func2(req, res, next) {
 app.get('/teacher_login', t_func1);
 app.post('/teacher_login', t_func2, t_func1);
 
+//===================================================
+//for student
+async function stu_func1(req,res){ //without post request
+    let text2;
+    if(typeof(req.dataProcessed) == "undefined"){
+        text2 = "";
+        res.render("student_login.ejs",{text2});
+    }   
+    else{ 
+        let msg2 = req.dataProcessed.mssgcode;
+        if(msg2 == "wrong_username"){
+            text2 = "User does not exist !";
+            res.render("student_login",{text2});
+        }else if (msg2 == "wrong_password"){
+            text2 = "Incorrect Password !";
+            res.render("student_login",{text2});
+        }else if(msg2 == "stu_dashboard"){
+            res.render("stu_dashboard.ejs");
+        }
+        else{
+            res.render("error_page.ejs");
+        }
+    } 
+}
+async function stu_func2(req, res, next) {
+
+    const stu_enr = req.body.stu_enr_key;
+    const stu_pass = req.body.stu_pass_key;
+    
+    const check2 = await chk_pass_from_enr(stu_enr); // get actual value from database
+    
+    // authenticate user here
+    
+    // wrong username `
+    req.dataProcessed = "";
+    if(check2 == "undefined") {
+        req.dataProcessed = {"mssgcode":"wrong_username"};
+    }
+    // right username wrong password
+    else if(check2 != stu_pass){
+        req.dataProcessed = {"mssgcode" :"wrong_password"};
+    }
+    // both correct - move to next page
+    else{
+        req.dataProcessed = {"mssgcode" : "stu_dashboard"};
+        console.log("stu_dashboard");
+    }
+    return next();
+}
+
+app.get('/student_login', stu_func1);
+app.post('/student_login', stu_func2, stu_func1);
+
+
+
+
 app.get("/teacher_edit",(req,res) => {
     res.render("teacher_editprofile")
 })
@@ -117,7 +173,9 @@ app.get("/t_mark_attendance",(req,res)=>{
 app.get("/student_login",(req,res)=>{
     res.render("student_login")
 })
-
+app.get("/stu_dashboard",(req,res) =>{
+    res.render("stu_dashboard")
+})
 app.use((req, res, next) => { 
     res.status(404).render("error_page");
 }) 
