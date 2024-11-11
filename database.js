@@ -40,11 +40,24 @@ export async function chk_pass_from_enr(id) {
   
 }
 
+//////////////////////////////
+export async function getLecture(f_id){
+   const [result2] = await pool.query(
+      'SELECT * FROM LECTURE WHERE F_ID = ?', [f_id]);
+  return result2;
+}
+
+export async function getStudentData(sectionID) {
+   const [result2] = await pool.query(
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME FROM STUDENT WHERE SECTION_ID = ?', [116]);
+  return result2;  
+}
 
 
+// const [result2] = await pool.query(
+//    'SELECT (SELECT SECTION_ID,SECTION_NAME FROM SECTION) FROM LECTURE WHERE F_ID = ?', [10001]);
 
-
-
+// console.log(result2);
 
 
 
