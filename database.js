@@ -31,12 +31,13 @@ export async function chk_t_lect_num(id){
 }
 //=============================
 // for student
-export async function chk_pass_from_enr(id2) {
-   const [result2] = await pool.query(
-      'SELECT STU_PASSWORD FROM STUDENT WHERE ENR_NUMBER = ?',[id2]);
-   if(typeof(result2[0]) == "undefined") return "undefined"
-   const sen = result2[0].STU_PASSWORD
-   return sen
+export async function chk_pass_from_enr(id) {
+      const [result2] = await pool.query(
+          'SELECT STU_PASSWORD FROM STUDENT WHERE ENR_NUMBER = ?', [id]);
+      if (result2.length === 0) return "undefined"; // Check length explicitly
+      return result2[0].STU_PASSWORD;
+  
+  
 }
 
 

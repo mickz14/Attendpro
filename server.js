@@ -122,9 +122,10 @@ async function stu_func2(req, res, next) {
 
     const stu_enr = req.body.stu_enr_key;
     const stu_pass = req.body.stu_pass_key;
-    
+    console.log("Student Enrollment:", stu_enr);
+    console.log("Student Password:", stu_pass);
     const check2 = await chk_pass_from_enr(stu_enr); // get actual value from database
-    
+    console.log("Password from DB:", check2);
     // authenticate user here
     
     // wrong username `
@@ -139,7 +140,7 @@ async function stu_func2(req, res, next) {
     // both correct - move to next page
     else{
         req.dataProcessed = {"mssgcode" : "stu_dashboard"};
-        console.log("stu_dashboard");
+        console.log("Login successful, redirecting to dashboard");
     }
     return next();
 }
