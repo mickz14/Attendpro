@@ -8,6 +8,9 @@ const rowsperpage = document.querySelector("#rows-per-page");
 const prevpage = document.querySelector("#prev-page");
 const nextpage = document.querySelector("#next-page");
 const pagemsg = document.querySelector(".page-msg");
+const markallpresent = document.querySelector(".mark-all-present");
+const recordlec = document.querySelector(".record-lec");
+const recordCheckbox = document.querySelector('.recordlec-checkbox')
 
 
 function getFormattedDate(date) {
@@ -51,6 +54,10 @@ const rowsData = Array.from({ length: 50 }, (_, i) => ({
 
 let currentpage = 1;
 
+// Array to store attendance status
+// Initialize each student with a default status, e.g., "Absent" (false)
+const attendanceStatus = Array(rowsData.length).fill(false);
+
 // Handling the next and previous page buttons
 nextpage.addEventListener('click',()=>{
     const rows = rowsperpage.value === "all" ? rowsData.length : parseInt(rowsperpage.value, 10)
@@ -83,13 +90,17 @@ async function renderPage(page){
 
     for (let i = startIndex; i < endIndex; i++) {
         const student = rowsData[i];
+        const isPresent = attendanceStatus[i];
         const row = `
             <tr>
                 <td class="border-2 px-4 py-2">${student.id}</td>
                 <td class="border-2 px-4 py-2">${student.name}</td>
-                <td class="border-2 px-4 py-2 text-center"><input type="checkbox" class="checkbox">
+                <td class="border-2 px-4 py-2 text-center"><input type="checkbox" class="checkbox" ${isPresent ? "checked" : ""} data-index="${i}">
                 </td>
-                <td class="border-2 px-4 py-2"></td>
+                <td class="border-2 px-4 py-2 text-center"><div class="${isPresent ? 'present h-6 w-16 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500' : 'absent h-6 w-16 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500'}">
+                    ${isPresent ? "Present" : "Absent"}
+                    </div>
+                </td>
 
             </tr>
         `;
@@ -112,16 +123,52 @@ async function setupCheckboxListeners() {
         checkbox.addEventListener("click", handleCheckboxClick);
     });
 }
-function handleCheckboxClick(e){
-    if(e.target.checked){
-        const tablerow = e.target.closest('tr');
-        tablerow.lastElementChild.innerHTML = `<div class="present h-5 w-16 flex items-center justify-center bg-green-200 border-2 border-green-400 
-        rounded-md text-center text-green-500">Present</div>`
+// Update attendanceStatus and UI when checkbox is clicked
+function handleCheckboxClick(e) {
+    const index = e.target.getAttribute("data-index");
+    const isChecked = e.target.checked;
+
+    // Update attendanceStatus array
+    attendanceStatus[index] = isChecked;
+
+    // Update the status display in the last cell
+    const tablerow = e.target.closest('tr');
+    tablerow.lastElementChild.innerHTML = `
+        <div class="${isChecked ? 'present h-6 w-16 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500' : 'absent h-6 w-16 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500'}">
+            ${isChecked ? "Present" : "Absent"}
+        </div>
+    `;
+}
+
+markallpresent.addEventListener('click',()=>{
+    if(markallpresent.textContent == "Mark All Present"){
+        attendanceStatus.fill(true);
+        markallpresent.textContent = "Mark All Absent";
     }
-    else{
-        const tablerow = e.target.closest('tr');
-        tablerow.lastElementChild.innerHTML = `<div class="absent h-5 w-16 flex items-center justify-center bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">Absent</div>`
+    else if(markallpresent.textContent == "Mark All Absent") {
+        attendanceStatus.fill(false);
+        markallpresent.textContent = "Mark All Present";
+
+    }
+    renderPage(currentpage).then(() => setupCheckboxListeners());
+})
+
+// Function to toggle lecture record
+function toggleLectureRecording() {
+    const isChecked = recordCheckbox.checked;
+    
+    if (isChecked) {
+        recordCheckbox.checked = false;
+        attendanceStatus[0] = false;
+    } else {
+        recordCheckbox.checked = true;
+        attendanceStatus[0] = true;
     }
 }
 
-
+// Add click listener for both the button and checkbox
+recordlec.addEventListener("click", toggleLectureRecording);
+recordCheckbox.addEventListener("click", (e) => {
+    // e.stopPropagation(); // Prevents the button click event from firing
+    toggleLectureRecording();
+});
