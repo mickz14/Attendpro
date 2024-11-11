@@ -10,12 +10,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
+import session from 'express-session';
 
 
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData} from './database.js';
 
 // ==================================================================================
 
@@ -30,6 +31,15 @@ app.use(express.urlencoded({extended:true})); //  is a middleware provided by Ex
 
 app.use(express.static(path.join(dirname,"public"))); // used to access static files and making them public 
 
+
+//////////////////////////////
+app.use(session({
+    secret: 'yourSecretKey', // replace with a secure secret key
+    resave: false,            // prevents session resaving if unmodified
+    saveUninitialized: false, // prevents creating a session until stored data exists
+    cookie: { secure: false } // set to true in production with HTTPS
+}));
+//////////////////////
 app.get("/",(req,res)=>{
     res.render("index") //or index.ejs it's same
 })
@@ -80,6 +90,7 @@ async function t_func2(req, res, next) {
     // both correct - move to next page
     else{
         const t_lectures = await chk_t_lect_num(t_userid);
+        req.session.user = { id: t_userid }; // Save user data in session
         if(t_lectures == 0){
             // send to edit profile page to add lectures
             req.dataProcessed = {"msgcode" : "right_zero_lec"}
@@ -165,6 +176,7 @@ app.get("/t_dashboard",(req,res)=>{
 app.get("/t_profile",(req,res)=>{
     res.render("t_profile")
 })
+
 app.get("/t_view_attendance",(req,res)=>{
     res.render("t_view_attendance")
 })
@@ -180,6 +192,20 @@ app.get("/stu_dashboard",(req,res) =>{
 app.use((req, res, next) => { 
     res.status(404).render("error_page");
 }) 
+// JSON endpoint to send data to the frontend
+//API
+//LECTURE FETCH 
+app.get('/api/t_profile', async (req, res) => {
+    const f_id = req.session.user.id;
+    const teacherData = await getLecture(f_id); // Fetch data based on teacher ID
+    res.json(teacherData); // Send data as JSON to the frontend
+
+}); //change name
+
+//STUDENT LIST FETCH
+
+
+
 app.listen(port,()=>{
     console.log("server is listening on http://localhost:8080/");
 })
