@@ -159,7 +159,19 @@ async function stu_func2(req, res, next) {
 app.get('/student_login', stu_func1);
 app.post('/student_login', stu_func2, stu_func1);
 
+///////////////////////////////////////////////////////////////////
+// JSON endpoint to send data to the frontend
+//API
+//LECTURE FETCH 
+app.get('/api/t_profile', async (req, res) => {
+    const f_id = req.session.user.id;
+    const teacherData = await getLecture(f_id); // Fetch data based on teacher ID
+    res.json(teacherData); // Send data as JSON to the frontend
 
+}); //change name
+
+//STUDENT LIST FETCH
+//////////////////////////////////////////////////////////////////
 
 
 app.get("/teacher_edit",(req,res) => {
@@ -192,17 +204,7 @@ app.get("/stu_dashboard",(req,res) =>{
 app.use((req, res, next) => { 
     res.status(404).render("error_page");
 }) 
-// JSON endpoint to send data to the frontend
-//API
-//LECTURE FETCH 
-app.get('/api/t_profile', async (req, res) => {
-    const f_id = req.session.user.id;
-    const teacherData = await getLecture(f_id); // Fetch data based on teacher ID
-    res.json(teacherData); // Send data as JSON to the frontend
 
-}); //change name
-
-//STUDENT LIST FETCH
 
 
 

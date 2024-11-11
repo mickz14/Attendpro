@@ -43,7 +43,8 @@ export async function chk_pass_from_enr(id) {
 //////////////////////////////
 export async function getLecture(f_id){
    const [result2] = await pool.query(
-      'SELECT * FROM LECTURE WHERE F_ID = ?', [f_id]);
+      //'SELECT * FROM LECTURE WHERE F_ID = ?', [f_id]);
+      'SELECT * FROM (SELECT SUBJECT.SUB_ID, SUBJECT.SUB_NAME, SECTION.SECTION_ID, SECTION.SECTION_NAME FROM LECTURE JOIN SUBJECT ON LECTURE.SUB_ID = SUBJECT.SUB_ID JOIN SECTION ON LECTURE.SECTION_ID = SECTION.SECTION_ID WHERE LECTURE.F_ID= ?) AS FACULTY_LECTURES;',[f_id]);
   return result2;
 }
 
