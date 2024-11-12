@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
     <link rel="shortcut icon" href="/images/AttendPro-logo.png" type="image/x-icon">
     <script type="text/javascript" src="/js/t_script.js" defer></script>
+    <script type="text/javascript" src="/js/t_view_attendance.js" defer></script>
 
 </head>
 <body class="h-screen overflow-hidden">
@@ -71,10 +72,64 @@
 
     <!-- Main Section -->
     <div class="main-sec ml-0 sm:ml-60 mt-16 p-8 h-[calc(100vh-4rem)] overflow-auto bg-gray-200/70 text-[#515151]">
-        <h1 class="text-2xl font-bold mb-4">Main Content</h1>
-        <p>Helooo</p>
-        <!-- Add more content to test scrolling -->
-    </div>
+        <h1 class="text-2xl font-bold mb-4">View Attendance</h1>
+
+        <div class="w-full flex justify-evenly">
+            <div class="w-44 flex flex-col">
+              <label for="select-lect">Select Lecture:</label>
+              <select name="lecture" id="select-lect" class="bg-white border-1 rounded-sm border-gray-200">
+              <option value="" disabled selected hidden>Select Lecture</option>
+              </select>
+              <div class="error-msg text-red-500 text-sm hidden">
+                Please select a lecture first!
+              </div>
+            </div>
+            <div
+          class="take-att-btn h-10 w-44 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center gap-1">
+          View Attendance
+        </div>
+        </div>
+
+        <div class="content-to-be-loaded hidden">
+
+            <div class="w-11/12 m-auto mt-10 flex justify-end">
+              <div class="mark-all-present h-8 w-36 bg-[#216a8d]/80 hover:border-2 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center">Mark All Present</div>
+            </div>
+    
+            <div id="attendance-table" class="mt-3 w-11/12 bg-white m-auto overflow-x-auto">
+              <table class="w-full md:text-sm text-xs border-x-2 ">
+                <thead>
+                  <tr class="border-y-2 bg-[#1e7aa4]/30">
+                    <th class="px-4 py-2">Student ID</th>
+                    <th class="px-4 py-2">Student Name</th>
+                    <th class="px-4 py-2">Mark Attendance</th>
+                    <th class="px-4 py-2">Status</th>
+                  </tr>
+                </thead>
+    
+                <!-- table body -->
+                <tbody>
+               
+                </tbody>
+              </table>
+            </div>
+            <!-- Rows per page -->
+            <div
+              class="w-11/12 bg-white flex justify-end items-center m-auto my-4 gap-4 border-2 border-gray-200 rounded-lg"
+            >
+              <label for="rows-per-page" class="mr-2">Rows per page:</label>
+              <select id="rows-per-page" class="border rounded p-1">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="all">All</option>
+              </select>
+              <div class="page-msg">
+                Page 1 of 10
+              </div>
+              <span class="material-symbols-outlined cursor-pointer" id="prev-page">chevron_left</span>
+              <span class="material-symbols-outlined cursor-pointer" id="next-page">chevron_right</span>
+            </div>
 
 
 

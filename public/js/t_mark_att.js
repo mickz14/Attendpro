@@ -27,7 +27,7 @@ const todayFormatted = getFormattedDate(today);
 attendanceDate.textContent = `${todayFormatted}`
 
 let sectionID;
-let rowsData;
+let rowsData=[];
 let attendanceStatus;
 
 takeAttendanceBtn.addEventListener("click", () => {
@@ -40,21 +40,26 @@ takeAttendanceBtn.addEventListener("click", () => {
 
         sectionID = lectureSelect.value;
 
-        // Sample data 
-    rowsData = Array.from({ length: 50 }, (_, i) => ({
-    id: i + 1,
-    name: `Student ${i + 1}`,
-    status: i % 2 === 0 ? "Present" : "Absent"
-}));
-// Array to store attendance status
-// Initialize each student with a default status, e.g., "Absent" (false)
- attendanceStatus = Array(rowsData.length).fill(false);
-
-
-
+    fetch(`/api/get_students?section_id=${sectionID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(studentData => {
+        rowsData = studentData;
+        console.log(rowsData);
+        attendanceStatus = Array(rowsData.length).fill(false);
         // Initial render
         renderPage(1).then(() => setupCheckboxListeners());
-    }
+    })
+    .catch(error => {
+        console.error("Error fetching student data:", error);
+});
+// Array to store attendance status
+// Initialize each student with a default status, e.g., "Absent" (false)
+}
 });
 
 lectureSelect.addEventListener('focus',()=>{
@@ -108,6 +113,7 @@ prevpage.addEventListener('click',()=>{
 })
 
 
+
 //render data rows acc to page number
 async function renderPage(page){
     tablebody.innerHTML = "";  // Clear previous rows
@@ -124,8 +130,8 @@ async function renderPage(page){
         const isPresent = attendanceStatus[i];
         const row = `
             <tr>
-                <td class="border-2 px-4 py-2">${student.id}</td>
-                <td class="border-2 px-4 py-2">${student.name}</td>
+                <td class="border-2 px-4 py-2">${student.ENR_NUMBER}</td>
+                <td class="border-2 px-4 py-2">${student.STU_FNAME}</td>
                 <td class="border-2 px-4 py-2 text-center"><input type="checkbox" class="checkbox" ${isPresent ? "checked" : ""} data-index="${i}">
                 </td>
                 <td class="border-2 px-4 py-2 text-center"><div class="${isPresent ? 'present h-6 w-16 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500' : 'absent h-6 w-16 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500'}">

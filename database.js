@@ -50,7 +50,7 @@ export async function getLecture(f_id){
 
 export async function getStudentData(sectionID) {
    const [result2] = await pool.query(
-      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME FROM STUDENT WHERE SECTION_ID = ?', [116]);
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME FROM STUDENT WHERE SECTION_ID = ?', [sectionID]);
   return result2;  
 }
 
