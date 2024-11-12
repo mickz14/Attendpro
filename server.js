@@ -172,6 +172,16 @@ app.get('/api/t_profile', async (req, res) => {
 
 //STUDENT LIST FETCH
 //////////////////////////////////////////////////////////////////
+app.get('/api/get_students', async (req, res) => {
+    const sectionId = req.query.section_id; // Get the section_id from query parameter
+    try {
+        const students = await getStudentData(sectionId);
+        res.json(students); // Send the student data as JSON
+    } catch (error) {
+        console.error("Error fetching student data:", error);
+        res.status(500).json({ error: 'Failed to retrieve student data' });
+    }
+});
 
 
 app.get("/teacher_edit",(req,res) => {
