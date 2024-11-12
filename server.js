@@ -164,7 +164,7 @@ app.post('/student_login', stu_func2, stu_func1);
 // JSON endpoint to send data to the frontend
 //API
 //LECTURE FETCH 
-app.get('/api/t_profile', async (req, res) => {
+app.get('/api/teacher_lectures', async (req, res) => {
     const f_id = req.session.user.id;
     const teacherData = await getLecture(f_id); // Fetch data based on teacher ID
     res.json(teacherData); // Send data as JSON to the frontend
@@ -183,6 +183,12 @@ app.get('/api/get_students', async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve student data' });
     }
 });
+
+// app.post('/api/post_attendanceData',async(req,res)=>{
+
+// })
+
+
 
 
 app.get("/teacher_edit",async(req,res) => {
@@ -222,6 +228,18 @@ app.get("/stu_dashboard",(req,res) =>{
 app.use((req, res, next) => { 
     res.status(404).render("error_page");
 }) 
+
+function getFormattedDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day}-${month}-${year}`;
+}
+
+// Getting today's date
+const today = new Date();
+const todayFormatted = getFormattedDate(today);
+console.log(todayFormatted);
 
 
 app.listen(port,()=>{

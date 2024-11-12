@@ -54,6 +54,10 @@ export async function getStudentData(sectionID) {
   return result2;  
 }
 
+// export function insertIntoAttendanceTable(){
+
+// }
+
 
 // const [result2] = await pool.query(
 //    'SELECT * FROM (SELECT SUBJECT.SUB_ID, SUBJECT.SUB_NAME, SECTION.SECTION_ID, SECTION.SECTION_NAME FROM LECTURE JOIN SUBJECT ON LECTURE.SUB_ID = SUBJECT.SUB_ID JOIN SECTION ON LECTURE.SECTION_ID = SECTION.SECTION_ID WHERE LECTURE.F_ID= 10001) AS FACULTY_LECTURES;');

@@ -11,6 +11,7 @@ const pagemsg = document.querySelector(".page-msg");
 const markallpresent = document.querySelector(".mark-all-present");
 const recordlec = document.querySelector(".record-lec");
 const recordCheckbox = document.querySelector('.recordlec-checkbox')
+const saveAtt = document.querySelector('.save-att-btn')
 
 
 function getFormattedDate(date) {
@@ -67,7 +68,7 @@ lectureSelect.addEventListener('focus',()=>{
 })
 
 // Fetch request to get the lecture data
-fetch('/api/t_profile', {
+fetch('/api/teacher_lectures', {
     method: 'GET', 
     headers: {
         'Content-Type': 'application/json'
