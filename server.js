@@ -16,7 +16,7 @@ import session from 'express-session';
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile} from './database.js';
 
 // ==================================================================================
 
@@ -60,7 +60,8 @@ async function t_func1(req, res) {
             text = "Incorrect Password !";
             res.render("teachers_login",{text});
         }else if (msg == "right_zero_lec"){
-            res.render("teacher_editprofile");
+            res.redirect("/teacher_edit");
+            // res.render("teacher_editprofile");
         }else if (msg== "right_not_zero_lec"){
             res.render("t_dashboard");
         }else{
@@ -184,12 +185,19 @@ app.get('/api/get_students', async (req, res) => {
 });
 
 
-app.get("/teacher_edit",(req,res) => {
-    res.render("teacher_editprofile")
+app.get("/teacher_edit",async(req,res) => {
+    const f_id = req.session.user.id;
+    const r = await get_teacher_profile_details_from_id(f_id);
+    
+    let data = r;
+    res.render("teacher_editprofile",{data,f_id});
 })
 
 app.post("/teacher_edit",(req,res) => {
-    
+    const f_id = req.session.user.id;
+    const t_profile_data = req.body;
+    const result = update_teacher_profile(t_profile_data,f_id);
+    res.redirect("/teacher_edit");
 })
 
 app.get("/t_dashboard",(req,res)=>{
@@ -214,8 +222,6 @@ app.get("/stu_dashboard",(req,res) =>{
 app.use((req, res, next) => { 
     res.status(404).render("error_page");
 }) 
-
-
 
 
 app.listen(port,()=>{

@@ -67,4 +67,27 @@ export async function getStudentData(sectionID) {
 // console.log(r);
 // console.log(typeof(r));
 
+
+// this function is used to get the profile details of the teacher
+
+export async function get_teacher_profile_details_from_id(id){
+   const [result] = await pool.query(
+      'SELECT F_FNAME,F_LNAME,F_PHONE_NUMBER FROM FACULTY WHERE F_ID = ?',[id]
+   )
+   return result[0];
+}
+
+export async function update_teacher_profile(data,fid){
+   const new_data = data;
+   if(new_data.fac_phone == "") new_data.fac_phone = null;
+   
+   const result = await pool.query(
+      'UPDATE FACULTY SET F_FNAME = ? , F_LNAME = ?, F_PHONE_NUMBER = ? WHERE F_ID = ?',[new_data.fac_fname,new_data.fac_lname,new_data.fac_phone,fid]
+   )
+}
+
+// const r = await get_teacher_profile_details_from_id(10001);
+// console.log(r);
+// console.log(typeof(r));
+
 // pool.end();

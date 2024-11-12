@@ -476,16 +476,16 @@ form .user-details .input-box label {
   border-color: #472b01;
 }
 
-form .button {
+form .button_div {
   height: 45px;
   display: flex;
-  /* width: ; */
+  width: 200px;
   justify-content: center;
   align-content: center;
 }
-form .button input {
+form .sv_button{
   height: 100%;
-  width: 180%;
+  width: 100%;
   border-radius: 5px;
   border: none;
   color: #fff;

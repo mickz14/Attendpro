@@ -150,7 +150,8 @@
 
 <!--  Khushi's division -->
       <div class="profile_div" id = "left_main_div">
-        <form action = "#"  method="GET" >
+
+        <form action = "/teacher_edit"  method="POST" >
           <div class="title">MANANGE YOUR PROFILE</div>
     
            <div class="user-details">
@@ -158,30 +159,49 @@
           
               <div class="input-box">
                 <span class="details">Teacher's ID:</span>
-                <input type="text" placeholder="110345" readonly required>
+                <input type="text" placeholder= "<%= f_id %>" readonly required>
               </div>
               <!-- <div class="input-box"></div>  -->
               <!-- Input for Full Name -->
               <div class="input-box">
-                <span class="details" id="fname">First Name:</span>
-                <input type="text" placeholder="Enter your first name" required>
+                <span class="details" name = "fac_id" id="fname">First Name:</span>
+                <%
+                    let first_name; 
+                    if(data.F_FNAME == null){
+                      first_name = "Enter your last name";
+                    }
+                  %>
+                <input type="text" name = "fac_fname" placeholder= "<%= first_name %>" value = "<%= data.F_FNAME %> " required>
               </div>
                 <!-- Input for Username -->
                 <div class="input-box">
                   <span class="details" id="lname">Last Name:</span>
-                  <input type="text" placeholder="Enter your last name" >
-                  <!-- <input type="text" class="btn btn-secondary" placeholder="Enter your last name" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover"> -->
-                  <!-- <a tabindex="0" role="input" data-bs-toggle="popover" data-bs-trigger="focus"  data-bs-content="Enter valid name">Enter last name</a> -->
+                  
+                  <%
+                    let last_name; 
+                    if(data.F_LNAME == null){
+                      last_name = "Enter your last name"
+                    }
+                  %>
+
+                  <input type="text" name = "fac_lname" placeholder="<%= last_name %>" value = "<%= data.F_LNAME %>"  >
+
                 </div>
           
               <!-- Input for Phone Number -->
               <div class="input-box">
                 <span class="details" id="phone_number">Phone Number:</span>
-                <input type="text" placeholder="Enter your number" >
+                <%
+                    let phone ; 
+                    if(data.F_PHONE_NUMBER == null){
+                      phone = "Enter your Phone Number"
+                    }
+                  %>
+                <input type="text" name = "fac_phone" placeholder="<%= phone %>" value = "<%= data.F_PHONE_NUMBER %> " >
               </div>
               <!-- Submit button -->
-              <div class="button">
-                <input type="submit" value="Save Changes">
+              <div class="button_div">
+                <button class = "sv_button" name="edit_profile_button"> Save Changes</button>
               </div>
            </div>
       
