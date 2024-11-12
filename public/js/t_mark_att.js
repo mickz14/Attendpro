@@ -43,6 +43,28 @@ lectureSelect.addEventListener('focus',()=>{
     errorMessage.classList.add("hidden");
 })
 
+// Fetch request to get the lecture data
+fetch('/api/t_profile', {
+    method: 'GET', 
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => response.json()) // Parse the response as JSON
+    .then(lectureData => {
+        // Loop through each item in lectureData and create an option element
+        lectureData.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.SECTION_ID; // Using SECTION_ID as the option value
+            option.textContent = `${item.SECTION_NAME} - ${item.SUB_NAME}`; 
+            lectureSelect.appendChild(option); 
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+
+
 // pagination
 
 // Sample data 
