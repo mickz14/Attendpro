@@ -26,6 +26,10 @@ const todayFormatted = getFormattedDate(today);
 
 attendanceDate.textContent = `${todayFormatted}`
 
+let sectionID;
+let rowsData;
+let attendanceStatus;
+
 takeAttendanceBtn.addEventListener("click", () => {
     if (lectureSelect.value === "") {
         errorMessage.classList.remove("hidden"); // Show error message
@@ -33,6 +37,20 @@ takeAttendanceBtn.addEventListener("click", () => {
         errorMessage.classList.add("hidden"); // Hide error message if valid
         // Continue with attendance-taking actions here
         ctobeloaded.classList.remove("hidden");
+
+        sectionID = lectureSelect.value;
+
+        // Sample data 
+    rowsData = Array.from({ length: 50 }, (_, i) => ({
+    id: i + 1,
+    name: `Student ${i + 1}`,
+    status: i % 2 === 0 ? "Present" : "Absent"
+}));
+// Array to store attendance status
+// Initialize each student with a default status, e.g., "Absent" (false)
+ attendanceStatus = Array(rowsData.length).fill(false);
+
+
 
         // Initial render
         renderPage(1).then(() => setupCheckboxListeners());
@@ -67,18 +85,9 @@ fetch('/api/t_profile', {
 
 // pagination
 
-// Sample data 
-const rowsData = Array.from({ length: 50 }, (_, i) => ({
-    id: i + 1,
-    name: `Student ${i + 1}`,
-    status: i % 2 === 0 ? "Present" : "Absent"
-}));
+
 
 let currentpage = 1;
-
-// Array to store attendance status
-// Initialize each student with a default status, e.g., "Absent" (false)
-const attendanceStatus = Array(rowsData.length).fill(false);
 
 // Handling the next and previous page buttons
 nextpage.addEventListener('click',()=>{
