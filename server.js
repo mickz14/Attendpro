@@ -38,7 +38,7 @@ app.use(session({
     resave: false,            // prevents session resaving if unmodified
     saveUninitialized: false, // prevents creating a session until stored data exists
     cookie: {secure: false,
-            maxAge: 24 * 60 * 60 * 1000 //24 hours
+            maxAge: 60 * 60 * 1000 //1 hour
      } // set to true in production with HTTPS
 
 }));
@@ -168,8 +168,9 @@ app.post('/student_login', stu_func2, stu_func1);
 //API
 //LECTURE FETCH 
 app.get('/api/teacher_lectures', async (req, res) => {
-    const f_id = req.session.user.id;
-    const teacherData = await getLecture(f_id); // Fetch data based on teacher ID
+    
+    const f_id = req.session.user ? req.session.user.id : 10002; //for tetsing
+    const teacherData = await getLecture(f_id); // Fetch TEACHER LECTURES based on teacher ID
     res.json(teacherData); // Send data as JSON to the frontend
 
 }); //change name

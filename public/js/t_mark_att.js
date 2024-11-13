@@ -192,21 +192,21 @@ markallpresent.addEventListener('click',()=>{
 })
 
 // Function to toggle lecture record
-function toggleLectureRecording() {
-    const isChecked = recordCheckbox.checked;
+// function toggleLectureRecording() {
+//     const isChecked = recordCheckbox.checked;
     
-    if (isChecked) {
-        recordCheckbox.checked = false;
-        attendanceStatus[0] = false;
-    } else {
-        recordCheckbox.checked = true;
-        attendanceStatus[0] = true;
-    }
-}
+//     if (isChecked) {
+//         recordCheckbox.checked = false;
+//         attendanceStatus[0] = false;
+//     } else {
+//         recordCheckbox.checked = true;
+//         attendanceStatus[0] = true;
+//     }
+// }
 
-// Add click listener for both the button and checkbox
-recordlec.addEventListener("click", toggleLectureRecording);
-recordCheckbox.addEventListener("click", (e) => {
-    // e.stopPropagation(); // Prevents the button click event from firing
-    toggleLectureRecording();
-});
+// // Add click listener for both the button and checkbox
+// recordlec.addEventListener("click", toggleLectureRecording);
+// recordCheckbox.addEventListener("click", (e) => {
+//     // e.stopPropagation(); // Prevents the button click event from firing
+//     toggleLectureRecording();
+// });

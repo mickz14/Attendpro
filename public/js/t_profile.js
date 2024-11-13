@@ -10,7 +10,7 @@ fetch('/api/teacher_lectures', {
     .then(response => response.json()) // Parse the response as JSON
     .then(data => {
         lectureData=data;
-        console.log(data); // Process the data received from the backend
+        // console.log(data); // Process the data received from the backend
         lectureData.forEach((lecture) => {
             const row = `<tr class="bg-[#1e7aa4]/20 mt-8 border-2">
                         <td class="px-2">${lecture.SECTION_ID}</td>
