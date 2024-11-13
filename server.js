@@ -37,7 +37,10 @@ app.use(session({
     secret: 'yourSecretKey', // replace with a secure secret key
     resave: false,            // prevents session resaving if unmodified
     saveUninitialized: false, // prevents creating a session until stored data exists
-    cookie: { secure: false } // set to true in production with HTTPS
+    cookie: {secure: false,
+            maxAge: 24 * 60 * 60 * 1000 //24 hours
+     } // set to true in production with HTTPS
+
 }));
 //////////////////////
 app.get("/",(req,res)=>{
@@ -219,6 +222,18 @@ app.get("/t_view_attendance",(req,res)=>{
 app.get("/t_mark_attendance",(req,res)=>{
     res.render("t_mark_attendance")
 })
+app.get("/t_logout",(req,res)=>{
+    res.render("t_logout")
+})
+app.get("/t_destroySession",(req,res)=>{
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Error occurred while logging out');
+        }
+        res.redirect('/teacher_login'); // Redirect to the login page
+    });
+})
+
 app.get("/student_login",(req,res)=>{
     res.render("student_login")
 })
