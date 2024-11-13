@@ -191,7 +191,7 @@ markallpresent.addEventListener('click',()=>{
     renderPage(currentpage).then(() => setupCheckboxListeners());
 })
 
-// Function to toggle lecture record
+// // Function to toggle lecture record
 // function toggleLectureRecording() {
 //     const isChecked = recordCheckbox.checked;
     

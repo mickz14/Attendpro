@@ -90,6 +90,15 @@ export async function update_teacher_profile(data,fid){
    )
 }
 
+// func to get student data from student ENR
+export async function getStudentInfofromENR(studentENR) {
+   const result = await pool.query(
+      'SELECT STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?',[studentENR]
+   )
+   return (result[0]);
+}
+
+
 // const r = await get_teacher_profile_details_from_id(10001);
 // console.log(r);
 // console.log(typeof(r));

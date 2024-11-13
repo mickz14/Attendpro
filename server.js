@@ -16,7 +16,7 @@ import session from 'express-session';
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
 
 // ==================================================================================
 
@@ -94,7 +94,7 @@ async function t_func2(req, res, next) {
     // both correct - move to next page
     else{
         const t_lectures = await chk_t_lect_num(t_userid);
-        req.session.user = { id: t_userid }; // Save user data in session
+        req.session.user = {id: t_userid}; // Save user data in session
         if(t_lectures == 0){
             // send to edit profile page to add lectures
             req.dataProcessed = {"msgcode" : "right_zero_lec"}
@@ -154,6 +154,7 @@ async function stu_func2(req, res, next) {
     }
     // both correct - move to next page
     else{
+        req.session.student = {s_enr: stu_enr};
         req.dataProcessed = {"mssgcode" : "stu_dashboard"};
         console.log("Login successful, redirecting to dashboard");
     }
@@ -163,20 +164,20 @@ async function stu_func2(req, res, next) {
 app.get('/student_login', stu_func1);
 app.post('/student_login', stu_func2, stu_func1);
 
-///////////////////////////////////////////////////////////////////
+//============================================================
 // JSON endpoint to send data to the frontend
 //API
-//LECTURE FETCH 
+//TEACHER LECTURES FETCH 
 app.get('/api/teacher_lectures', async (req, res) => {
     
-    const f_id = req.session.user ? req.session.user.id : 10002; //for tetsing
+    const f_id = req.session.user ? req.session.user.id : 10002; //for testing
     const teacherData = await getLecture(f_id); // Fetch TEACHER LECTURES based on teacher ID
     res.json(teacherData); // Send data as JSON to the frontend
 
-}); //change name
+});
 
+//==============================================================
 //STUDENT LIST FETCH
-//////////////////////////////////////////////////////////////////
 app.get('/api/get_students', async (req, res) => {
     const sectionId = req.query.section_id; // Get the section_id from query parameter
     try {
@@ -187,6 +188,17 @@ app.get('/api/get_students', async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve student data' });
     }
 });
+
+//================================================================
+//STUDENT INFO FETCH
+app.get('/api/studentInfo', async (req, res) => {
+    // const studentENR = req.session.student.s_enr;
+    const studentInfo = await getStudentInfofromENR(196202721);
+    res.json(studentInfo);
+});
+
+
+
 
 // app.post('/api/post_attendanceData',async(req,res)=>{
 

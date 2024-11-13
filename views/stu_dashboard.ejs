@@ -6,6 +6,7 @@
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="output.css"/>
     <link rel="shortcut icon" href="/images/AttendPro-logo.png" type="image/x-icon"/>
+    <script src="stu_dashboard.js" defer></script>
 
 </head>
 <body class="h-screen overflow-hidden bg-gray-200/70">
@@ -38,30 +39,48 @@
                 <th class="px-4 py-2"></th>
               </tr>
             </thead>
-            <tr>
-                <td class="px-4 py-2 border">1</td>
-                <td class="px-4 py-2 border">DSA</td>
-                <td class="px-4 py-2 border">5</td>
-                <td class="px-4 py-2 border">10</td>
-                <td class="px-4 py-2 border"> 50%</td>
-                <td class="px-4 py-2 border"></td>
-                <td class="px-4 py-2 border">
-                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center">More info</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="px-4 py-2 border">1</td>
-                <td class="px-4 py-2 border">DSA</td>
-                <td class="px-4 py-2 border">5</td>
-                <td class="px-4 py-2 border">10</td>
-                <td class="px-4 py-2 border"> 50%</td>
-                <td class="px-4 py-2 border"></td>
-                <td class="px-4 py-2 border">
-                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center">More info</div>
-                </td>
-            </tr>
             <!-- table body -->
             <tbody>
+            <tr>
+                <td class="px-4 py-2 border">1</td>
+                <td class="px-4 py-2 border">DSA</td>
+                <td class="px-4 py-2 border">5</td>
+                <td class="px-4 py-2 border">10</td>
+                <td class="px-4 py-2 border"> 50%</td>
+                <td class="px-4 py-2 border">
+                    <div class="present h-6 w-20 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500">At risk</div>
+                </td>
+                <td class="px-4 py-2 border">
+                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center m-auto">More info</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-4 py-2 border">1</td>
+                <td class="px-4 py-2 border">DSA</td>
+                <td class="px-4 py-2 border">5</td>
+                <td class="px-4 py-2 border">10</td>
+                <td class="px-4 py-2 border"> 50%</td>
+                <td class="px-4 py-2 border">
+                    <div class="present h-6 w-20 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500">Excellent</div>
+                </td>
+                <td class="px-4 py-2 border">
+                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center m-auto">More info</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-4 py-2 border">1</td>
+                <td class="px-4 py-2 border">DSA</td>
+                <td class="px-4 py-2 border">5</td>
+                <td class="px-4 py-2 border">10</td>
+                <td class="px-4 py-2 border"> 50%</td>
+                <td class="px-4 py-2 border">
+                    <div class="h-10 w-24 flex items-center justify-center m-auto bg-yellow-200 border-2 border-yellow-400 rounded-md text-center text-yellow-500">Need Improvement</div>
+                </td>
+                <td class="px-4 py-2 border">
+                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center m-auto">More info</div>
+                </td>
+            </tr>
+          
            
             </tbody>
           </table>
