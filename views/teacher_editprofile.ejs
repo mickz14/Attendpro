@@ -52,6 +52,7 @@
               <label for="lect_year" class = "label_lect_dd">Select the Year:</label>
 
               <select name="Years" id="lect_year" class="lect_dd" required>
+                <option value=''>Select Year</option>
                 <option value="First">First</option>
                 <option value="Second">Second</option>
                 <option value="Third">Third</option>
@@ -60,7 +61,9 @@
                 
               <label for="lect_sem" class = "label_lect_dd">Select the Semester:</label>
               <select name="Sems" id="lect_sem" class="lect_dd" required>
-                <option value="1">1</option>
+              
+              <option value=''>Select Semester</option>
+              <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -69,8 +72,24 @@
                 <option value="7">7</option>
                 <option value="8">8</option>
               </select> 
+
+              <!-- gpt start -->
+                <!-- Section Dropdown (Dynamic based on Year and Subject) -->
+        <label for="lect_sect" class="label_lect_dd">Select the Section:</label>
+        <select name="lect_sect" id="lect_sect" class="lect_dd" required>
+            <!-- Sections will populate dynamically based on selected year and subject -->
+            <option value="">Select Section</option>
+        </select>
+
+        <!-- Subject Dropdown (Dynamic based on Semester and Section) -->
+        <label for="lect_sub" class="label_lect_dd">Select the Subject:</label>
+        <select name="lect_sub" id="lect_sub" class="lect_dd" required>
+            <!-- Subjects will populate dynamically based on selected semester and section -->
+            <option value="">Select Subject</option>
+        </select>
+               <!-- gpt end -->
                 
-              <label for="lect_sect" class = "label_lect_dd" >Select the Section:</label>
+              <!-- <label for="lect_sect" class = "label_lect_dd" >Select the Section:</label>
 
               <select name="cars" id="lect_sect" class="lect_dd" required>
                 <option value="volvo">Volvo</option>
@@ -86,7 +105,7 @@
                 <option value="saab">Saab</option>
                 <option value="mercedes">Mercedes</option>
                 <option value="audi">Audi</option>
-              </select> 
+              </select>  -->
 
             </form>
 
@@ -193,7 +212,7 @@
                 <span class="details" id="phone_number">Phone Number:</span>
                 <%
                     let phone ; 
-                    if(data.F_PHONE_NUMBER == null){
+                    if(data.F_PHONE_NUMBER == "abc" || data.F_PHONE_NUMBER == null ){
                       phone = "Enter your Phone Number"
                     }
                   %>
@@ -254,7 +273,95 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>  -->
 <script>
-  
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  // gpt start again
+ 
+    document.addEventListener("DOMContentLoaded", () => {
+        const yearSelect = document.getElementById("lect_year");
+        const semesterSelect = document.getElementById("lect_sem");
+        const sectionSelect = document.getElementById("lect_sect");
+        const subjectSelect = document.getElementById("lect_sub");
+        const addLectureBtn = document.querySelector(".add");
+        const facultyId = "<%= f_id %>";  // Update here to match your session ID
+
+        // Function to fetch sections based on selected year
+        async function fetchSections() {
+            const selectedYear = yearSelect.value;
+            if (selectedYear) {
+                try {
+                    const response = await fetch(`/get-sections?year=${selectedYear}&facultyId=${facultyId}`);
+                    const sections = await response.json();
+                    console.log("Fetched sections:", sections);  // Log fetched sections
+                    sectionSelect.innerHTML = "<option value=''>Select Section</option>";
+                    sections.forEach(section => {
+                        const option = document.createElement("option");
+                        option.value = section.SECTION_ID;
+                        option.textContent = section.SECTION_NAME;
+                        sectionSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Error fetching sections:", error);
+                }
+            }
+        }
+
+        // Function to fetch subjects based on selected semester
+        async function fetchSubjects() {
+            const selectedSemester = semesterSelect.value;
+            const selectedSection = sectionSelect.value;
+            if (selectedSemester) {
+                try {
+                    const response = await fetch(`/get-subjects?semester=${selectedSemester}&sectionID=${selectedSection}`);
+                    const subjects = await response.json();
+                    console.log("Fetched subjects:", subjects);  // Log fetched subjects
+                    subjectSelect.innerHTML = "<option value=''>Select Subject</option>";
+                    subjects.forEach(subject => {
+                        const option = document.createElement("option");
+                        option.value = subject.SUB_ID;
+                        option.textContent = subject.SUB_NAME;
+                        subjectSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("Error fetching subjects:", error);
+                }
+            }
+        }
+
+        // Event listeners for year and semester dropdowns
+        yearSelect.addEventListener("change", fetchSections);
+        semesterSelect.addEventListener("change", fetchSubjects);
+        sectionSelect.addEventListener("change",fetchSubjects );
+
+        // Add lecture on button click
+        addLectureBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            const sectionId = sectionSelect.value;
+            const subjectId = subjectSelect.value;
+            if (sectionId && subjectId) {
+                try {
+                    const response = await fetch("/add-lecture", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ sectionId, subjectId, facultyId })
+                    });
+                    const result = await response.json();
+                    alert(result.message || "Lecture added successfully");
+                    fetchSections();  // Refresh section and subject dropdowns after addition
+                    fetchSubjects();
+                } catch (error) {
+                    console.error("Error adding lecture:", error);
+                }
+            } else {
+                alert("Please select both section and subject.");
+            }
+        });
+    });
+
+
+
+  //gpt end again
+  /////////////////////////////////////////////////////////////////////////////////////////////
 </script>
 
 
