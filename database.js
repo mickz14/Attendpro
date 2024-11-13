@@ -106,19 +106,6 @@ export async function getStudentInfofromENR(studentENR) {
    return ([result[0][0],studentSubjects[0]]); //array of (object and array)
 }
 
-// const result = await pool.query(
-//    'SELECT STU_FNAME, STU_LNAME, SECTION_ID, STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?', [796202721]
-// );
-
-// Retrieve semester value
-
-// console.log((result));
-// const sem = result[0][0].STU_SEM;  //obj.STU_SEM
-// console.log(sem);
-// const studentSubjects = await pool.query(
-//    `select * from subject where sub_sem = ?;`,[7]
-// )
-// console.log(studentSubjects[0]);
 
 // Get sections based on year, excluding those already used with the selected subject
 export const getAvailableSections= async (year,facultyId) => {
