@@ -3,9 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="output.css"/>
+    <link rel="shortcut icon" href="/images/AttendPro-logo.png" type="image/x-icon"/>
+
 </head>
-<body>
-    <p>hi</p>
+<body class="h-screen overflow-hidden bg-gray-200/70">
+    <!-- Navbar -->
+    <div class="nav-con text-[#515151] w-full bg-[#F7F7F7] " >
+      <nav class="navbar w-11/12 flex justify-between items-center m-auto">
+        <div
+          class="at-logo text-[#515151] font-bold text-2xl flex items-center"
+        >
+          Attend<span class="text-[#1e7aa4]">Pro</span>
+        </div>
+        <div class="nav-links flex items-center h-16">
+          <div class="h-10 w-36 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center gap-1">
+            Change Password
+          </div>
+        </div>
+        </nav>
+        <div class="h-16 bg-[#1e7aa4]/20"></div>
+    </div>
+    <div id="student-table" class="mt-12 w-11/12 bg-white m-auto overflow-x-auto">
+          <table class="w-full md:text-sm text-xs border-x-2 ">
+            <thead>
+              <tr class="border-y-2 bg-[#1e7aa4]/30">
+                <th class="px-4 py-2">S No</th>
+                <th class="px-4 py-2">Subject Name</th>
+                <th class="px-4 py-2">Lecture Attended</th>
+                <th class="px-4 py-2">Total Lectures</th>
+                <th class="px-4 py-2">Percentage</th>
+                <th class="px-4 py-2">Remarks</th>
+                <th class="px-4 py-2"></th>
+              </tr>
+            </thead>
+            <tr>
+                <td class="px-4 py-2 border">1</td>
+                <td class="px-4 py-2 border">DSA</td>
+                <td class="px-4 py-2 border">5</td>
+                <td class="px-4 py-2 border">10</td>
+                <td class="px-4 py-2 border"> 50%</td>
+                <td class="px-4 py-2 border"></td>
+                <td class="px-4 py-2 border">
+                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center">More info</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="px-4 py-2 border">1</td>
+                <td class="px-4 py-2 border">DSA</td>
+                <td class="px-4 py-2 border">5</td>
+                <td class="px-4 py-2 border">10</td>
+                <td class="px-4 py-2 border"> 50%</td>
+                <td class="px-4 py-2 border"></td>
+                <td class="px-4 py-2 border">
+                    <div class="h-8 w-24 self-center bg-[#216a8d] hover:bg-[#216a8d]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center">More info</div>
+                </td>
+            </tr>
+            <!-- table body -->
+            <tbody>
+           
+            </tbody>
+          </table>
+        </div>
+
 </body>
 </html>
