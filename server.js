@@ -192,12 +192,12 @@ app.get('/api/get_students', async (req, res) => {
 //================================================================
 //STUDENT INFO FETCH
 app.get('/api/studentInfo', async (req, res) => {
-    const studentENR = req.session.student.s_enr;
-    const studentInfo = await getStudentInfofromENR(196202721);
-    res.json(studentInfo);
+    // const studentENR = req.session.student.s_enr;
+    const studentInfo = await getStudentInfofromENR(796202721);
+    const studentpinfo = studentInfo[0];
+    const studentSubjects = studentInfo[1];
+    res.json([studentpinfo,studentSubjects]);
 });
-
-
 
 
 // app.post('/api/post_attendanceData',async(req,res)=>{
@@ -259,7 +259,7 @@ app.use((req, res, next) => {
 
 function getFormattedDate(date) {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${day}-${month}-${year}`;
 }
