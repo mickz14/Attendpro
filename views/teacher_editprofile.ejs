@@ -420,10 +420,10 @@
             // label.for = 
             label.textContent = `${lecture.SECTION_NAME}-${lecture.SUB_ALIAS}`;
             existingLecturesDiv.appendChild(label);
-            // const btnn = document.createElement('button');
-            // btnn.className = 'lecture_label_button';
-            // btnn.textContent = 'x';
-            // existingLecturesDiv.appendChild(btnn);
+            const btnn = document.createElement('button');
+            btnn.className = 'lecture_label_button';
+            btnn.textContent = 'x';
+            existingLecturesDiv.appendChild(btnn);
           });
         } catch (error) {
           console.error("Error loading existing lectures:", error);
