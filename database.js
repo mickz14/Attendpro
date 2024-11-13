@@ -89,6 +89,8 @@ export async function update_teacher_profile(data,fid){
       'UPDATE FACULTY SET F_FNAME = ? , F_LNAME = ?, F_PHONE_NUMBER = ? WHERE F_ID = ?',[new_data.fac_fname,new_data.fac_lname,new_data.fac_phone,fid]
    )
 }
+// ///////////////////////////////////////////////////////////////////////////////////////////////////
+// database.js
 
 // func to get student data from student ENR
 export async function getStudentInfofromENR(studentENR) {
@@ -99,6 +101,41 @@ export async function getStudentInfofromENR(studentENR) {
 }
 
 
+// Get sections based on year, excluding those already used with the selected subject
+export const getAvailableSections= async (year,facultyId) => {
+   const [sections] = await pool.query(
+      'SELECT S.SECTION_ID, S.SECTION_NAME FROM SECTION S LEFT JOIN LECTURE L ON S.SECTION_ID = L.SECTION_ID AND L.F_ID = ? WHERE S.SECTION_YEAR = ? AND L.SUB_ID IS NULL',[facultyId,year]
+   )
+   // console.log(sections);
+   return sections;
+   
+}
+
+// Get subjects based on semester, excluding those already used with the selected section
+export const getAvailableSubjects= async (semester,sectionID) => {
+   const [subjects] = await pool.query(
+      'SELECT SUB.SUB_ID, SUB.SUB_NAME FROM SUBJECT SUB WHERE SUB.SUB_SEM = ? AND SUB.SUB_ID NOT IN (SELECT L.SUB_ID FROM LECTURE L WHERE L.SECTION_ID = ?)',[semester,sectionID]
+   )
+   return subjects;
+}
+
+export const addLecture = async (facultyId, sectionId, subjectId) => {
+   // Ensure that the section + subject combination doesn't already exist in the 'lecture' table
+   const [existingLecture] = await pool.query(`SELECT * FROM LECTURE WHERE SECTION_ID = ? AND SUB_ID = ?`, [sectionId, subjectId]);
+   //console.log(existingLecture);
+   if (existingLecture.length > 0) {
+       throw new Error("This lecture already exists.");
+   }
+
+   // Insert the new lecture
+   await pool.query(`INSERT INTO lecture (F_ID, SECTION_ID, SUB_ID) VALUES (?, ?, ?)`, [facultyId, sectionId, subjectId]);
+};
+
+
+
+
+
+///////////////////////////////////
 // const r = await get_teacher_profile_details_from_id(10001);
 // console.log(r);
 // console.log(typeof(r));

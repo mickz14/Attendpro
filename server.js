@@ -11,12 +11,13 @@ import { fileURLToPath } from 'url'
 // const ejs = require("ejs")
 import ejs from 'ejs'
 import session from 'express-session';
-
+const router = express.Router();
 
 // ===================================================================================
 // importing data from database file
 
-import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
+// import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR, getAvailableSubjects,getAvailableSections,addLecture} from './database.js';
 
 // ==================================================================================
 
@@ -213,6 +214,11 @@ app.get("/teacher_edit",async(req,res) => {
     
     let data = r;
     res.render("teacher_editprofile",{data,f_id});
+    //for faculty_lecture to get available sections
+    // const { year } = req.query;
+    // f_id = req.query;
+    // const sections = await getAvailableSections(year, f_id);
+    // res.json(sections);
 })
 
 app.post("/teacher_edit",(req,res) => {
@@ -221,6 +227,72 @@ app.post("/teacher_edit",(req,res) => {
     const result = update_teacher_profile(t_profile_data,f_id);
     res.redirect("/teacher_edit");
 })
+
+////////////////////////////////////////////
+
+// Route to get sections based on selected year and facultyid
+app.get("/get-sections", async (req, res) => {
+    const facultyId = req.session.user.id;
+    const { year } = req.query;
+    let yr = 0;
+    if(year == "First"){
+        yr = 1;
+    }
+    else if(year == "Second"){
+        yr = 2;
+    }
+    else if(year == "Third"){
+        yr = 3;
+    }
+    else if(year == "Fourth"){
+        yr = 4;
+    }
+   // facultyId = req.query;
+    // console.log(facultyId);
+    // console.log(typeof(year));
+
+    try {
+        const sections = await getAvailableSections(yr, facultyId);
+        res.json(sections);
+    } catch (error) {
+        console.error("Error fetching sections:", error);
+        res.status(500).json({ error: "Error fetching sections" });
+    }
+});
+
+// Route to get subjects based on selected semester
+app.get("/get-subjects", async (req, res) => {
+    // const facultyId = req.session.user.id;
+    const {semester,sectionID} = req.query;
+    try {
+        const subjects = await getAvailableSubjects(semester, sectionID);
+        res.json(subjects);
+    } catch (error) {
+        console.error("Error fetching subjects:", error);
+        res.status(500).json({ error: "Error fetching subjects" });
+    }
+});
+
+// Route to add a lecture
+app.post("/add-lecture", async (req, res) => {
+    const { facultyId, sectionId, subjectId  } = req.body;
+    // console.log(sectionId);
+    // console.log(req.body);
+    
+    try {
+        const result = await addLecture(facultyId, sectionId, subjectId);
+        res.json({ message: "Lecture added successfully" });
+    } catch (error) {
+        console.error("Error adding lecture:", error);
+        res.status(500).json({ error: "Error adding lecture" });
+    }
+});
+
+// export default router;
+/////////////////////////////////////////////
+
+
+
 
 app.get("/t_dashboard",(req,res)=>{
     res.render("t_dashboard")
