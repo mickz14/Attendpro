@@ -389,21 +389,20 @@
       }
 
 
-
       // Load existing lectures as labels
       async function loadExistingLectures() {
 
         // Existing saveLectures function
-        function saveLectures() {
-          // Call loadExistingLectures to reload the existing lectures list after save
-          loadExistingLectures();
-        }
+        // function saveLectures() {
+        //   // Call loadExistingLectures to reload the existing lectures list after save
+        //   loadExistingLectures();
+        // }
 
-        // Add the event listener for Save Lectures button
-        document.querySelector(".btn_save_btn").addEventListener("click", (e) => {
-          e.preventDefault();
-          saveLectures();
-        });
+        // // Add the event listener for Save Lectures button
+        // document.querySelector(".btn_save_btn").addEventListener("click", (e) => {
+        //   e.preventDefault();
+        //   saveLectures();
+        // });
 
         console.log("Loading existing lectures...");
         try {
@@ -415,15 +414,28 @@
           existingLecturesDiv.innerHTML = '';  // Clear existing labels
 
           lectures.forEach(lecture => {
-            const label = document.createElement('label');
-            label.className = 'lecture_label';
+            const labell = document.createElement('label');
+            labell.className = 'lecture_label';
             // label.for = 
-            label.textContent = `${lecture.SECTION_NAME}-${lecture.SUB_ALIAS}`;
-            existingLecturesDiv.appendChild(label);
+            labell.textContent = `${lecture.SECTION_NAME}-${lecture.SUB_ALIAS}`;
+            // existingLecturesDiv.appendChild(label);
             const btnn = document.createElement('button');
             btnn.className = 'lecture_label_button';
-            btnn.textContent = 'x';
-            existingLecturesDiv.appendChild(btnn);
+            btnn.textContent = `x`;
+            // existingLecturesDiv.appendChild(btnn);
+            
+            // Append the label and button to the container
+            const lect_div = document.createElement('div');
+            lect_div.className = 'lect_div_class';
+            lect_div.appendChild(labell);
+            lect_div.appendChild(btnn);
+            existingLecturesDiv.appendChild(lect_div);
+
+            btnn.addEventListener('click', async (e) => {
+              e.preventDefault(); 
+              // Remove the label when the button is clicked
+              lect_div.remove();  // Remove the label from the DOM
+            });
           });
         } catch (error) {
           console.error("Error loading existing lectures:", error);
