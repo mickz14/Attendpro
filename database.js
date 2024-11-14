@@ -105,7 +105,23 @@ export async function getStudentInfofromENR(studentENR) {
 
    return ([result[0][0],studentSubjects[0]]); //array of (object and array)
 }
-
+ export async function check_att_array_existance(sectionId,subID,attendanceDate) {
+   const [result] = await pool.query(
+      `select enr_number from attendance where sub_id=? AND section_id=? and attendance_date=?;`,[subID,sectionId,attendanceDate]
+   )
+   if(result.length==0){
+      return result;
+   }
+   else{
+      const result2 = await pool.query(
+         `select enr_number,status from attendance where sub_id=? AND section_id=? and attendance_date=?`,[subID,sectionId,attendanceDate]
+      )
+   }
+ }
+//  const [result] = await pool.query(
+//    `  select enr_number,status from attendance where sub_id='ETCS_413' AND section_id=116 and attendance_date='2024-11-14';`)
+// console.log(result);
+// console.log(typeof(result));
 
 // Get sections based on year, excluding those already used with the selected subject
 export const getAvailableSections= async (year,facultyId) => {

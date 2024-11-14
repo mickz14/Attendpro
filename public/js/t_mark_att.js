@@ -18,7 +18,7 @@ function getFormattedDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-indexed
     const day = String(date.getDate()).padStart(2, "0");
-    return `${day}-${month}-${year}`;
+    return `${year}-${month}-${day}`;
 }
 
 // Getting today's date
@@ -28,6 +28,7 @@ const todayFormatted = getFormattedDate(today);
 attendanceDate.textContent = `${todayFormatted}`
 
 let sectionID;
+let subID;
 let rowsData=[];
 let attendanceStatus;
 
@@ -39,9 +40,12 @@ takeAttendanceBtn.addEventListener("click", () => {
         // Continue with attendance-taking actions here
         ctobeloaded.classList.remove("hidden");
 
-        sectionID = lectureSelect.value;
+        const lectureSelected = lectureSelect.value;
+        sectionID = parseInt(lectureSelected.slice(0,2));
+        subID = lectureSelected.slice(4);
+        
 
-    fetch(`/api/get_students?section_id=${sectionID}`, {
+    fetch(`/api/get_students?section_id=${sectionID}?sub_id=${subID}?attendance_date=${todayFormatted}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -56,30 +60,29 @@ takeAttendanceBtn.addEventListener("click", () => {
         renderPage(1).then(() => setupCheckboxListeners());
     })
     .catch(error => {
-        console.error("Error fetching student data:", error);
-});
-// Array to store attendance status
-// Initialize each student with a default status, e.g., "Absent" (false)
-}
+        console.error("Error fetching student data:", error);});
+    // Array to store attendance status
+    // Initialize each student with a default status, e.g., "Absent" (false)
+    }   
 });
 
 lectureSelect.addEventListener('focus',()=>{
     errorMessage.classList.add("hidden");
 })
 
-// Fetch request to get the lecture data
+//1 Fetch request to get the lecture data
 fetch('/api/teacher_lectures', {
     method: 'GET', 
     headers: {
         'Content-Type': 'application/json'
     }
 })
-    .then(response => response.json()) // Parse the response as JSON
+    .then(response => response.json()) 
     .then(lectureData => {
         // Loop through each item in lectureData and create an option element
         lectureData.forEach(item => {
             const option = document.createElement('option');
-            option.value = item.SECTION_ID; // Using SECTION_ID as the option value
+            option.value = `${item.SECTION_ID} ${item.SUB_ID}`; // Using SECTION_ID as the option value
             option.textContent = `${item.SECTION_NAME} - ${item.SUB_NAME}`; 
             lectureSelect.appendChild(option); 
         });
@@ -190,6 +193,13 @@ markallpresent.addEventListener('click',()=>{
     }
     renderPage(currentpage).then(() => setupCheckboxListeners());
 })
+
+saveAtt.addEventListener('click',()=>{
+    // const dataToBeSent = [subID,sectionID,attendanceDate,obj(enr_number:status)]
+
+    })
+
+
 
 // // Function to toggle lecture record
 // function toggleLectureRecording() {

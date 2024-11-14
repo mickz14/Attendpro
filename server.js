@@ -17,7 +17,7 @@ const router = express.Router();
 // importing data from database file
 
 // import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
-import { chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData, get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR, getAvailableSubjects, getAvailableSections, addLecture, getExistingLectures } from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData, get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR, getAvailableSubjects, getAvailableSections, addLecture, getExistingLectures,check_att_array_existance } from './database.js';
 
 // ==================================================================================
 
@@ -192,9 +192,14 @@ app.get('/api/teacher_lectures', async (req, res) => {
 //STUDENT LIST FETCH
 app.get('/api/get_students', async (req, res) => {
     const sectionId = req.query.section_id; // Get the section_id from query parameter
+    const subID = req.query.sub_id;
+    const attendanceDate= req.query.attendance_date;
     try {
         const students = await getStudentData(sectionId);
-        res.json(students); // Send the student data as JSON
+        // res.json(students); // Send the student data as JSON
+        const attendanceStatus = check_att_array_existance(sectionId,subID,attendanceDate);
+
+        res.json([students,attendanceStatus]);
     } catch (error) {
         console.error("Error fetching student data:", error);
         res.status(500).json({ error: 'Failed to retrieve student data' });
