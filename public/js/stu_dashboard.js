@@ -2,6 +2,7 @@ const tablebody = document.querySelector('tbody');
 const enr = document.getElementById('enr');
 const section = document.getElementById('section');
 const year = document.getElementById('year');
+const welcomename = document.getElementById('welc-name');
 
 async function getInfo(){
     const res = await fetch('/api/studentInfo',
@@ -17,10 +18,11 @@ async function getInfo(){
     const studentSubArray = studentALLInfo[1];
 
     if(studentInfo.STU_LNAME != null){
-        enr.textContent = `${studentInfo.STU_FNAME} ${studentInfo.STU_LNAME}`
+        welcomename.textContent = `Welcome ${studentInfo.STU_FNAME} ${studentInfo.STU_LNAME}!`
     }else{
-        enr.textContent = `${studentInfo.STU_FNAME}`
+        welcomename.textContent = `Welcome ${studentInfo.STU_FNAME}!`
     }
+    enr.textContent = `${studentInfo.ENR_NUMBER}`
 
     section.textContent = `${studentInfo.SECTION_ID}`;
     year.textContent = `Semester : ${studentInfo.STU_SEM}`;
