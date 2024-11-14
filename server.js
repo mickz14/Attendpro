@@ -46,13 +46,23 @@ app.use(session({
 }));
 //////////////////////
 app.get("/", (req, res) => {
-    res.render("index") //or index.ejs it's same
+    // console.log(document.cookie);
+    if(typeof(req.session.user )== "undefined"){
+        // req.userxists = 0;
+        res.render("index") //or index.ejs it's same        
+    }else{
+        req.session.userxists = 1;
+        res.render("index")
+    }
 })
 //for faculty login
 async function t_func1(req, res) {
     // function called without post request
     let text;
-    if (typeof (req.dataProcessed) == "undefined") {
+    if(typeof(req.session.userxists) != "undefined" && req.session.userxists == 1){
+        res.render("t_dashboard");
+    }
+    else if (typeof (req.dataProcessed) == "undefined") {
         text = "";
         res.render("teachers_login.ejs", { text });
     }

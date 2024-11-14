@@ -154,7 +154,7 @@
           <!-- Input for Phone Number -->
           <div class="input-box">
             <span class="details" id="phone_number">Phone Number:</span>
-            <% let phone ; if(data.F_PHONE_NUMBER=="abc" || data.F_PHONE_NUMBER==null ){ phone="Enter your Phone Number"
+            <% let phone ; if(data.F_PHONE_NUMBER==null ){ phone="Enter your Phone Number"
               } %>
               <input type="text" name="fac_phone" placeholder="<%= phone %>" value="<%= data.F_PHONE_NUMBER %> ">
           </div>
