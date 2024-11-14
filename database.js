@@ -95,7 +95,7 @@ export async function update_teacher_profile(data,fid){
 // func to get student data and student sub data from student ENR
 export async function getStudentInfofromENR(studentENR) {
    const result = await pool.query(
-      'SELECT STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?',[studentENR]
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?',[studentENR]
    )
    const sem = result[0][0].STU_SEM;
 
