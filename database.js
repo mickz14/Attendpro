@@ -137,6 +137,16 @@ export const addLecture = async (facultyId, sectionId, subjectId) => {
    await pool.query(`INSERT INTO lecture (F_ID, SECTION_ID, SUB_ID) VALUES (?, ?, ?)`, [facultyId, sectionId, subjectId]);
 };
 
+// database.js
+
+export const getExistingLectures = async (facultyId) => {
+   const [rows] = await pool.query(`SELECT S.SECTION_NAME, SUB.SUB_ALIAS FROM LECTURE L JOIN SECTION S ON L.SECTION_ID = S.SECTION_ID JOIN SUBJECT SUB ON L.SUB_ID = SUB.SUB_ID WHERE L.F_ID = ?`,[facultyId]);
+   // console.log(rows);
+   // console.log(facultyId);
+   return rows;
+
+ 
+};
 
 
 
