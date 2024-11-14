@@ -194,8 +194,8 @@ app.get('/api/get_students', async (req, res) => {
 //================================================================
 //STUDENT INFO FETCH
 app.get('/api/studentInfo', async (req, res) => {
-    // const studentENR = req.session.student.s_enr;
-    const studentInfo = await getStudentInfofromENR(796202721);
+    const studentENR = req.session.student.s_enr;
+    const studentInfo = await getStudentInfofromENR(studentENR);
     const studentpinfo = studentInfo[0];
     const studentSubjects = studentInfo[1];
     res.json([studentpinfo,studentSubjects]);
