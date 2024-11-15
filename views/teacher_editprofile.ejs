@@ -212,128 +212,8 @@
   <!-- FORM VALIDATION USING JS -->
   <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>  -->
-  <script>
-
-    //   ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //   // gpt start again
-
-    //   document.addEventListener("DOMContentLoaded", () => {
-    //     const yearSelect = document.getElementById("lect_year");
-    //     const semesterSelect = document.getElementById("lect_sem");
-    //     const sectionSelect = document.getElementById("lect_sect");
-    //     const subjectSelect = document.getElementById("lect_sub");
-    //     const addLectureBtn = document.querySelector(".add");
-    //     const facultyId = "<%= f_id %>";  // Update here to match your session ID
-
-    //     // Function to fetch sections based on selected year
-    //     async function fetchSections() {
-    //       const selectedYear = yearSelect.value;
-    //       if (selectedYear) {
-    //         try {
-    //           const response = await fetch(`/get-sections?year=${selectedYear}&facultyId=${facultyId}`);
-    //           const sections = await response.json();
-    //           console.log("Fetched sections:", sections);  // Log fetched sections
-    //           sectionSelect.innerHTML = "<option value=''>Select Section</option>";
-    //           sections.forEach(section => {
-    //             const option = document.createElement("option");
-    //             option.value = section.SECTION_ID;
-    //             option.textContent = section.SECTION_NAME;
-    //             sectionSelect.appendChild(option);
-    //           });
-    //         } catch (error) {
-    //           console.error("Error fetching sections:", error);
-    //         }
-    //       }
-    //     }
-
-    //     // Function to fetch subjects based on selected semester
-    //     async function fetchSubjects() {
-    //       const selectedSemester = semesterSelect.value;
-    //       const selectedSection = sectionSelect.value;
-    //       if (selectedSemester) {
-    //         try {
-    //           const response = await fetch(`/get-subjects?semester=${selectedSemester}&sectionID=${selectedSection}`);
-    //           const subjects = await response.json();
-    //           console.log("Fetched subjects:", subjects);  // Log fetched subjects
-    //           subjectSelect.innerHTML = "<option value=''>Select Subject</option>";
-    //           subjects.forEach(subject => {
-    //             const option = document.createElement("option");
-    //             option.value = subject.SUB_ID;
-    //             option.textContent = subject.SUB_NAME;
-    //             subjectSelect.appendChild(option);
-    //           });
-    //         } catch (error) {
-    //           console.error("Error fetching subjects:", error);
-    //         }
-    //       }
-    //     }
-
-    //     // Event listeners for year and semester dropdowns
-    //     yearSelect.addEventListener("change", fetchSections);
-    //     semesterSelect.addEventListener("change", fetchSubjects);
-    //     sectionSelect.addEventListener("change", fetchSubjects);
-
-    //     async function loadExistingLectures() {
-    //       console.log("Loading existing lectures...");
-    //       try {
-    //         const response = await fetch('/getExistingLectures');
-    //         const lectures = await response.json();
-
-    //         const existingLecturesDiv = document.getElementById('existing_lectures_div');
-    //         existingLecturesDiv.innerHTML = '';  // Clear existing labels
-
-    //         lectures.forEach(lecture => {
-    //           const label = document.createElement('label');
-    //         label.className = 'lecture_label';
-    //         label.textContent = `${lecture.SECTION_NAME}-${lecture.SUB_NAME}`;
-    //         console.log(label.textContent);
-    //         existingLecturesDiv.appendChild(label);
-    //       });
-    //     } catch (error) {
-    //       console.error("Error loading existing lectures:", error);
-    //     }
-    //   }
-
-    //   // Call this function on page load to display existing lectures
-    //   //window.onload = loadExistingLectures;
-
-    //   // Reload lectures when "Save Lectures" is clicked
-    //   function saveLectures() {
-    //     // Additional logic here, if needed, to trigger lecture save (optional)
-    //     loadExistingLectures(); // Reload the existing lectures list after save
-    //   }
-
-    //     // Add lecture on button click
-    //     addLectureBtn.addEventListener("click", async (e) => {
-    //       e.preventDefault();
-    //       const sectionId = sectionSelect.value;
-    //       const subjectId = subjectSelect.value;
-    //       if (sectionId && subjectId) {
-    //         try {
-    //           const response = await fetch("/add-lecture", {
-    //             method: "POST",
-    //             headers: { "Content-Type": "application/json" },
-    //             body: JSON.stringify({ sectionId, subjectId, facultyId })
-    //           });
-    //           const result = await response.json();
-    //           alert(result.message || "Lecture added successfully");
-    //           fetchSections();  // Refresh section and subject dropdowns after addition
-    //           fetchSubjects();
-    //           loadExistingLectures();
-    //         } catch (error) {
-    //           console.error("Error adding lecture:", error);
-    //         }
-    //       } else {
-    //         alert("Please select both section and subject.");
-    //       }
-    //     });
-    //     ///////////////////////////////////////////
-    //     // Fetch and display existing lectures as labels
-
-    // });
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<script>
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     document.addEventListener("DOMContentLoaded", () => {
       const yearSelect = document.getElementById("lect_year");
@@ -350,7 +230,7 @@
           try {
             const response = await fetch(`/get-sections?year=${selectedYear}&facultyId=${facultyId}`);
             const sections = await response.json();
-            console.log("Fetched sections:", sections);
+            // console.log("Fetched sections:", sections);
 
             sectionSelect.innerHTML = "<option value=''>Select Section</option>";
             sections.forEach(section => {
@@ -373,7 +253,7 @@
           try {
             const response = await fetch(`/get-subjects?semester=${selectedSemester}&sectionID=${selectedSection}`);
             const subjects = await response.json();
-            console.log("Fetched subjects:", subjects);
+            // console.log("Fetched subjects:", subjects);
 
             subjectSelect.innerHTML = "<option value=''>Select Subject</option>";
             subjects.forEach(subject => {
@@ -408,12 +288,13 @@
         try {
           const response = await fetch('/getExistingLectures');
           const lectures = await response.json();
-          console.log("Lectures:", lectures);
-
+          // console.log("Lectures:", lectures);
+          
           const existingLecturesDiv = document.getElementById('existing_lectures_div');
           existingLecturesDiv.innerHTML = '';  // Clear existing labels
-
+          
           lectures.forEach(lecture => {
+            // Remove the label when the button is clicked
             const labell = document.createElement('label');
             labell.className = 'lecture_label';
             // label.for = 
@@ -433,8 +314,21 @@
 
             btnn.addEventListener('click', async (e) => {
               e.preventDefault(); 
-              // Remove the label when the button is clicked
-              lect_div.remove();  // Remove the label from the DOM
+              const string_of_lec_name = labell.textContent;
+              split_array_of_lect_name = string_of_lec_name.split("-");
+              remove_lect_section = split_array_of_lect_name[0];
+              remove_lect_subject_alias = split_array_of_lect_name[1];
+              console.log(remove_lect_section);
+              console.log(remove_lect_subject);
+
+              try {
+                const response = await remove_lecture(remove_lect_section,remove_lect_subject_alias);
+                
+                lect_div.remove();  // Remove the label from the DOM
+                  } catch (error) {
+                console.error("Error removing lecture from database:", error);
+                }
+
             });
           });
         } catch (error) {

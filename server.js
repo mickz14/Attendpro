@@ -186,7 +186,7 @@ app.get('/api/teacher_lectures', async (req, res) => {
 
     const f_id = req.session.user ? req.session.user.id : 10002; //for testing
     const teacherData = await getLecture(f_id); // Fetch TEACHER LECTURES based on teacher ID
-    res.json(teacherData); // Send data as JSON to the frontend
+    res.json(teacherData); // Send data as JSON to the frsontend
 
 });
 
@@ -202,7 +202,7 @@ app.get('/api/get_students', async (req, res) => {
         // res.json(students); // Send the student data as JSON
         const attendanceStatus = await check_att_array_existance(sectionId,subID,attendanceDate);
         console.log(attendanceStatus);
-        res.json({stu:students,attendanceStatus});
+        res.json({stu:students,stat:attendanceStatus});
     } catch (error) {
         console.error("Error fetching student data:", error);
         res.status(500).json({ error: 'Failed to retrieve student data' });
