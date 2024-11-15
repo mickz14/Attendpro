@@ -291,7 +291,7 @@ li{
   width: 40%;
 }
 
-.remove{
+/* .remove{
   background-color: #6F4E37;
   color: #fff;
   padding: 10px 20px;
@@ -302,7 +302,7 @@ li{
   text-transform: uppercase;
   margin-top: 10px;
   cursor: pointer;
-}
+} */
 
 .hidden{
   display: flex;
