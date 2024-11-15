@@ -33,7 +33,7 @@ let rowsData=[];
 let attendanceStatus;
 
 takeAttendanceBtn.addEventListener("click", () => {
-    if (lectureSelect.value === "") {
+    if (lectureSelect.value == "") {
         errorMessage.classList.remove("hidden"); // Show error message
     } else {
         errorMessage.classList.add("hidden"); // Hide error message if valid
@@ -41,20 +41,22 @@ takeAttendanceBtn.addEventListener("click", () => {
         ctobeloaded.classList.remove("hidden");
 
         const lectureSelected = lectureSelect.value;
-        sectionID = parseInt(lectureSelected.slice(0,2));
+
+        sectionID = parseInt(lectureSelected.slice(0,3));
         subID = lectureSelected.slice(4);
         
 
-    fetch(`/api/get_students?section_id=${sectionID}?sub_id=${subID}?attendance_date=${todayFormatted}`, {
+    fetch(`/api/get_students?section_id=${sectionID}&sub_id=${subID}&attendance_date=${todayFormatted}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
     .then(response => response.json())
-    .then(studentData => {
+    .then(recieved_response => {
+        studentData = recieved_response.stu;
         rowsData = studentData;
-        console.log(rowsData);
+        console.log("rows data" ,rowsData);
         attendanceStatus = Array(rowsData.length).fill(false);
         // Initial render
         renderPage(1).then(() => setupCheckboxListeners());

@@ -39,8 +39,10 @@ app.use(session({
     resave: false,            // prevents session resaving if unmodified
     saveUninitialized: false, // prevents creating a session until stored data exists
     cookie: {
+        // httpOnly: true,
         secure: false,
-        maxAge: 60 * 60 * 1000 //1 hour
+        // SameSite: 'None',
+        maxAge: 24 * 60 * 60 * 1000 //1 hour
     } // set to true in production with HTTPS
 
 }));
@@ -194,12 +196,13 @@ app.get('/api/get_students', async (req, res) => {
     const sectionId = req.query.section_id; // Get the section_id from query parameter
     const subID = req.query.sub_id;
     const attendanceDate= req.query.attendance_date;
+
     try {
         const students = await getStudentData(sectionId);
         // res.json(students); // Send the student data as JSON
-        const attendanceStatus = check_att_array_existance(sectionId,subID,attendanceDate);
-
-        res.json([students,attendanceStatus]);
+        const attendanceStatus = await check_att_array_existance(sectionId,subID,attendanceDate);
+        console.log(attendanceStatus);
+        res.json({stu:students,attendanceStatus});
     } catch (error) {
         console.error("Error fetching student data:", error);
         res.status(500).json({ error: 'Failed to retrieve student data' });
@@ -220,9 +223,6 @@ app.get('/api/studentInfo', async (req, res) => {
 // app.post('/api/post_attendanceData',async(req,res)=>{
 
 // })
-
-
-
 
 app.get("/teacher_edit", async (req, res) => {
     const f_id = req.session.user.id;

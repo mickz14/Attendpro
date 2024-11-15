@@ -106,16 +106,21 @@ export async function getStudentInfofromENR(studentENR) {
    return ([result[0][0],studentSubjects[0]]); //array of (object and array)
 }
  export async function check_att_array_existance(sectionId,subID,attendanceDate) {
+   // console.log(sectionId,subID,attendanceDate);
    const [result] = await pool.query(
-      `select enr_number from attendance where sub_id=? AND section_id=? and attendance_date=?;`,[subID,sectionId,attendanceDate]
+      // check attendance existence on that date
+      `select enr_number from attendance where sub_id=? AND section_id=? and attendance_date=?;`,[subID,sectionId,attendanceDate]  
    )
    if(result.length==0){
+      // no record of that day so attendance has not been marked previously
       return result;
    }
    else{
-      const result2 = await pool.query(
+      const [result2] = await pool.query(
          `select enr_number,status from attendance where sub_id=? AND section_id=? and attendance_date=?`,[subID,sectionId,attendanceDate]
       )
+      // attendance of this day has been marked previously
+      return result2;
    }
  }
 //  const [result] = await pool.query(
