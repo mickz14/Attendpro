@@ -17,7 +17,10 @@ const router = express.Router();
 // importing data from database file
 
 // import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
-import { chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData, get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR, getAvailableSubjects, getAvailableSections, addLecture, getExistingLectures,check_att_array_existance } from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData, 
+    get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
+    getAvailableSubjects, getAvailableSections, addLecture, getExistingLectures, check_att_array_existance,
+    insertAttendanceEntry,updateAttendanceEntry } from './database.js';
 
 // ==================================================================================
 
@@ -49,10 +52,10 @@ app.use(session({
 //////////////////////
 app.get("/", (req, res) => {
     // console.log(document.cookie);
-    if(typeof(req.session.user )== "undefined"){
+    if (typeof (req.session.user) == "undefined") {
         // req.userxists = 0;
         res.render("index") //or index.ejs it's same        
-    }else{
+    } else {
         req.session.userxists = 1;
         res.render("index")
     }
@@ -61,7 +64,7 @@ app.get("/", (req, res) => {
 async function t_func1(req, res) {
     // function called without post request
     let text;
-    if(typeof(req.session.userxists) != "undefined" && req.session.userxists == 1){
+    if (typeof (req.session.userxists) != "undefined" && req.session.userxists == 1) {
         res.render("t_dashboard");
     }
     else if (typeof (req.dataProcessed) == "undefined") {
@@ -195,13 +198,13 @@ app.get('/api/teacher_lectures', async (req, res) => {
 app.get('/api/get_students', async (req, res) => {
     const sectionId = req.query.section_id; // Get the section_id from query parameter
     const subID = req.query.sub_id;
-    const attendanceDate= req.query.attendance_date;
+    const attendanceDate = req.query.attendance_date;
 
     try {
         const students = await getStudentData(sectionId);
         // res.json(students); // Send the student data as JSON
-        const attendanceStatus = await check_att_array_existance(sectionId,subID,attendanceDate);
-        res.json({stu:students,stat:attendanceStatus});
+        const attendanceStatus = await check_att_array_existance(sectionId, subID, attendanceDate);
+        res.json({ stu: students, stat: attendanceStatus });
     } catch (error) {
         console.error("Error fetching student data:", error);
         res.status(500).json({ error: 'Failed to retrieve student data' });
@@ -215,13 +218,51 @@ app.get('/api/studentInfo', async (req, res) => {
     const studentInfo = await getStudentInfofromENR(studentENR);
     const studentpinfo = studentInfo[0];
     const studentSubjects = studentInfo[1];
-    res.json([studentpinfo,studentSubjects]);
+    res.json([studentpinfo, studentSubjects]);
 });
 
 
-app.post('/api/post_attendanceData',async(req,res)=>{
+// app.post('/api/post_attendanceData',async(req,res)=>{
 
-})
+// })
+app.post('/markAttendance', async (req, res) => {
+    try {
+        const attendanceData = req.body; // Array of attendance objects
+        // Iterate through the data and insert/update attendance table
+        // Check if an entry already exists
+        console.log(attendanceData[0]);
+        var sec_id = attendanceData[0].section_id;
+        var subj_id = attendanceData[0].sub_id;
+        var att_date = attendanceData[0].attendance_date;
+        const existingEntry = await check_att_array_existance(sec_id,subj_id,att_date);
+        console.log("abc");
+        console.log(sec_id);
+
+        for (let entry of attendanceData) {
+            var { attendance_date, enr_number, sub_id, section_id, status } = entry;
+            enr_number = parseInt(enr_number);
+            // console.log(entry);
+            console.log(existingEntry);
+
+            if (existingEntry == 0) {
+                // Insert new entry
+                const insert = await insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
+                console.log("def");
+            } 
+            
+            else {
+                // Update existing entry
+                const update = await updateAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
+                console.log("ijh");
+            }
+        }
+        res.json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: 'Error saving attendance.' });
+    }
+});
+
 
 app.get("/teacher_edit", async (req, res) => {
     const f_id = req.session.user.id;

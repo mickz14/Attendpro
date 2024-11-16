@@ -163,7 +163,7 @@ async function renderPage(page){
                 isPresent = false;
             }
         }
-        const row = `
+        var row = `
             <tr>
                 <td class="border-2 px-4 py-2">${student.ENR_NUMBER}</td>
                 <td class="border-2 px-4 py-2">${student.STU_FNAME} ${student.STU_LNAME} </td>
@@ -177,6 +177,7 @@ async function renderPage(page){
             </tr>
         `;
         tablebody.insertAdjacentHTML("beforeend", row);
+        // row.classList.add("attendance-row");
     }
 
     
@@ -200,7 +201,7 @@ function handleCheckboxClick(e) {
     const index = e.target.getAttribute("data-index");
     const isChecked = e.target.checked;
 
-    console.log(index);
+    // console.log(index);
     // Update attendanceStatus array
     attendanceStatus[index] = isChecked;
 
@@ -228,8 +229,59 @@ markallpresent.addEventListener('click',()=>{
 
 saveAtt.addEventListener('click',()=>{
     // const dataToBeSent = [subID,sectionID,attendanceDate,obj(enr_number:status)]
+    const attendanceDate = todayFormatted;
+    const subjectId = subID;
+    const sectionId = sectionID;
 
-    })
+
+    // Collecting attendance data from the table or rendered UI
+    const attendanceSend = new Map();
+    document.querySelectorAll("tr").forEach(row => {
+        const enrollmentNumber = row.querySelector("td:nth-child(1)")?.textContent.trim(); // Assuming dataset attribute for enr_number
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        var status = checkbox?.checked ? 1 : 0;
+
+    // Ensure both enrollment number and status are valid
+    if (enrollmentNumber && checkbox) {
+        attendanceSend.set(enrollmentNumber, status);
+    }
+
+    });
+    // console.log(attendanceSend);
+    // Convert the Map into an array of objects for sending to the backend
+    const attendanceData = Array.from(attendanceSend, ([enr_number, status]) => ({
+        attendance_date: attendanceDate,
+        enr_number,
+        sub_id: subjectId,
+        section_id: sectionId,
+        status
+    }));
+    console.log(attendanceData);
+
+    // Send the data to the backend
+    saveAttendance(attendanceData);
+
+
+    });
+
+    function saveAttendance(data) {
+        fetch('/markAttendance', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert('Attendance saved successfully!');
+                location.reload();
+            } else {
+                alert('Error saving attendance: ' + result.message);
+            }
+        })
+        .catch(err => console.error('Fetch Error:', err));
+    }
+
 
 
 
