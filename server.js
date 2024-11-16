@@ -201,7 +201,6 @@ app.get('/api/get_students', async (req, res) => {
         const students = await getStudentData(sectionId);
         // res.json(students); // Send the student data as JSON
         const attendanceStatus = await check_att_array_existance(sectionId,subID,attendanceDate);
-        console.log(attendanceStatus);
         res.json({stu:students,stat:attendanceStatus});
     } catch (error) {
         console.error("Error fetching student data:", error);
@@ -220,9 +219,9 @@ app.get('/api/studentInfo', async (req, res) => {
 });
 
 
-// app.post('/api/post_attendanceData',async(req,res)=>{
+app.post('/api/post_attendanceData',async(req,res)=>{
 
-// })
+})
 
 app.get("/teacher_edit", async (req, res) => {
     const f_id = req.session.user.id;

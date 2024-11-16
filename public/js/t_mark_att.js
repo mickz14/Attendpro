@@ -55,9 +55,21 @@ takeAttendanceBtn.addEventListener("click", () => {
     .then(response => response.json())
     .then(recieved_response => {
         studentData = recieved_response.stu;
+        stat_array = recieved_response.stat;
+        console.log(stat_array);
         rowsData = studentData;
+
+        if(stat_array.length == 0){
+            attendanceStatus = 0;
+        }else{
+            let new_status = new Map();
+            // console.log(stat_array.enr_number);
+            for(let j = 0 ;j < stat_array.length; j++){
+                new_status.set(stat_array[j].enr_number,stat_array[j].status)
+            }
+            attendanceStatus = new_status;
+        }
         console.log("rows data" ,rowsData);
-        attendanceStatus = Array(rowsData.length).fill(false);
         // Initial render
         renderPage(1).then(() => setupCheckboxListeners());
     })
@@ -133,11 +145,28 @@ async function renderPage(page){
 
     for (let i = startIndex; i < endIndex; i++) {
         const student = rowsData[i];
-        const isPresent = attendanceStatus[i];
+        if(student.STU_LNAME == null){
+            student.STU_LNAME = "";
+        }
+        
+        if(attendanceStatus == 0){
+            var isPresent = false;
+        }else{
+            if(attendanceStatus.has(student.ENR_NUMBER) ){
+                const x = attendanceStatus.get(student.ENR_NUMBER);
+                if(x == 0){
+                    isPresent = false;
+                }else{
+                    isPresent = true;
+                }
+            }else{
+                isPresent = false;
+            }
+        }
         const row = `
             <tr>
                 <td class="border-2 px-4 py-2">${student.ENR_NUMBER}</td>
-                <td class="border-2 px-4 py-2">${student.STU_FNAME}</td>
+                <td class="border-2 px-4 py-2">${student.STU_FNAME} ${student.STU_LNAME} </td>
                 <td class="border-2 px-4 py-2 text-center"><input type="checkbox" class="checkbox" ${isPresent ? "checked" : ""} data-index="${i}">
                 </td>
                 <td class="border-2 px-4 py-2 text-center"><div class="${isPresent ? 'present h-6 w-16 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500' : 'absent h-6 w-16 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500'}">
@@ -171,6 +200,7 @@ function handleCheckboxClick(e) {
     const index = e.target.getAttribute("data-index");
     const isChecked = e.target.checked;
 
+    console.log(index);
     // Update attendanceStatus array
     attendanceStatus[index] = isChecked;
 
@@ -189,7 +219,7 @@ markallpresent.addEventListener('click',()=>{
         markallpresent.textContent = "Mark All Absent";
     }
     else if(markallpresent.textContent == "Mark All Absent") {
-        attendanceStatus.fill(false);
+        attendanceStatus.clear();
         markallpresent.textContent = "Mark All Present";
 
     }

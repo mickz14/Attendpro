@@ -173,11 +173,10 @@ export async function remove_lecture(section_name,subject_alias){
    const result = await pool.query(
       `DELETE FROM LECTURE WHERE SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_ALIAS = ?) AND SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = ?);`,[subject_alias,section_name]
    )
-   console.log(result);
    return result[0];
 }
 
-remove_lecture("BD","F14");
+// remove_lecture("BD","F14");
 
 
 

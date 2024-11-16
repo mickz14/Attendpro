@@ -318,11 +318,10 @@
               split_array_of_lect_name = string_of_lec_name.split("-");
               remove_lect_section = split_array_of_lect_name[0];
               remove_lect_subject_alias = split_array_of_lect_name[1];
-              console.log(remove_lect_section);
-              console.log(remove_lect_subject);
 
               try {
-                const response = await remove_lecture(remove_lect_section,remove_lect_subject_alias);
+                // not working because of foreigh key constraint on lecture table
+                // const response = await remove_lecture(remove_lect_section,remove_lect_subject_alias);
                 
                 lect_div.remove();  // Remove the label from the DOM
                   } catch (error) {
