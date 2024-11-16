@@ -221,39 +221,29 @@ app.get('/api/studentInfo', async (req, res) => {
     res.json([studentpinfo, studentSubjects]);
 });
 
-
-// app.post('/api/post_attendanceData',async(req,res)=>{
-
-// })
 app.post('/markAttendance', async (req, res) => {
     try {
         const attendanceData = req.body; // Array of attendance objects
         // Iterate through the data and insert/update attendance table
         // Check if an entry already exists
-        console.log(attendanceData[0]);
         var sec_id = attendanceData[0].section_id;
         var subj_id = attendanceData[0].sub_id;
         var att_date = attendanceData[0].attendance_date;
         const existingEntry = await check_att_array_existance(sec_id,subj_id,att_date);
-        console.log("abc");
-        console.log(sec_id);
 
         for (let entry of attendanceData) {
             var { attendance_date, enr_number, sub_id, section_id, status } = entry;
             enr_number = parseInt(enr_number);
             // console.log(entry);
-            console.log(existingEntry);
 
             if (existingEntry == 0) {
                 // Insert new entry
                 const insert = await insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
-                console.log("def");
             } 
             
             else {
                 // Update existing entry
                 const update = await updateAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
-                console.log("ijh");
             }
         }
         res.json({ success: true });
@@ -270,11 +260,7 @@ app.get("/teacher_edit", async (req, res) => {
 
     let data = r;
     res.render("teacher_editprofile", { data, f_id });
-    //for faculty_lecture to get available sections
-    // const { year } = req.query;
-    // f_id = req.query;
-    // const sections = await getAvailableSections(year, f_id);
-    // res.json(sections);
+ 
 })
 
 app.post("/teacher_edit", (req, res) => {
@@ -303,9 +289,6 @@ app.get("/get-sections", async (req, res) => {
     else if (year == "Fourth") {
         yr = 4;
     }
-    // facultyId = req.query;
-    // console.log(facultyId);
-    // console.log(typeof(year));
 
     try {
         const sections = await getAvailableSections(yr, facultyId);

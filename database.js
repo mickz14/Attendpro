@@ -54,24 +54,6 @@ export async function getStudentData(sectionID) {
   return result2;  
 }
 
-// export function insertIntoAttendanceTable(){
-
-// }
-
-
-// const [result2] = await pool.query(
-//    'SELECT * FROM (SELECT SUBJECT.SUB_ID, SUBJECT.SUB_NAME, SECTION.SECTION_ID, SECTION.SECTION_NAME FROM LECTURE JOIN SUBJECT ON LECTURE.SUB_ID = SUBJECT.SUB_ID JOIN SECTION ON LECTURE.SECTION_ID = SECTION.SECTION_ID WHERE LECTURE.F_ID= 10001) AS FACULTY_LECTURES;');
-
-// console.log(result2);
-
-
-
-
-// const r = await chk_t_lect_num(10001);
-// console.log(r);
-// console.log(typeof(r));
-
-
 // this function is used to get the profile details of the teacher
 
 export async function get_teacher_profile_details_from_id(id){
@@ -90,7 +72,6 @@ export async function update_teacher_profile(data,fid){
    )
 }
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
-// database.js
 
 // func to get student data and student sub data from student ENR
 export async function getStudentInfofromENR(studentENR) {
@@ -123,10 +104,6 @@ export async function getStudentInfofromENR(studentENR) {
       return result2;
    }
  }
-//  const [result] = await pool.query(
-//    `  select enr_number,status from attendance where sub_id='ETCS_413' AND section_id=116 and attendance_date='2024-11-14';`)
-// console.log(result);
-// console.log(typeof(result));
 
 // Get sections based on year, excluding those already used with the selected subject
 export const getAvailableSections= async (year,facultyId) => {
@@ -158,7 +135,6 @@ export const addLecture = async (facultyId, sectionId, subjectId) => {
    await pool.query(`INSERT INTO lecture (F_ID, SECTION_ID, SUB_ID) VALUES (?, ?, ?)`, [facultyId, sectionId, subjectId]);
 };
 
-// database.js
 
 export const getExistingLectures = async (facultyId) => {
    const [rows] = await pool.query(`SELECT S.SECTION_NAME, SUB.SUB_ALIAS FROM LECTURE L JOIN SECTION S ON L.SECTION_ID = S.SECTION_ID JOIN SUBJECT SUB ON L.SUB_ID = SUB.SUB_ID WHERE L.F_ID = ?`,[facultyId]);
@@ -176,13 +152,6 @@ export async function remove_lecture(section_name,subject_alias){
    return result[0];
 }
 
-// remove_lecture("BD","F14");
-
-// Check if an attendance entry exists
-// export async function checkAttendanceEntry(attendance_date, sub_id, section_id, enr_number) {
-//    const rows = await pool.query(`SELECT * FROM attendance WHERE attendance_date = ? AND sub_id = ? AND section_id = ? AND enr_number = ?`,[attendance_date, sub_id, section_id, enr_number])
-//    return rows.length > 0;
-// }
 
 // Update an existing attendance entry
 export async function updateAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status) {
@@ -199,11 +168,5 @@ export async function insertAttendanceEntry(attendance_date, sub_id, section_id,
    return result;
 }
 
-
-
-///////////////////////////////////
-// const r = await get_teacher_profile_details_from_id(10001);
-// console.log(r);
-// console.log(typeof(r));
 
 // pool.end();

@@ -256,7 +256,6 @@ saveAtt.addEventListener('click',()=>{
         section_id: sectionId,
         status
     }));
-    console.log(attendanceData);
 
     // Send the data to the backend
     saveAttendance(attendanceData);
