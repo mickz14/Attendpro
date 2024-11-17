@@ -17,10 +17,12 @@ const router = express.Router();
 // importing data from database file
 
 // import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
-import { chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData, 
+import {
+    chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData,
     get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
-    getAvailableSubjects, getAvailableSections, addLecture, getExistingLectures, check_att_array_existance,
-    insertAttendanceEntry,updateAttendanceEntry } from './database.js';
+    getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance,
+    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken
+} from './database.js';
 
 // ==================================================================================
 
@@ -205,6 +207,7 @@ app.get('/api/get_students', async (req, res) => {
         // res.json(students); // Send the student data as JSON
         const attendanceStatus = await check_att_array_existance(sectionId, subID, attendanceDate);
         res.json({ stu: students, stat: attendanceStatus });
+        
     } catch (error) {
         console.error("Error fetching student data:", error);
         res.status(500).json({ error: 'Failed to retrieve student data' });
@@ -220,7 +223,19 @@ app.get('/api/studentInfo', async (req, res) => {
     const studentSubjects = studentInfo[1];
     res.json([studentpinfo, studentSubjects]);
 });
+//chat gpt- get student attendance to show in view attendance table
+app.get('/api/get_students_by_section', async (req, res) => {
+    const { sectionName } = req.query;
 
+    try {
+        const students = await getStudentsBySection(sectionName);
+        res.json(students);
+    } catch (error) {
+        console.error('Error fetching student data:', error);
+        res.status(500).json({ error: 'Failed to fetch student data' });
+    }
+});
+//chat gpt ends
 app.post('/markAttendance', async (req, res) => {
     try {
         const attendanceData = req.body; // Array of attendance objects
@@ -229,7 +244,7 @@ app.post('/markAttendance', async (req, res) => {
         var sec_id = attendanceData[0].section_id;
         var subj_id = attendanceData[0].sub_id;
         var att_date = attendanceData[0].attendance_date;
-        const existingEntry = await check_att_array_existance(sec_id,subj_id,att_date);
+        const existingEntry = await check_att_array_existance(sec_id, subj_id, att_date);
 
         for (let entry of attendanceData) {
             var { attendance_date, enr_number, sub_id, section_id, status } = entry;
@@ -239,8 +254,8 @@ app.post('/markAttendance', async (req, res) => {
             if (existingEntry == 0) {
                 // Insert new entry
                 const insert = await insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
-            } 
-            
+            }
+
             else {
                 // Update existing entry
                 const update = await updateAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
@@ -252,7 +267,38 @@ app.post('/markAttendance', async (req, res) => {
         res.json({ success: false, message: 'Error saving attendance.' });
     }
 });
+////////////////////////////////////////////////////////////////////////////////
+//chat gpt
+// Endpoint to fetch lecture attendance data
+app.post('/api/get_lectures_taken', async (req, res) => {
+    const { enr_number, section_name, subject_name } = req.body;
 
+    try {
+        const lecturesTaken = await getLecturesTaken(enr_number, section_name, subject_name);
+        console.log('Lectures Taken:', lecturesTaken); // Debug log
+        res.json({ lecturesTaken });
+    } catch (error) {
+        console.error('Error fetching lectures taken:', error);
+        res.status(500).json({ error: 'Failed to fetch lectures taken' });
+    }
+});
+
+// API to get total lectures for a lecture
+app.post('/api/get_total_lectures', async (req, res) => {
+    const { section_name, subject_name } = req.body;
+
+    try {
+        const totalLectures = await getTotalLectures(section_name, subject_name);
+        console.log('Total Lectures:', totalLectures); // Debug log
+        res.json({ totalLectures });
+    } catch (error) {
+        console.error('Error fetching total lectures:', error);
+        res.status(500).json({ error: 'Failed to fetch total lectures' });
+    }
+});
+
+//chat gpt ends
+////////////////////////////////////////////////////////////////////////
 
 app.get("/teacher_edit", async (req, res) => {
     const f_id = req.session.user.id;
