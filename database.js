@@ -156,7 +156,7 @@ export async function remove_lecture(section_name,subject_alias){
 // Update an existing attendance entry
 export async function updateAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status) {
    const [result] = await pool.query(`UPDATE attendance SET status = ? WHERE attendance_date = ? AND sub_id = ? AND section_id = ? AND enr_number = ?`,[status, attendance_date, sub_id, section_id, enr_number])
-    console.log(result);
+   //  console.log(result);
     return result;
    
 }
@@ -164,7 +164,6 @@ export async function updateAttendanceEntry(attendance_date, sub_id, section_id,
 // Insert a new attendance entry
 export async function insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status) {
    const [result] = await pool.query(`INSERT INTO attendance (attendance_id,attendance_date, sub_id, section_id, enr_number, status) VALUES (null,?, ?, ?, ?, ?)`,[attendance_date, sub_id, section_id, enr_number, status])
-   console.log(result);
    return result;
 }
 

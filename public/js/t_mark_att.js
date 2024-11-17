@@ -56,7 +56,7 @@ takeAttendanceBtn.addEventListener("click", () => {
     .then(recieved_response => {
         studentData = recieved_response.stu;
         stat_array = recieved_response.stat;
-        console.log(stat_array);
+        // console.log(stat_array);
         rowsData = studentData;
 
         if(stat_array.length == 0){
@@ -69,7 +69,7 @@ takeAttendanceBtn.addEventListener("click", () => {
             }
             attendanceStatus = new_status;
         }
-        console.log("rows data" ,rowsData);
+        // console.log("rows data" ,rowsData);
         // Initial render
         renderPage(1).then(() => setupCheckboxListeners());
     })
@@ -151,7 +151,10 @@ async function renderPage(page){
         
         if(attendanceStatus == 0){
             var isPresent = false;
-        }else{
+        }else if(attendanceStatus == 1){
+            var isPresent = true;
+        }
+        else{
             if(attendanceStatus.has(student.ENR_NUMBER) ){
                 const x = attendanceStatus.get(student.ENR_NUMBER);
                 if(x == 0){
@@ -203,7 +206,7 @@ function handleCheckboxClick(e) {
 
     // console.log(index);
     // Update attendanceStatus array
-    attendanceStatus[index] = isChecked;
+    // attendanceStatus[index] = isChecked;
 
     // Update the status display in the last cell
     const tablerow = e.target.closest('tr');
@@ -216,11 +219,11 @@ function handleCheckboxClick(e) {
 
 markallpresent.addEventListener('click',()=>{
     if(markallpresent.textContent == "Mark All Present"){
-        attendanceStatus.fill(true);
+        attendanceStatus = 1;
         markallpresent.textContent = "Mark All Absent";
     }
     else if(markallpresent.textContent == "Mark All Absent") {
-        attendanceStatus.clear();
+        attendanceStatus = 0;
         markallpresent.textContent = "Mark All Present";
 
     }
