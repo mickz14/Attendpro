@@ -56,7 +56,7 @@ takeAttendanceBtn.addEventListener("click", () => {
     .then(recieved_response => {
         studentData = recieved_response.stu;
         stat_array = recieved_response.stat;
-        // console.log(stat_array);
+        console.log(stat_array);
         rowsData = studentData;
 
         if(stat_array.length == 0){
