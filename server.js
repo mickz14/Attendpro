@@ -18,7 +18,7 @@ const router = express.Router();
 
 // import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
 import {
-    chk_pass_from_enr, chk_pass_from_id, chk_t_lect_num, getLecture, getStudentData,
+    chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,
     get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
     getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance,
     insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken
@@ -64,7 +64,7 @@ app.get("/", (req, res) => {
 })
 //for faculty login
 async function t_func1(req, res) {
-    // function called without post request
+    // function called without post request i.e. when land on this page
     let text;
     if (typeof (req.session.userxists) != "undefined" && req.session.userxists == 1) {
         res.render("t_dashboard");
@@ -130,7 +130,7 @@ app.post('/teacher_login', t_func2, t_func1);
 
 //===================================================
 //for student
-async function stu_func1(req, res) { //without post request
+async function stu_func1(req, res) { //without post request i.e. when land on this page
     let text2;
     if (typeof (req.dataProcessed) == "undefined") {
         text2 = "";
@@ -182,6 +182,61 @@ async function stu_func2(req, res, next) {
 
 app.get('/student_login', stu_func1);
 app.post('/student_login', stu_func2, stu_func1);
+
+//============================================================
+//for hod
+async function hod_func1(req, res) { //without post request i.e. when land on this page
+    let text2;
+    if (typeof (req.dataProcessed) == "undefined") {
+        text2 = "";
+        res.render("hod_login.ejs", { text2 });
+    }
+    else {
+        let msg2 = req.dataProcessed.mssgcode;
+        if (msg2 == "wrong_username") {
+            text2 = "User does not exist !";
+            res.render("hod_login", { text2 });
+        } else if (msg2 == "wrong_password") {
+            text2 = "Incorrect Password !";
+            res.render("hod_login", { text2 });
+        } else if (msg2 == "hod_dashboard") {
+            res.render("hod_dashboard.ejs");
+        }
+        else {
+            res.render("error_page.ejs");
+        }
+    }
+}
+async function hod_func2(req, res, next) {
+
+    const hod_id = req.body.hod_id_key;
+    const hod_pass = req.body.hod_pass_key;
+    console.log("HOD ID:", hod_id);
+    console.log("HOD Password:", hod_pass);
+    const check3 = await chk_pass_from_hod_id(hod_id); // get actual value from database
+    console.log("Password from DB:", check3);
+    // authenticate user here
+
+    // wrong username `
+    req.dataProcessed = "";
+    if (check3 == "undefined") {
+        req.dataProcessed = { "mssgcode": "wrong_username" };
+    }
+    // right username wrong password
+    else if (check3 != hod_pass) {
+        req.dataProcessed = { "mssgcode": "wrong_password" };
+    }
+    // both correct - move to next page
+    else {
+        req.session.hod = { hod_id: hod_id };
+        req.dataProcessed = { "mssgcode": "hod_dashboard" };
+        console.log("Login successful, redirecting to dashboard");
+    }
+    return next();
+}
+
+app.get('/hod_login', hod_func1);
+app.post('/hod_login', hod_func2, hod_func1);
 
 //============================================================
 // JSON endpoint to send data to the frontend
@@ -430,7 +485,12 @@ app.get("/stu_dashboard", (req, res) => {
 app.use((req, res, next) => {
     res.status(404).render("error_page");
 })
-
+app.get("/hod_login",(req,res)=>{
+    res.render("hod_login")
+})
+app.get("/hod_dashboard",(req,res)=>{
+    res.render("hod_dashboard")
+})
 function getFormattedDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");

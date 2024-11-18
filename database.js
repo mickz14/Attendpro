@@ -40,6 +40,14 @@ export async function chk_pass_from_enr(id) {
 
 }
 
+//===========================================
+//for hod login
+export async function chk_pass_from_hod_id(id) {
+   const [result3] = await pool.query('SELECT HOD_PASSWORD FROM HOD WHERE HOD_ID = ?',[id]);
+   if (result3.length === 0) return "undefined"; // Check length explicitly
+   return result3[0].HOD_PASSWORD;   
+}
+
 //////////////////////////////
 export async function getLecture(f_id) {
    const [result2] = await pool.query(
@@ -173,7 +181,7 @@ export async function getLecturesTaken(enr_number, section_name, subject_name) {
    // const send1 = result[0].LRES;
    //return send1;
    try{
-      console.log(result[0]);
+      //console.log(result[0]);
       return result[0]?.lecturesTaken || 0;
    }catch (error) {
       console.error("getLecturesTaken Error:", error);
@@ -186,7 +194,7 @@ export async function getTotalLectures(section_name, subject_name) {
    // const send2 = result[0].TRES;
    //return send2;
    try{
-      console.log(result[0]);
+      //console.log(result[0]);
       return result[0]?.totalLectures || 0; 
       // Return count or 0 if no records found
    }catch (error) {
