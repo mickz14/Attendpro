@@ -210,6 +210,9 @@ function handleCheckboxClick(e) {
 
     // Update the status display in the last cell
     const tablerow = e.target.closest('tr');
+    const enr = parseInt(tablerow.firstElementChild.textContent);
+    attendanceStatus.set(enr,isChecked?1:0);
+    // console.log(attendanceStatus);
     tablerow.lastElementChild.innerHTML = `
         <div class="${isChecked ? 'present h-6 w-16 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500' : 'absent h-6 w-16 m-auto bg-red-200 border-2 border-red-400 rounded-md text-center text-red-500'}">
             ${isChecked ? "Present" : "Absent"}
@@ -219,11 +222,18 @@ function handleCheckboxClick(e) {
 
 markallpresent.addEventListener('click',()=>{
     if(markallpresent.textContent == "Mark All Present"){
-        attendanceStatus = 1;
+        // attendanceStatus = 1;
+        for (let key of attendanceStatus.keys()) {
+            attendanceStatus.set(key, 1);
+        }
+
         markallpresent.textContent = "Mark All Absent";
     }
     else if(markallpresent.textContent == "Mark All Absent") {
-        attendanceStatus = 0;
+        // attendanceStatus = 0;
+        for (let key of attendanceStatus.keys()) {
+            attendanceStatus.set(key, 0);
+        }
         markallpresent.textContent = "Mark All Present";
 
     }
@@ -237,22 +247,23 @@ saveAtt.addEventListener('click',()=>{
     const sectionId = sectionID;
 
 
-    // Collecting attendance data from the table or rendered UI
-    const attendanceSend = new Map();
-    document.querySelectorAll("tr").forEach(row => {
-        const enrollmentNumber = row.querySelector("td:nth-child(1)")?.textContent.trim(); // Assuming dataset attribute for enr_number
-        const checkbox = row.querySelector('input[type="checkbox"]');
-        var status = checkbox?.checked ? 1 : 0;
+    // // Collecting attendance data from the table or rendered UI
+    // const attendanceSend = new Map();
+    // document.querySelectorAll("tr").forEach(row => {
+    //     const enrollmentNumber = row.querySelector("td:nth-child(1)")?.textContent.trim(); // Assuming dataset attribute for enr_number
+    //     const checkbox = row.querySelector('input[type="checkbox"]');
+    //     var status = checkbox?.checked ? 1 : 0;
 
-    // Ensure both enrollment number and status are valid
-    if (enrollmentNumber && checkbox) {
-        attendanceSend.set(enrollmentNumber, status);
-    }
+    // // Ensure both enrollment number and status are valid
+    // if (enrollmentNumber && checkbox) {
+    //     attendanceSend.set(enrollmentNumber, status);
+    // }
 
-    });
+    // });
     // console.log(attendanceSend);
+
     // Convert the Map into an array of objects for sending to the backend
-    const attendanceData = Array.from(attendanceSend, ([enr_number, status]) => ({
+    const attendanceData = Array.from(attendanceStatus, ([enr_number, status]) => ({
         attendance_date: attendanceDate,
         enr_number,
         sub_id: subjectId,
