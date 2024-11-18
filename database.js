@@ -73,19 +73,7 @@ export async function update_teacher_profile(data, fid) {
 }
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-// func to get student data and student sub data from student ENR
-export async function getStudentInfofromENR(studentENR) {
-   const result = await pool.query(
-      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?', [studentENR]
-   )
-   const sem = result[0][0].STU_SEM;
 
-   const studentSubjects = await pool.query(
-      `select * from subject where sub_sem = ?;`, [sem]
-   )
-
-   return ([result[0][0], studentSubjects[0]]); //array of (object and array)
-}
 export async function check_att_array_existance(sectionId, subID, attendanceDate) {
    // console.log(sectionId,subID,attendanceDate);
    const [result] = await pool.query(
@@ -192,8 +180,9 @@ export async function getLecturesTaken(enr_number, section_name, subject_name) {
       throw error;
   }   
 }   
-export async function  getTotalLectures(section_name, subject_name) {
+export async function getTotalLectures(section_name, subject_name) {
    const [result] = await pool.query(`SELECT COUNT(DISTINCT attendance_date) AS totalLectures FROM attendance WHERE section_id = (SELECT section_id FROM section WHERE section_name = ?) AND sub_id = (SELECT sub_id FROM SUBJECT WHERE sub_name = ?);`,[section_name, subject_name]);
+   // console.log(result);
    // const send2 = result[0].TRES;
    //return send2;
    try{
@@ -204,9 +193,27 @@ export async function  getTotalLectures(section_name, subject_name) {
       console.error("getTotalLectures Error:", error);
       throw error;
   }
-
 }   
 
+// func to get student data and student sub data from student ENR
+export async function getStudentInfofromENR(studentENR) {
+   const [result] = await pool.query(
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?', [studentENR]
+   )
+   const sem = result[0].STU_SEM;
+   const section_id = result[0].SECTION_ID;
+
+   const [studentSubjects] = await pool.query(
+      `select * from subject where sub_sem = ?;`, [sem]
+   )
+   const [[section_name]] = await pool.query(
+      `select SECTION_NAME from section where SECTION_ID=?;`, [section_id]
+   )
+   result[0].SECTION_NAME = section_name.SECTION_NAME;
+   console.log(result[0]);
+
+   return ([result[0], studentSubjects]); //array of (object and array)
+}
 
 // pool.end();
 ////////////////////////////////////////

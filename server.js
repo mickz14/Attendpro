@@ -221,6 +221,14 @@ app.get('/api/studentInfo', async (req, res) => {
     const studentInfo = await getStudentInfofromENR(studentENR);
     const studentpinfo = studentInfo[0];
     const studentSubjects = studentInfo[1];
+
+    for (const subject of studentSubjects) {
+        console.log(`Processing Subject: ${studentpinfo.SECTION_NAME}, ${subject.SUB_NAME}`);
+        subject["total_lec"] = await getTotalLectures(studentpinfo.SECTION_NAME, subject.SUB_NAME);
+        subject['lec_taken'] = await getLecturesTaken(studentENR, studentpinfo.SECTION_NAME, subject.SUB_NAME);
+         
+    }
+
     res.json([studentpinfo, studentSubjects]);
 });
 //chat gpt- get student attendance to show in view attendance table
