@@ -25,7 +25,7 @@ viewAttendanceBtn.addEventListener("click", () => {
 
         // const [sectionName, subjectName] = lectureSelected.split('-');
 
-         // Get selected lecture data
+        // Get selected lecture data
         const lectureSelected = lectureSelect.options[lectureSelect.selectedIndex].text;
         const splitData = lectureSelected.split(' - ');
         if (splitData.length !== 2) {
@@ -52,7 +52,7 @@ viewAttendanceBtn.addEventListener("click", () => {
 
                 const tablebody = document.querySelector("tbody");
                 tablebody.innerHTML = '';  // Clear existing rows
-//////////////////////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////////////////////
                 // Fetch total lectures for the section and subject
                 fetch('/api/get_total_lectures', {
                     method: 'POST',
@@ -157,7 +157,7 @@ viewAttendanceBtn.addEventListener("click", () => {
 
 
 
-////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////
 
     }
 });

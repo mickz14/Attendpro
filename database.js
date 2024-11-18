@@ -185,20 +185,20 @@ export async function getLecturesTaken(enr_number, section_name, subject_name) {
    // const send1 = result[0].LRES;
    //return send1;
    try{
-      console.log(result);
-      return result?.lecturesTaken || 0;
+      console.log(result[0]);
+      return result[0]?.lecturesTaken || 0;
    }catch (error) {
       console.error("getLecturesTaken Error:", error);
       throw error;
   }   
 }   
 export async function  getTotalLectures(section_name, subject_name) {
-   const [result] = await pool.query(`SELECT COUNT(attendance_id) AS totalLectures FROM attendance WHERE section_id = (SELECT section_id FROM section WHERE section_name = ?) AND sub_id = (SELECT sub_id FROM SUBJECT WHERE sub_name = ?);`,[section_name, subject_name]);
+   const [result] = await pool.query(`SELECT COUNT(DISTINCT attendance_date) AS totalLectures FROM attendance WHERE section_id = (SELECT section_id FROM section WHERE section_name = ?) AND sub_id = (SELECT sub_id FROM SUBJECT WHERE sub_name = ?);`,[section_name, subject_name]);
    // const send2 = result[0].TRES;
    //return send2;
    try{
-      console.log(result);
-      return result?.totalLectures || 0; 
+      console.log(result[0]);
+      return result[0]?.totalLectures || 0; 
       // Return count or 0 if no records found
    }catch (error) {
       console.error("getTotalLectures Error:", error);
