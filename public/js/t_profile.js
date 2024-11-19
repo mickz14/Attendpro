@@ -1,4 +1,6 @@
 const lecturetable = document.getElementById('table-body');
+const tid_div = document.querySelector('.tid');
+const tname_div = document.querySelector('.tname');
 
 let lectureData;
 fetch('/api/teacher_lectures', {
@@ -23,5 +25,18 @@ fetch('/api/teacher_lectures', {
     })
     .catch(error => {
         console.error('Error fetching data:', error);
+    });
+
+let teacher_details;
+fetch('/api/teacher_details',{
+    method: 'GET', // Specify the HTTP method
+    headers: {
+        'Content-Type': 'application/json' // Optional, but good to include for JSON data
+    }
+    }).then(response => response.json()).then((tdata) => {
+        teacher_details = tdata;
+        console.log(teacher_details);
+        tid_div.textContent = `Teacher ID : ${teacher_details.F_ID}`;
+        tname_div.textContent = `Teacher Name : ${teacher_details.F_FNAME}${teacher_details.F_LNAME ? teacher_details.F_LNAME : ""}`;
     });
 

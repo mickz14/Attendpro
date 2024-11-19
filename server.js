@@ -244,11 +244,22 @@ app.post('/hod_login', hod_func2, hod_func1);
 //TEACHER LECTURES FETCH 
 app.get('/api/teacher_lectures', async (req, res) => {
 
-    const f_id = req.session.user ? req.session.user.id : 10002; //for testing
+    const f_id = req.session.user.id;
+    // const f_id = req.session.user ? req.session.user.id : 10002; //for testing
     const teacherData = await getLecture(f_id); // Fetch TEACHER LECTURES based on teacher ID
     res.json(teacherData); // Send data as JSON to the frsontend
 
 });
+
+app.get('/api/teacher_details', async (req, res) => {
+
+    const f_id = req.session.user.id; //for testing
+    const teacherData = await get_teacher_profile_details_from_id(f_id); // Fetch teacher detail based on teacher ID
+    teacherData.F_ID = f_id;
+    res.json(teacherData); // Send data as JSON to the frontend
+
+});
+
 
 //==============================================================
 //STUDENT LIST FETCH

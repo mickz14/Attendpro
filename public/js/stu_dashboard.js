@@ -28,13 +28,13 @@ async function getInfo(){
     year.textContent = `Semester : ${studentInfo.STU_SEM}`;
 
     studentSubArray.forEach((sub,i) => {
-        const percentage = sub.total_lec ? `${Math.round(sub.lec_taken/sub.total_lec * 100) / 100}%` : "NA"; // Multiplies, rounds, and divides
+        const percentage = sub.total_lec ? Math.round(sub.lec_taken/sub.total_lec * 100) / 100 : "NA"; // Multiplies, rounds, and divides
         const row = `<tr>
                 <td class="px-4 py-2 border border-gray-400">${i+1}</td>
                 <td class="px-4 py-2 border border-gray-400 overflow-x-auto">${sub.SUB_NAME}</td>
                 <td class="px-4 py-2 border border-gray-400">${sub.lec_taken}</td>
                 <td class="px-4 py-2 border border-gray-400">${sub.total_lec}</td>
-                <td class="px-4 py-2 border border-gray-400">${percentage}</td>
+                <td class="px-4 py-2 border border-gray-400">${percentage}%</td>
                 <td class="px-4 py-2 border border-gray-400"> ${getRemark(percentage)}
                 </td>
                 <td class="px-4 py-2 border border-gray-400">
