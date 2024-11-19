@@ -59,10 +59,14 @@ takeAttendanceBtn.addEventListener("click", () => {
         // console.log(stat_array);
         rowsData = studentData;
 
-        if(stat_array.length == 0){
-            for (let key of attendanceStatus.keys()) {
-                attendanceStatus.set(key, 0);
+        if(stat_array == 0){
+            let new_status = new Map();
+            // console.log(studentData[i].ENR_NUMBER);
+            for(let i = 0 ;i < studentData.length; i++){
+                new_status.set(studentData[i].ENR_NUMBER,0)
             }
+            attendanceStatus = new_status;
+            console.log(attendanceStatus);
         }else{
             let new_status = new Map();
             // console.log(stat_array.enr_number);
