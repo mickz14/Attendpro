@@ -36,12 +36,12 @@
                 <span class="material-symbols-outlined group-hover:text-[#DB2878]">space_dashboard</span>
                 <a class="sb-item group-hover:text-[#DB2878] ">Dashboard</a>
             </div>
-            <div onclick="openPage('t_profile')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden" >
+            <div onclick="openPage('/t_profile')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden" >
                 <div class="h-full w-2  group-hover:bg-[#DB2878] "></div>
                 <span class="material-symbols-outlined group-hover:text-[#DB2878]">person</span>
                 <a class="sb-item group-hover:text-[#DB2878]">Profile</a>
             </div>
-            <div onclick="openPage('t_view_attendance')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
+            <div onclick="openPage('/t_view_attendance')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
                 <div class="h-full w-2  group-hover:bg-[#DB2878] "></div>
                 <span class="material-symbols-outlined group-hover:text-[#DB2878]">visibility</span>
                 <a class="sb-item group-hover:text-[#DB2878]">View Attendance</a>
@@ -51,24 +51,26 @@
                 <span class="material-symbols-outlined group-hover:text-[#DB2878]">check_box</span>
                 <a class="sb-item group-hover:text-[#DB2878]">Mark Attendance</a>
             </div>
-            <div class="w-full h-12 my-2 flex rounded items-center gap-3 bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
-                <div class="h-full w-2 bg-[#DB2878]"></div>
-                <span class="material-symbols-outlined text-[#DB2878]">logout</span>
-                <a class="sb-item text-[#DB2878]">Log Out</a>
-            </div>
-            <div onclick="openPage('/t_help')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
+            <div onclick="openPage('/t_logout')" class="w-full h-12 my-2 flex rounded items-center gap-3 hover:bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
                 <div class="h-full w-2  group-hover:bg-[#DB2878] "></div>
-                <span class="material-symbols-outlined group-hover:text-[#DB2878]">help</span>
-                <a class="sb-item group-hover:text-[#DB2878]">Help</a>
+                <span class="material-symbols-outlined group-hover:text-[#DB2878]">logout</span>
+                <a class="sb-item group-hover:text-[#DB2878]">Log Out</a>
+            </div>
+            <div class="w-full h-12 my-2 flex rounded items-center gap-3 bg-[#DB2878]/20 group cursor-pointer overflow-hidden">
+                <div class="h-full w-2 bg-[#DB2878] "></div>
+                <span class="material-symbols-outlined text-[#DB2878]">help</span>
+                <a class="sb-item text-[#DB2878]">Help</a>
             </div>
         </div>
     </div>
 
     <!-- Main Section -->
-    <div onclick="location.href='/t_destroySession'" class="main-sec ml-0 sm:ml-60 mt-16 p-8 h-[calc(100vh-4rem)] overflow-auto  bg-gray-200/70 text-[#515151]">
-        <h1 class="text-2xl font-medium mb-4"></h1>
-        <div
-          class="logout-btn h-10 w-44 self-center bg-[#DB2878] hover:bg-[#DB2878]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center m-auto">
-          Logout
-        </div>
+    <div class="main-sec ml-0 sm:ml-60 mt-16 p-8 h-[calc(100vh-4rem)] overflow-auto bg-gray-200/70 text-[#515151]">
+        <h1 class="text-2xl font-bold mb-4">Teacher's Guide</h1>
+        
     </div>
+
+
+
+</body>
+</html>

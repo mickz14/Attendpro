@@ -66,7 +66,7 @@ takeAttendanceBtn.addEventListener("click", () => {
                 new_status.set(studentData[i].ENR_NUMBER,0)
             }
             attendanceStatus = new_status;
-            console.log(attendanceStatus);
+            // console.log(attendanceStatus);
         }else{
             let new_status = new Map();
             // console.log(stat_array.enr_number);

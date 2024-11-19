@@ -475,6 +475,9 @@ app.get("/t_view_attendance", (req, res) => {
 app.get("/t_mark_attendance", (req, res) => {
     res.render("t_mark_attendance")
 })
+app.get("/t_help", (req, res) => {
+    res.render("t_help")
+})
 app.get("/t_logout", (req, res) => {
     res.render("t_logout")
 })
@@ -492,6 +495,9 @@ app.get("/student_login", (req, res) => {
 })
 app.get("/stu_dashboard", (req, res) => {
     res.render("stu_dashboard")
+})
+app.get("/stu_more_info", (req, res) => {
+    res.render("stu_more_info")
 })
 app.use((req, res, next) => {
     res.status(404).render("error_page");
