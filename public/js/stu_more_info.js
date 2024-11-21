@@ -10,7 +10,7 @@ const next = document.querySelector('#next')
 async function getMOREInfo(){
     const urlParams = new URLSearchParams(window.location.search);
     const subId = urlParams.get('subId');
-    console.log(subId);
+    console.log(typeof(subId));
     const res = await fetch(`/api/detailedStuAttendance?subId=${subId}`,
         {method : 'GET', 
         headers : {

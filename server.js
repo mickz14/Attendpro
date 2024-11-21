@@ -513,9 +513,9 @@ app.get('/stu_more_info', async (req, res) => {
 
 app.get('/api/detailedStuAttendance',async (req, res) => {
     const subId = req.query.subId;
-    console.log(typeof(subId));
-    // const enr = req.session.student.s_enr;
-    const enr = 196202721;
+    // console.log(typeof(subId));
+    const enr = req.session.student.s_enr;
+    // const enr = 196202721;
     const detailedAttendance = await fetchDetailedAttendance(enr, subId);
     console.log(detailedAttendance);
     res.json(detailedAttendance);
