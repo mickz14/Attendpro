@@ -226,9 +226,10 @@ export async function getStudentInfofromENR(studentENR) {
 
 export async function fetchDetailedAttendance(enr,subId) {
    console.log(subId,enr);
+   console.log(typeof(subId));
    const [result] = await pool.query(
       `SELECT DATE_FORMAT(attendance_date, '%Y-%m-%d') AS attendance_date, status
-      FROM attendance where SUB_ID= '${subId}' AND ENR_NUMBER= ${enr};`)
+      FROM attendance where SUB_ID= ${subId} AND ENR_NUMBER= ${enr};`)
 
 
       console.log(result);
