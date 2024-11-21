@@ -5,7 +5,6 @@ import dotenv from 'dotenv' // for enviornment variables file
 import e from 'connect-flash';
 dotenv.config()
 
-// ==================================================================================================
 const pool = mysql.createPool({
    host: process.env.MYSQL_HOST,
    user: process.env.MYSQL_USER,
@@ -14,6 +13,7 @@ const pool = mysql.createPool({
    connectionLimit: 10,
 }).promise();
 
+// ==================================================================================================
 
 // this function takes the faculty id and return the password associated with it 
 export async function chk_pass_from_id(id) {

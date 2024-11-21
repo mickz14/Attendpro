@@ -1,22 +1,17 @@
 
-// const express = require("express")
+
 import express from 'express'
 const app = express()
 const port = 8080
-// const ejsmate = require("ejs-mate");
 import ejsmate from "ejs-mate"
-// const path = require("path")
 import path from 'node:path'
 import { fileURLToPath } from 'url'
-// const ejs = require("ejs")
-import ejs from 'ejs'
 import session from 'express-session';
 const router = express.Router();
 
 // ===================================================================================
 // importing data from database file
 
-// import { chk_pass_from_enr, chk_pass_from_id ,chk_t_lect_num,getLecture,getStudentData,get_teacher_profile_details_from_id,update_teacher_profile,getStudentInfofromENR} from './database.js';
 import {
     chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,
     get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
@@ -297,7 +292,7 @@ app.get('/api/studentInfo', async (req, res) => {
 
     res.json([studentpinfo, studentSubjects]);
 });
-//chat gpt- get student attendance to show in view attendance table
+// get student attendance to show in view attendance table
 app.get('/api/get_students_by_section', async (req, res) => {
     const { sectionName } = req.query;
 
@@ -309,7 +304,7 @@ app.get('/api/get_students_by_section', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch student data' });
     }
 });
-//chat gpt ends
+
 app.post('/markAttendance', async (req, res) => {
     try {
         const attendanceData = req.body; // Array of attendance objects
@@ -341,8 +336,7 @@ app.post('/markAttendance', async (req, res) => {
         res.json({ success: false, message: 'Error saving attendance.' });
     }
 });
-////////////////////////////////////////////////////////////////////////////////
-//chat gpt
+
 // Endpoint to fetch lecture attendance data
 app.post('/api/get_lectures_taken', async (req, res) => {
     const { enr_number, section_name, subject_name } = req.body;
@@ -371,15 +365,12 @@ app.post('/api/get_total_lectures', async (req, res) => {
     }
 });
 
-//chat gpt ends
-////////////////////////////////////////////////////////////////////////
-
 app.get("/teacher_edit", async (req, res) => {
     const f_id = req.session.user.id;
     const r = await get_teacher_profile_details_from_id(f_id);
 
     let data = r;
-    res.render("teacher_editprofile", { data, f_id });
+    res.render("teacher_editprofile.ejs", { data, f_id });
  
 })
 
