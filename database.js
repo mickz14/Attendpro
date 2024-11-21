@@ -223,6 +223,38 @@ export async function getStudentInfofromENR(studentENR) {
    return ([result[0], studentSubjects]); //array of (object and array)
 }
 
+export async function fetchDetailedAttendance(enr,subId) {
+   const [result] = await pool.query(
+      `select attendance_date,status from attendance where SUB_ID=? AND ENR_NUMBER=?;`,[subId, enr]);
+   result.forEach((row)=>{
+      const date = new Date(row.attendance_date);
+      const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+      row.attendance_date=formattedDate;
+   });
+}
+
+
+
+
+
+
+
+
+
+
+// const [result] = await pool.query(
+//    `select attendance_date,status from attendance where SUB_ID='ETCS_413' AND ENR_NUMBER=35196202721;`
+// )
+// result.forEach((row)=>{
+//    const date = new Date(row.attendance_date);
+//    const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+//    row.attendance_date=formattedDate;
+// })
+// console.log(result);
+// console.log(result[0].attendance_date);
+// console.log(typeof(result[0].attendance_date));
+
+
 // pool.end();
 ////////////////////////////////////////
 // SELECT COUNT(ATTENDANCE_ID) FROM ATTENDANCE WHERE ENR_NUMBER = 141202722 AND SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = "T1") AND SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_NAME = "OPERATING SYSTEM") AND STATUS = 1;

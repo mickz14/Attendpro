@@ -21,7 +21,7 @@ import {
     chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,
     get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
     getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance,
-    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken
+    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken,fetchDetailedAttendance
 } from './database.js';
 
 // ==================================================================================
@@ -490,15 +490,28 @@ app.get("/t_destroySession", (req, res) => {
     });
 })
 
+
+
 app.get("/student_login", (req, res) => {
     res.render("student_login")
 })
 app.get("/stu_dashboard", (req, res) => {
     res.render("stu_dashboard")
 })
-app.get("/stu_more_info", (req, res) => {
-    res.render("stu_more_info")
+app.get('/stu_more_info', async (req, res) => {
+    res.render('stu_more_info');
+});
+
+app.get('/api/detailedStuAttendance',async (req, res) => {
+    const subId = req.query.subId;
+    console.log(subId);
+    const enr = req.session.student.s_enr;
+    const detailedAttendance = await fetchDetailedAttendance(enr, subId);
+    res.json(detailedAttendance);
 })
+
+
+
 app.use((req, res, next) => {
     res.status(404).render("error_page");
 })

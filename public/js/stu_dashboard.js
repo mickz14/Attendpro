@@ -38,7 +38,7 @@ async function getInfo(){
                 <td class="px-4 py-2 border border-gray-400"> ${getRemark(percentage)}
                 </td>
                 <td class="px-4 py-2 border border-gray-400">
-                    <div onclick="openPage(${studentInfo.ENR_NUMBER},${sub.SUBJECT_ID})" class="h-8 w-24 self-center bg-[#5254dd] hover:bg-[#5254dd]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center m-auto">More Info</div>
+                    <div onclick="openPage('${sub.SUB_ID}')" class="h-8 w-24 self-center bg-[#5254dd] hover:bg-[#5254dd]/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center text-center m-auto">More Info</div>
                 </td>
             </tr>`
             tablebody.insertAdjacentHTML("beforeend",row);
@@ -59,10 +59,9 @@ function getRemark(num){
         return `<div class="present h-6 w-20 m-auto bg-green-200 border-2 border-green-400 rounded-md text-center text-green-500">Excellent</div>`;
     }
 }
-function openPage(enr,subId) {
-    fetch('/stu_more_info',{
-        
-    })
+function openPage(subId) {
+    // Redirect to a new page with query parameters
+    window.location.href = `/stu_more_info?subId=${subId}`;
 }
 getInfo();
 
