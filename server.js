@@ -503,7 +503,7 @@ app.get('/stu_more_info', async (req, res) => {
 });
 
 app.get('/api/detailedStuAttendance',async (req, res) => {
-    const subId = req.query.subId;
+    const {subId} = req.query;
     // console.log(typeof(subId));
     const enr = req.session.student.s_enr;
     // const enr = 196202721;
