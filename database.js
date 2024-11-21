@@ -2,6 +2,7 @@
 import mysql from 'mysql2'
 
 import dotenv from 'dotenv' // for enviornment variables file
+import e from 'connect-flash';
 dotenv.config()
 
 // ==================================================================================================
@@ -224,13 +225,16 @@ export async function getStudentInfofromENR(studentENR) {
 }
 
 export async function fetchDetailedAttendance(enr,subId) {
+   console.log(subId,enr);
    const [result] = await pool.query(
-      `select attendance_date,status from attendance where SUB_ID=? AND ENR_NUMBER=?;`,[subId, enr]);
-   result.forEach((row)=>{
-      const date = new Date(row.attendance_date);
-      const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-      row.attendance_date=formattedDate;
-   });
+      `SELECT DATE_FORMAT(attendance_date, '%Y-%m-%d') AS attendance_date, status
+      FROM attendance where SUB_ID= '${subId}' AND ENR_NUMBER= ${enr};`)
+
+
+      console.log(result);
+   
+   return result;
+
 }
 
 

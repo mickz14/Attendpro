@@ -490,6 +490,15 @@ app.get("/t_destroySession", (req, res) => {
     });
 })
 
+app.get("/stu_destroySession", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Error occurred while logging out');
+        }
+        res.redirect('/student_login'); // Redirect to the login page
+    });
+})
+
 
 
 app.get("/student_login", (req, res) => {
@@ -504,9 +513,10 @@ app.get('/stu_more_info', async (req, res) => {
 
 app.get('/api/detailedStuAttendance',async (req, res) => {
     const subId = req.query.subId;
-    console.log(subId);
     const enr = req.session.student.s_enr;
+    // const enr = 196202721;
     const detailedAttendance = await fetchDetailedAttendance(enr, subId);
+    console.log(detailedAttendance);
     res.json(detailedAttendance);
 })
 
