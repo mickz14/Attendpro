@@ -23,7 +23,8 @@ function getFormattedDate(date) {
 
 // Getting today's date
 const today = new Date();
-const todayFormatted = getFormattedDate(today);
+// const todayFormatted = getFormattedDate(today);
+const todayFormatted = "2024-11-4";
 
 attendanceDate.textContent = `${todayFormatted}`
 
