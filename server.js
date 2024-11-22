@@ -140,7 +140,7 @@ async function stu_func1(req, res) { //without post request i.e. when land on th
             text2 = "Incorrect Password !";
             res.render("student_login", { text2 });
         } else if (msg2 == "stu_dashboard") {
-            res.render("stu_dashboard.ejs");
+            res.redirect("/stu_dashboard");
         }
         else {
             res.render("error_page.ejs");
