@@ -71,10 +71,11 @@ async function loadcalender(year,month) {
 }
 
 function makeTDbasedOnStatus(attMap,dayDate,year,month){
+    let date;
     if(dayDate < 10) {
-        const date = `${year}-${month}-0${dayDate}`
+         date = `${year}-${month}-0${dayDate}`
     }else{
-        const date = `${year}-${month}-${dayDate}`
+         date = `${year}-${month}-${dayDate}`
     }
     if (attMap.get(date)==0){
         const td = document.createElement('td')
