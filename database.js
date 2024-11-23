@@ -234,7 +234,7 @@ export async function fetchDetailedAttendance(enr,subId) {
       `SELECT DATE_FORMAT(attendance_date, '%Y-%m-%d') AS attendance_date, status
       FROM attendance where ENR_NUMBER= ? AND SUB_ID= ?;`,[enr,subId])
 
-      // console.log(result);
+      //console.log(result);
    
    return result;
 
