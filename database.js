@@ -219,14 +219,14 @@ export async function getStudentInfofromENR(studentENR) {
       `select SECTION_NAME from section where SECTION_ID=?;`, [section_id]
    )
    result[0].SECTION_NAME = section_name.SECTION_NAME;
-   console.log(result[0]);
+   // console.log(result[0]);
 
    return ([result[0], studentSubjects]); //array of (object and array)
 }
 
 export async function fetchDetailedAttendance(enr,subId) {
-   console.log(subId,enr);
-   console.log(typeof(subId));
+   // console.log(subId,enr);
+   // console.log(typeof(subId));
    const [result] = await pool.query(
       
       // `SELECT DATE_FORMAT(attendance_date, '%Y-%m-%d') AS attendance_date, status

@@ -343,7 +343,7 @@ app.post('/api/get_lectures_taken', async (req, res) => {
 
     try {
         const lecturesTaken = await getLecturesTaken(enr_number, section_name, subject_name);
-        console.log('Lectures Taken:', lecturesTaken); // Debug log
+        // console.log('Lectures Taken:', lecturesTaken); // Debug log
         res.json({ lecturesTaken });
     } catch (error) {
         console.error('Error fetching lectures taken:', error);
@@ -357,7 +357,7 @@ app.post('/api/get_total_lectures', async (req, res) => {
 
     try {
         const totalLectures = await getTotalLectures(section_name, subject_name);
-        console.log('Total Lectures:', totalLectures); // Debug log
+        // console.log('Total Lectures:', totalLectures); // Debug log
         res.json({ totalLectures });
     } catch (error) {
         console.error('Error fetching total lectures:', error);
