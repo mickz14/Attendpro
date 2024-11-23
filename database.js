@@ -240,9 +240,18 @@ export async function fetchDetailedAttendance(enr,subId) {
 
 }
 
+export async function hod_getsections(year) {
+   const [result] = await pool.query(`select section_id, section_name from section where section_year = ?;`,[year])
+   // console.log(result);
+   return result;
+}
+export async function hod_get_subjects(sem) {
+   const [result] = await pool.query(` select sub_id, sub_name from subject where sub_sem= ? ;`,[sem])
+   // console.log(result);
+   return result;
+}
 
-
-
+ 
 
 
 

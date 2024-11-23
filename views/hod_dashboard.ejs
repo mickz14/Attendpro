@@ -9,7 +9,7 @@
     <script src="/js/hod_dash.js" defer></script>
 
 </head>
-<body class="h-screen overflow-hidden bg-gradient-to-r from-emerald-100 to-white text-[#515151]">
+<body class="overflow-y-auto bg-gradient-to-r from-emerald-100 to-white text-[#515151]">
     <!-- Navbar -->
     <div class="nav-con text-[#515151] w-full bg-[#F7F7F7] shadow-md fixed top-0" >
       <nav class="navbar w-11/12 flex justify-between items-center m-auto">
@@ -25,39 +25,41 @@
         </div>
         </nav>
       </div>
-      <div class="cal-con w-full my-20 mt-28">
-        <div class="max-w-[500px] m-auto bg-white p-4 my-20 border rounded-lg flex flex-col">
-          <label for="year">Select year:</label>
-          <select name="year" id="year" onchange="fetchSem()" class="border-2 p-2 rounded-md bg-emerald-50">
-            <option value="" disabled selected hidden>Select year:</option>
+      <div class="cal-con w-full my-5 mt-24">
+        <div class="max-w-[480px] m-auto bg-white py-8 px-6 mt-16 mb-6 border rounded-lg flex flex-col">
+          <label for="year" class="text-lg font-semibold">Select year:</label>
+          <select name="year" id="year" onchange="fetchSemSec();" class="border-2 p-1 rounded-md bg-emerald-50 my-2">
+            <option value="" disabled selected>Select year:</option>
             <option value="1">First</option>
             <option value="2">Second</option>
             <option value="3">Third</option>
             <option value="4">Fourth</option>
           </select>
 
-          <label for="sem">Select Semester:</label>
-          <select name="sem" id="sem">
+          <label for="sem" class="text-lg font-semibold">Select Semester:</label>
+          <select name="sem" id="sem" onchange="fetchSubjects()" class="border-2 p-1 rounded-md bg-emerald-50 my-2">
             <option value="" disabled selected hidden>Select Semester:</option>
           </select>
-          <label for="sec">Select Section:</label>
-          <select name="sec" id="sec">
+          <label for="sec" class="text-lg font-semibold">Select Section:</label>
+          <select name="sec" id="sec" class="border-2 p-1 rounded-md bg-emerald-50 my-2">
             <option value="" disabled selected hidden>Select Section:</option>
-            <option value="1">First</option>
-            <option value="2">Second</option>
             
           </select>
-          <label for="sub">Select Subject:</label>
-          <select name="sub" id="sub">
+          <label for="sub" class="text-lg font-semibold">Select Subject:</label>
+          <select name="sub" id="sub" class="border-2 p-1 rounded-md bg-emerald-50 my-2">
             <option value="" disabled selected hidden>Select Subject:</option>
-            <option value="1">First</option>
-            <option value="2">Second</option>
-            <option value="3">Third</option>
-            <option value="4">Fourth</option>
           </select>
-        
         </div>
-      </div> 
+        <div class="w-full flex flex-col justify-center items-center">
+          <div onclick="viewatt()" class="view-att-btn h-10 w-44 bg-emerald-600 hover:bg-emerald-600/90 rounded-lg cursor-pointer text-white font-medium flex justify-center items-center gap-1">View Attendance</div>
+          <div class="error-msg text-red-500 text-sm mb-4 h-4 hidden">
+            Please select all fields.
+          </div>
+        </div>
+
+
+        </div>
+         
     
 
 </body>

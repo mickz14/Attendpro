@@ -16,7 +16,7 @@ import {
     chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,
     get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
     getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance,
-    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken,fetchDetailedAttendance
+    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken,fetchDetailedAttendance,hod_getsections,hod_get_subjects
 } from './database.js';
 
 // ==================================================================================
@@ -529,6 +529,42 @@ app.get("/hod_destroySession", (req, res) => {
         res.redirect('/hod_login'); // Redirect to the login page
     });
 })
+
+app.get("/api/hod_get_Section", async (req, res) => {
+    const { year } = req.query;
+    if (!year) {
+        return res.status(400).send('Year is required');
+    }
+
+    try {
+        const sec = await hod_getsections(year);
+        res.json(sec);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+app.get("/api/hod-get-subjects", async (req, res) => {
+    const { semester } = req.query;
+    if (!semester) {
+        return res.status(400).send('Year is required');
+    }
+
+    try {
+        const subjects = await hod_get_subjects(semester);
+        res.json(subjects);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+app.get('/hod_view_att', async (req, res) => {
+    res.render('hod_view_att');
+});
+
+
+
+
 app.use((req, res, next) => {
     res.status(404).render("error_page");
 })
