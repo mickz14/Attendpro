@@ -616,6 +616,10 @@ video {
   z-index: 10;
 }
 
+.m-10 {
+  margin: 2.5rem;
+}
+
 .m-2 {
   margin: 0.5rem;
 }
@@ -626,10 +630,6 @@ video {
 
 .m-auto {
   margin: auto;
-}
-
-.m-10 {
-  margin: 2.5rem;
 }
 
 .mx-4 {
@@ -650,11 +650,6 @@ video {
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-
-.my-10 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
 }
 
 .mb-1 {
@@ -693,6 +688,10 @@ video {
   margin-top: 4rem;
 }
 
+.mt-28 {
+  margin-top: 7rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -707,14 +706,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mt-40 {
-  margin-top: 10rem;
-}
-
-.mt-28 {
-  margin-top: 7rem;
 }
 
 .block {
@@ -775,10 +766,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.min-h-\[400px\] {
-  min-height: 400px;
 }
 
 .w-11\/12 {
@@ -886,10 +873,6 @@ video {
   justify-content: space-between;
 }
 
-.justify-around {
-  justify-content: space-around;
-}
-
 .justify-evenly {
   justify-content: space-evenly;
 }
@@ -972,6 +955,11 @@ video {
   border-bottom-width: 2px;
 }
 
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
 .border-gray-200 {
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
@@ -1000,21 +988,6 @@ video {
 .border-yellow-400 {
   --tw-border-opacity: 1;
   border-color: rgb(250 204 21 / var(--tw-border-opacity));
-}
-
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity));
-}
-
-.border-red-800 {
-  --tw-border-opacity: 1;
-  border-color: rgb(153 27 27 / var(--tw-border-opacity));
-}
-
-.border-green-800 {
-  --tw-border-opacity: 1;
-  border-color: rgb(22 101 52 / var(--tw-border-opacity));
 }
 
 .bg-\[\#5254dd\] {
@@ -1056,6 +1029,11 @@ video {
   background-color: rgb(247 247 247 / var(--tw-bg-opacity));
 }
 
+.bg-emerald-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(5 150 105 / var(--tw-bg-opacity));
+}
+
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
@@ -1070,9 +1048,19 @@ video {
   background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
 
+.bg-green-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
+}
+
 .bg-red-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+}
+
+.bg-red-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(252 165 165 / var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -1090,14 +1078,14 @@ video {
   background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
 
-.bg-green-300 {
+.bg-emerald-100 {
   --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
+  background-color: rgb(209 250 229 / var(--tw-bg-opacity));
 }
 
-.bg-red-300 {
+.bg-emerald-50 {
   --tw-bg-opacity: 1;
-  background-color: rgb(252 165 165 / var(--tw-bg-opacity));
+  background-color: rgb(236 253 245 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -1107,6 +1095,12 @@ video {
 .from-\[\#5254dd1d\] {
   --tw-gradient-from: #5254dd1d var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(82 84 221 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-emerald-100 {
+  --tw-gradient-from: #d1fae5 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(209 250 229 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -1133,6 +1127,10 @@ video {
   padding: 0.25rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -1145,12 +1143,8 @@ video {
   padding: 6px;
 }
 
-.p-10 {
-  padding: 2.5rem;
-}
-
-.p-3 {
-  padding: 0.75rem;
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-2 {
@@ -1242,6 +1236,11 @@ video {
   color: rgb(219 40 120 / var(--tw-text-opacity));
 }
 
+.text-emerald-600 {
+  --tw-text-opacity: 1;
+  color: rgb(5 150 105 / var(--tw-text-opacity));
+}
+
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -1320,6 +1319,10 @@ video {
 
 .hover\:bg-\[\#DB2878\]\/90:hover {
   background-color: rgb(219 40 120 / 0.9);
+}
+
+.hover\:bg-emerald-600\/90:hover {
+  background-color: rgb(5 150 105 / 0.9);
 }
 
 .group:hover .group-hover\:bg-\[\#DB2878\] {

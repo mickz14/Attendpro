@@ -80,7 +80,7 @@ async function t_func1(req, res) {
             res.redirect("/teacher_edit");
             // res.render("teacher_editprofile");
         } else if (msg == "right_not_zero_lec") {
-            res.render("t_dashboard");
+            res.redirect("/t_dashboard");
         } else {
             res.render("error_page.ejs");
         }
@@ -195,7 +195,7 @@ async function hod_func1(req, res) { //without post request i.e. when land on th
             text2 = "Incorrect Password !";
             res.render("hod_login", { text2 });
         } else if (msg2 == "hod_dashboard") {
-            res.render("hod_dashboard.ejs");
+            res.redirect("/hod_dashboard");
         }
         else {
             res.render("error_page.ejs");
@@ -514,15 +514,26 @@ app.get('/api/detailedStuAttendance',async (req, res) => {
 
 
 
-app.use((req, res, next) => {
-    res.status(404).render("error_page");
-})
 app.get("/hod_login",(req,res)=>{
     res.render("hod_login")
 })
 app.get("/hod_dashboard",(req,res)=>{
     res.render("hod_dashboard")
 })
+
+app.get("/hod_destroySession", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send('Error occurred while logging out');
+        }
+        res.redirect('/hod_login'); // Redirect to the login page
+    });
+})
+app.use((req, res, next) => {
+    res.status(404).render("error_page");
+})
+
+
 function getFormattedDate(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
