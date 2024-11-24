@@ -563,6 +563,9 @@ app.get('/hod_view_att', async (req, res) => {
 });
 
 
+app.get('/contactUs', async (req, res) => {
+    res.render('contactUs');
+});
 
 
 app.use((req, res, next) => {
