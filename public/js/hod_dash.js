@@ -48,7 +48,7 @@ async function fetchSec(){
     
     for (const section of sections) {
         sec.insertAdjacentHTML('beforeend',
-            `<option value="${section.section_name}">${section.section_name}</option>
+            `<option value="${section.section_id}-${section.section_name}">${section.section_name}</option>
             `
         )
     }
@@ -64,7 +64,7 @@ async function fetchSubjects() {
         sub.innerHTML = "<option value=''>Select Subject</option>";
         subjects.forEach(subject => {
           const option = document.createElement("option");
-          option.value = subject.sub_id;
+          option.value = `${subject.sub_id}-${subject.sub_name}`;
           option.textContent = subject.sub_name;
           sub.appendChild(option);
         });
@@ -76,7 +76,16 @@ async function fetchSubjects() {
 
 function viewatt(){
     if(year.value && sub.value && sec.value && sem.value){
-        window.location.href = `/hod_view_att?sem=${sem.value}&sub=${sub.value}`;
+        const secInfo = sec.value
+        // Extract the section ID (first 3 characters)
+        const sectionID = secInfo.slice(0, 3);
+
+        // Extract the section name (remaining part)
+        const sectionName = secInfo.slice(4);
+
+        const [subjectID, subjectName] = sub.value.split('-')
+
+        window.location.href = `/hod_view_att?secID=${sectionID}&secName=${sectionName}&subID=${subjectID}&subName=${subjectName}`;
     }
     else{
         errormsg.classList.toggle('hidden')
