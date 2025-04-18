@@ -2,7 +2,7 @@
 import mysql from 'mysql2'
 
 import dotenv from 'dotenv' // for enviornment variables file
-import e from 'connect-flash';
+
 dotenv.config()
 
 const pool = mysql.createPool({
@@ -18,14 +18,14 @@ const pool = mysql.createPool({
 // this function takes the faculty id and return the password associated with it 
 export async function chk_pass_from_id(id) {
    const [result] = await pool.query(
-      'SELECT F_PASSWORD FROM FACULTY WHERE F_ID = ?', [id]);
+      'SELECT F_PASSWORD FROM faculty WHERE F_ID = ?', [id]);
    if (typeof (result[0]) == "undefined") return "undefined"
    return result[0].F_PASSWORD
 }
 
 export async function chk_t_lect_num(id) {
    const [result] = await pool.query(
-      'SELECT COUNT(F_ID) AS RES FROM LECTURE WHERE F_ID = ?', [id]
+      'SELECT COUNT(F_ID) AS RES FROM lecture WHERE F_ID = ?', [id]
    )
    const send = result[0].RES;
    return send
@@ -34,7 +34,7 @@ export async function chk_t_lect_num(id) {
 // for student
 export async function chk_pass_from_enr(id) {
    const [result2] = await pool.query(
-      'SELECT STU_PASSWORD FROM STUDENT WHERE ENR_NUMBER = ?', [id]);
+      'SELECT STU_PASSWORD FROM student WHERE ENR_NUMBER = ?', [id]);
    if (result2.length === 0) return "undefined"; // Check length explicitly
    return result2[0].STU_PASSWORD;
 
@@ -44,7 +44,7 @@ export async function chk_pass_from_enr(id) {
 //===========================================
 //for hod login
 export async function chk_pass_from_hod_id(id) {
-   const [result3] = await pool.query('SELECT HOD_PASSWORD FROM HOD WHERE HOD_ID = ?',[id]);
+   const [result3] = await pool.query('SELECT HOD_PASSWORD FROM hod WHERE HOD_ID = ?',[id]);
    if (result3.length === 0) return "undefined"; // Check length explicitly
    return result3[0].HOD_PASSWORD;   
 }
@@ -53,13 +53,13 @@ export async function chk_pass_from_hod_id(id) {
 export async function getLecture(f_id) {
    const [result2] = await pool.query(
       //'SELECT * FROM LECTURE WHERE F_ID = ?', [f_id]);
-      'SELECT * FROM (SELECT SUBJECT.SUB_ID, SUBJECT.SUB_NAME, SECTION.SECTION_ID, SECTION.SECTION_NAME FROM LECTURE JOIN SUBJECT ON LECTURE.SUB_ID = SUBJECT.SUB_ID JOIN SECTION ON LECTURE.SECTION_ID = SECTION.SECTION_ID WHERE LECTURE.F_ID=?) AS FACULTY_LECTURES', [f_id]);
+      'SELECT * FROM (SELECT subject.SUB_ID, subject.SUB_NAME, section.SECTION_ID, section.SECTION_NAME FROM lecture JOIN subject ON lecture.SUB_ID = subject.SUB_ID JOIN section ON lecture.SECTION_ID = section.SECTION_ID WHERE lecture.F_ID=?) AS FACULTY_LECTURES', [f_id]);
    return result2;
 }
 
 export async function getStudentData(sectionID) {
    const [result2] = await pool.query(
-      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME FROM STUDENT WHERE SECTION_ID = ?', [sectionID]);
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME FROM student WHERE SECTION_ID = ?', [sectionID]);
    return result2;
 }
 
@@ -67,7 +67,7 @@ export async function getStudentData(sectionID) {
 
 export async function get_teacher_profile_details_from_id(id) {
    const [result] = await pool.query(
-      'SELECT F_FNAME,F_LNAME,F_PHONE_NUMBER FROM FACULTY WHERE F_ID = ?', [id]
+      'SELECT F_FNAME,F_LNAME,F_PHONE_NUMBER FROM faculty WHERE F_ID = ?', [id]
    )
    return result[0];
 }
@@ -77,7 +77,7 @@ export async function update_teacher_profile(data, fid) {
    if (new_data.fac_phone == "") new_data.fac_phone = null;
 
    const result = await pool.query(
-      'UPDATE FACULTY SET F_FNAME = ? , F_LNAME = ?, F_PHONE_NUMBER = ? WHERE F_ID = ?', [new_data.fac_fname, new_data.fac_lname, new_data.fac_phone, fid]
+      'UPDATE faculty SET F_FNAME = ? , F_LNAME = ?, F_PHONE_NUMBER = ? WHERE F_ID = ?', [new_data.fac_fname, new_data.fac_lname, new_data.fac_phone, fid]
    )
 }
 // ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ export async function check_att_array_existance(sectionId, subID, attendanceDate
 // Get sections based on year, excluding those already used with the selected subject
 export const getAvailableSections = async (year, facultyId) => {
    const [sections] = await pool.query(
-      'SELECT S.SECTION_ID, S.SECTION_NAME FROM SECTION S LEFT JOIN LECTURE L ON S.SECTION_ID = L.SECTION_ID AND L.F_ID = ? WHERE S.SECTION_YEAR = ? AND L.SUB_ID IS NULL', [facultyId, year]
+      'SELECT S.SECTION_ID, S.SECTION_NAME FROM section S LEFT JOIN lecture L ON S.SECTION_ID = L.SECTION_ID AND L.F_ID = ? WHERE S.SECTION_YEAR = ? AND L.SUB_ID IS NULL', [facultyId, year]
    )
    // console.log(sections);
    return sections;
@@ -114,13 +114,13 @@ export const getAvailableSections = async (year, facultyId) => {
 
 // Get subjects based on semester, excluding those already used with the selected section
 export const getAvailableSubjects = async (semester, sectionID) => {
-   const [subjects] = await pool.query('SELECT SUB.SUB_ID, SUB.SUB_NAME FROM SUBJECT SUB WHERE SUB.SUB_SEM = ? AND SUB.SUB_ID NOT IN (SELECT L.SUB_ID FROM LECTURE L WHERE L.SECTION_ID = ?)', [semester, sectionID]);
+   const [subjects] = await pool.query('SELECT SUB.SUB_ID, SUB.SUB_NAME FROM subject SUB WHERE SUB.SUB_SEM = ? AND SUB.SUB_ID NOT IN (SELECT L.SUB_ID FROM lecture L WHERE L.SECTION_ID = ?)', [semester, sectionID]);
    return subjects;
 }
 
 export const addLecture = async (facultyId, sectionId, subjectId) => {
    // Ensure that the section + subject combination doesn't already exist in the 'lecture' table
-   const [existingLecture] = await pool.query(`SELECT * FROM LECTURE WHERE SECTION_ID = ? AND SUB_ID = ?`, [sectionId, subjectId]);
+   const [existingLecture] = await pool.query(`SELECT * FROM lecture WHERE SECTION_ID = ? AND SUB_ID = ?`, [sectionId, subjectId]);
    //console.log(existingLecture);
    if (existingLecture.length > 0) {
       throw new Error("This lecture already exists.");
@@ -132,7 +132,7 @@ export const addLecture = async (facultyId, sectionId, subjectId) => {
 
 
 export const getExistingLectures = async (facultyId) => {
-   const [rows] = await pool.query(`SELECT S.SECTION_NAME, SUB.SUB_ALIAS FROM LECTURE L JOIN SECTION S ON L.SECTION_ID = S.SECTION_ID JOIN SUBJECT SUB ON L.SUB_ID = SUB.SUB_ID WHERE L.F_ID = ?`, [facultyId]);
+   const [rows] = await pool.query(`SELECT S.SECTION_NAME, SUB.SUB_ALIAS FROM lecture L JOIN section S ON L.SECTION_ID = S.SECTION_ID JOIN subject SUB ON L.SUB_ID = SUB.SUB_ID WHERE L.F_ID = ?`, [facultyId]);
    // console.log(rows);
    // console.log(facultyId);
    return rows;
@@ -141,7 +141,7 @@ export const getExistingLectures = async (facultyId) => {
 };
 
 export async function remove_lecture(section_name, subject_alias) {
-   const result = await pool.query(`DELETE FROM LECTURE WHERE SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_ALIAS = ?) AND SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = ?);`, [subject_alias, section_name]);
+   const result = await pool.query(`DELETE FROM lecture WHERE SUB_ID = (SELECT SUB_ID FROM subject WHERE SUB_ALIAS = ?) AND SECTION_ID = (SELECT SECTION_ID FROM section WHERE SECTION_NAME = ?);`, [subject_alias, section_name]);
    return result[0];
 }
 
@@ -155,7 +155,7 @@ export async function updateAttendanceEntry(attendance_date, sub_id, section_id,
 }
 
 // Insert a new attendance entry
-export async function insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status) {
+export async function insertattendanceEntry(attendance_date, sub_id, section_id, enr_number, status) {
    const [result] = await pool.query(`INSERT INTO attendance (attendance_id,attendance_date, sub_id, section_id, enr_number, status) VALUES (null,?, ?, ?, ?, ?)`, [attendance_date, sub_id, section_id, enr_number, status])
    return result;
 }
@@ -190,7 +190,7 @@ export async function getLecturesTaken(enr_number, section_name, subject_name) {
   }   
 }   
 export async function getTotalLectures(section_name, subject_name) {
-   const [result] = await pool.query(`SELECT COUNT(DISTINCT attendance_date) AS totalLectures FROM attendance WHERE section_id = (SELECT section_id FROM section WHERE section_name = ?) AND sub_id = (SELECT sub_id FROM SUBJECT WHERE sub_name = ?);`,[section_name, subject_name]);
+   const [result] = await pool.query(`SELECT COUNT(DISTINCT attendance_date) AS totalLectures FROM attendance WHERE section_id = (SELECT section_id FROM section WHERE section_name = ?) AND sub_id = (SELECT sub_id FROM subject WHERE sub_name = ?);`,[section_name, subject_name]);
    // console.log(result);
    // const send2 = result[0].TRES;
    //return send2;
@@ -207,7 +207,7 @@ export async function getTotalLectures(section_name, subject_name) {
 // func to get student data and student sub data from student ENR
 export async function getStudentInfofromENR(studentENR) {
    const [result] = await pool.query(
-      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM STUDENT WHERE ENR_NUMBER = ?', [studentENR]
+      'SELECT ENR_NUMBER,STU_FNAME,STU_LNAME,SECTION_ID,STU_SEM FROM student WHERE ENR_NUMBER = ?', [studentENR]
    )
    const sem = result[0].STU_SEM;
    const section_id = result[0].SECTION_ID;
@@ -273,5 +273,5 @@ export async function hod_get_subjects(sem) {
 
 // pool.end();
 ////////////////////////////////////////
-// SELECT COUNT(ATTENDANCE_ID) FROM ATTENDANCE WHERE ENR_NUMBER = 141202722 AND SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = "T1") AND SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_NAME = "OPERATING SYSTEM") AND STATUS = 1;
-// SELECT COUNT(ATTENDANCE_ID) FROM ATTENDANCE WHERE SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = "T1") AND SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_NAME = "OPERATING SYSTEM");
+// SELECT COUNT(attendance_ID) FROM attendance WHERE ENR_NUMBER = 141202722 AND SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = "T1") AND SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_NAME = "OPERATING SYSTEM") AND STATUS = 1;
+// SELECT COUNT(attendance_ID) FROM attendance WHERE SECTION_ID = (SELECT SECTION_ID FROM SECTION WHERE SECTION_NAME = "T1") AND SUB_ID = (SELECT SUB_ID FROM SUBJECT WHERE SUB_NAME = "OPERATING SYSTEM");

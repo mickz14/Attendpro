@@ -1,8 +1,7 @@
 
-
 import express from 'express'
 const app = express()
-const port = 8080
+const port = 3000
 import ejsmate from "ejs-mate"
 import path from 'node:path'
 import { fileURLToPath } from 'url'
@@ -12,12 +11,7 @@ const router = express.Router();
 // ===================================================================================
 // importing data from database file
 
-import {
-    chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,
-    get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,
-    getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance,
-    insertAttendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken,fetchDetailedAttendance,hod_getsections,hod_get_subjects
-} from './database.js';
+import { chk_pass_from_enr, chk_pass_from_id, chk_pass_from_hod_id, chk_t_lect_num, getLecture, getStudentData,get_teacher_profile_details_from_id, update_teacher_profile, getStudentInfofromENR,getAvailableSubjects, getAvailableSections, addLecture, remove_lecture, getExistingLectures, check_att_array_existance, insertattendanceEntry, updateAttendanceEntry, getStudentsBySection,getTotalLectures,getLecturesTaken,fetchDetailedAttendance,hod_getsections,hod_get_subjects } from './database.js';
 
 // ==================================================================================
 
@@ -322,7 +316,7 @@ app.post('/markAttendance', async (req, res) => {
 
             if (existingEntry == 0) {
                 // Insert new entry
-                const insert = await insertAttendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
+                const insert = await insertattendanceEntry(attendance_date, sub_id, section_id, enr_number, status);
             }
 
             else {
@@ -448,10 +442,6 @@ app.post("/add-lecture", async (req, res) => {
     }
 });
 
-/////////////////////////////////////////////
-
-
-
 
 app.get("/t_dashboard", (req, res) => {
     res.render("t_dashboard")
@@ -564,7 +554,7 @@ app.get('/hod_view_att', async (req, res) => {
 
 
 app.get('/contactUs', async (req, res) => {
-    res.render('contactUs');
+    res.render('contactus');
 });
 
 
@@ -587,5 +577,5 @@ console.log(todayFormatted);
 
 
 app.listen(port, () => {
-    console.log("server is listening on http://localhost:8080/");
+    console.log("server is listening on http://localhost:3000/");
 })
